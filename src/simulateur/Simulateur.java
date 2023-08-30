@@ -1,7 +1,11 @@
 package simulateur;
 import destinations.Destination;
+import destinations.DestinationFinale;
 import sources.Source;
+import sources.SourceFixe;
 import transmetteurs.Transmetteur;
+import transmetteurs.TransmetteurParfait;
+import visualisations.SondeLogique;
 
 
 /** La classe Simulateur permet de construire et simuler une chaîne de
@@ -58,7 +62,12 @@ public class Simulateur {
     	analyseArguments(args);
       
       	// TODO : Partie à compléter
-      		
+		transmetteurLogique = new TransmetteurParfait();
+
+		source=new SourceFixe();
+		source.connecter(new SondeLogique("Source", 200));
+
+		destination = new DestinationFinale();
     }
    
    
@@ -136,7 +145,8 @@ public class Simulateur {
      */ 
     public void execute() throws Exception {      
          
-    	// TODO : typiquement source.emettre(); 
+    	// TODO : typiquement source.emettre();
+		source.emettre();
       	     	      
     }
    
