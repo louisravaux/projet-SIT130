@@ -61,30 +61,20 @@ public class Simulateur {
     public  Simulateur(String [] args) throws ArgumentsException {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
+      
+      	// Instanciation des vars
+    	source = new SourceAleatoire();
+    	transmetteurLogique = new TransmetteurParfait();
+    	destination = new DestinationFinale();
+    	SondeLogique sondeSrc = new SondeLogique("Src", 200);
+    	SondeLogique sondeDst = new SondeLogique("Dst", 200);
 
-		SondeLogique sondeSrc = new SondeLogique("Source", 200);
-		SondeLogique sondeDest = new SondeLogique("Destination", 200);
-
-		source = new SourceFixe();
-		transmetteurLogique = new TransmetteurParfait();
-		destination = new DestinationFinale();
-
-		source.connecter(transmetteurLogique);
-		transmetteurLogique.connecter(destination);
-
-		try {
-			execute();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		sondeSrc.recevoir(source.getInformationEmise());
-		sondeDest.recevoir(destination.getInformationRecue());
-
-		// rendu NOM1_NOM2_SIT213_0.pdf
-
-	}
-   
+    	// Connections de la source et du transmetteur
+    	source.connecter(transmetteurLogique);
+    	source.connecter(sondeSrc);
+    	transmetteurLogique.connecter(destination);
+    	transmetteurLogique.connecter(sondeDst);
+    }
    
    
     /** La méthode analyseArguments extrait d'un tableau de chaînes de
@@ -159,10 +149,7 @@ public class Simulateur {
      *
      */ 
     public void execute() throws Exception {      
-         
-    	// TODO : typiquement source.emettre();
-		source.emettre();
-      	     	      
+		  source.emettre();	     	      
     }
    
    	   	
@@ -173,10 +160,14 @@ public class Simulateur {
      * @return  La valeur du Taux dErreur Binaire.
      */   	   
     public float  calculTauxErreurBinaire() {
-
-    	// TODO : A compléter
-
-    	return  0.0f;
+    	int nb_fail = 0;
+    	int nb = source.getInformationEmise().nbElements();
+    	for(int i=0; i<nb; i++) {
+    		if(source.getInformationEmise().iemeElement(i) != destination.getInformationRecue().iemeElement(i)) {
+    			nb_fail++;
+    		}
+    	}
+    	return  ((float)(nb_fail)/(float)(nb));
     }
    
    
