@@ -1,6 +1,7 @@
 package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
+import information.InformationNonConformeException;
 import sources.Source;
 import sources.SourceFixe;
 import transmetteurs.Transmetteur;
@@ -60,15 +61,29 @@ public class Simulateur {
     public  Simulateur(String [] args) throws ArgumentsException {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
-      
-      	// TODO : Partie à compléter
+
+		SondeLogique sondeSrc = new SondeLogique("Source", 200);
+		SondeLogique sondeDest = new SondeLogique("Destination", 200);
+
+		source = new SourceFixe();
 		transmetteurLogique = new TransmetteurParfait();
-
-		source=new SourceFixe();
-		source.connecter(new SondeLogique("Source", 200));
-
 		destination = new DestinationFinale();
-    }
+
+		source.connecter(transmetteurLogique);
+		transmetteurLogique.connecter(destination);
+
+		try {
+			execute();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		sondeSrc.recevoir(source.getInformationEmise());
+		sondeDest.recevoir(destination.getInformationRecue());
+
+		// rendu NOM1_NOM2_SIT213_0.pdf
+
+	}
    
    
    
