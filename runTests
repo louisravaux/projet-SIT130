@@ -1,0 +1,11 @@
+#!/bin/bash
+./hello Antoine
+./hello Louis
+./hello Pierre
+
+for i in {1..50}
+do
+	./hello $i
+done
+
+echo "Amazing!!"

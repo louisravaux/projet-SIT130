@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Cleaning binaries and docs
+./cleanAll
+
+tar --exclude='genDeliverable' --exclude='.git' -czvf FAVREL-RAVAUX.tar.gz .

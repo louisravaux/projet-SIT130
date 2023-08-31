@@ -60,15 +60,15 @@ public class Simulateur {
      *
      */   
     public  Simulateur(String [] args) throws ArgumentsException {
-    	// analyser et récupérer les arguments   	
+    	// analyser et récupérer les arguments
     	analyseArguments(args);
       
       	// Instanciation des vars
     	source = new SourceAleatoire();
     	transmetteurLogique = new TransmetteurParfait();
     	destination = new DestinationFinale();
-    	SondeLogique sondeSrc = new SondeLogique("Src", 200);
-    	SondeLogique sondeDst = new SondeLogique("Dst", 200);
+    	SondeLogique sondeSrc = new SondeLogique("Source", 200);
+    	SondeLogique sondeDst = new SondeLogique("Destination", 200);
 
     	// Connections de la source et du transmetteur
     	source.connecter(transmetteurLogique);
