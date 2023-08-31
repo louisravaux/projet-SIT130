@@ -1,7 +1,6 @@
 package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
-import information.InformationNonConformeException;
 import sources.Source;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
@@ -60,22 +59,24 @@ public class Simulateur {
      *
      */   
     public  Simulateur(String [] args) throws ArgumentsException {
-    	// analyser et récupérer les arguments
+    	// analyser et récupérer les arguments   	
     	analyseArguments(args);
       
       	// Instanciation des vars
     	source = new SourceAleatoire();
     	transmetteurLogique = new TransmetteurParfait();
     	destination = new DestinationFinale();
-    	SondeLogique sondeSrc = new SondeLogique("Source", 200);
-    	SondeLogique sondeDst = new SondeLogique("Destination", 200);
+    	SondeLogique sondeSrc = new SondeLogique("Src", 200);
+    	SondeLogique sondeDst = new SondeLogique("Dst", 200);
 
     	// Connections de la source et du transmetteur
     	source.connecter(transmetteurLogique);
     	source.connecter(sondeSrc);
     	transmetteurLogique.connecter(destination);
     	transmetteurLogique.connecter(sondeDst);
+    	
     }
+   
    
    
     /** La méthode analyseArguments extrait d'un tableau de chaînes de
@@ -150,7 +151,7 @@ public class Simulateur {
      *
      */ 
     public void execute() throws Exception {      
-		  source.emettre();	     	      
+    	source.emettre();
     }
    
    	   	

@@ -3,11 +3,8 @@ package sources;
 import information.Information;
 
 public class SourceFixe extends Source<Boolean> {
-
-    /**
-     * Une source qui envoie toujours le même message
-     */
-    public SourceFixe () {
+	/** Une source qui envoie toujours le m�me message */
+    public SourceFixe() {
         informationGeneree = new Information<Boolean>();
         informationGeneree.add(true);
         informationGeneree.add(false);
@@ -16,5 +13,5 @@ public class SourceFixe extends Source<Boolean> {
         informationGeneree.add(false);
         informationGeneree.add(true);
     }
-
+    
 }

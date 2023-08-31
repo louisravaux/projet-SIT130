@@ -15,10 +15,11 @@ public class TransmetteurParfait extends Transmetteur<Boolean,Boolean> {
 
 	public void emettre() throws InformationNonConformeException {
 		informationEmise = new Information<Boolean>();
+		//this.informationRecue.setIemeElement(0,false);    //Ajout d'une erreur
 		for(int i=0; i<informationRecue.nbElements(); i++) {
 			informationEmise.add((Boolean)informationRecue.iemeElement(i));
 		}
-		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
+		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
             destinationConnectee.recevoir(informationEmise);
 		}
 	}
