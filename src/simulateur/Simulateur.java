@@ -3,6 +3,7 @@ import destinations.Destination;
 import destinations.DestinationFinale;
 import information.InformationNonConformeException;
 import sources.Source;
+import sources.SourceAleatoire;
 import sources.SourceFixe;
 import transmetteurs.Transmetteur;
 import transmetteurs.TransmetteurParfait;
