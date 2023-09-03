@@ -63,7 +63,7 @@ public class Simulateur {
     	analyseArguments(args);
       
       	// Instanciation des vars
-    	source = new SourceFixe();
+    	source = new SourceAleatoire(6);
     	transmetteurLogique = new TransmetteurParfait();
     	destination = new DestinationFinale();
 

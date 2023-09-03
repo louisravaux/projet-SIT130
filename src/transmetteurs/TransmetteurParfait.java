@@ -22,11 +22,6 @@ public class TransmetteurParfait extends Transmetteur<Boolean, Boolean>{
 
     @Override
     public void emettre() throws InformationNonConformeException {
-        informationRecue.setIemeElement(0, false); // adding error
-        informationRecue.setIemeElement(1, true); // adding error
-        informationRecue.setIemeElement(2, false); // adding error
-
-        
         for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
             destinationConnectee.recevoir(informationRecue);
         }
