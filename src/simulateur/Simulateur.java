@@ -63,11 +63,12 @@ public class Simulateur {
     	analyseArguments(args);
       
       	// Instanciation des vars
-    	source = new SourceAleatoire();
+    	source = new SourceFixe();
     	transmetteurLogique = new TransmetteurParfait();
     	destination = new DestinationFinale();
-    	SondeLogique sondeSrc = new SondeLogique("Src", 200);
-    	SondeLogique sondeDst = new SondeLogique("Dst", 200);
+
+    	SondeLogique sondeSrc = new SondeLogique("Source", 200);
+    	SondeLogique sondeDst = new SondeLogique("Destination", 200);
 
     	// Connections de la source et du transmetteur
     	source.connecter(transmetteurLogique);

@@ -4,10 +4,16 @@ import information.Information;
 import information.InformationNonConformeException;
 
 public class DestinationFinale extends Destination<Boolean> {
-	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {	
+
+	public DestinationFinale() {
 		informationRecue = new Information<Boolean>();
+	}
+
+	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {	
+
 		for(int i=0; i<information.nbElements(); i++) {
-			informationRecue.add((Boolean)information.iemeElement(i));
+			informationRecue.add(information.iemeElement(i));
 		}
+
 	}
 }
