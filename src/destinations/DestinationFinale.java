@@ -12,9 +12,9 @@ public class DestinationFinale extends Destination<Boolean> {
 
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {	
 
-		for(int i=0; i<information.nbElements(); i++) {
-			informationRecue.add(information.iemeElement(i));
-		}
+		for(Boolean i : information) {
+        	informationRecue.add(i);
+        }
 
 	}
 }
