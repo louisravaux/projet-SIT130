@@ -6,6 +6,7 @@ import information.InformationNonConformeException;
 public class DestinationFinale extends Destination<Boolean> {
 
 	public DestinationFinale() {
+		super();
 		informationRecue = new Information<Boolean>();
 	}
 
