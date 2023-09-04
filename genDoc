@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "Generating javadoc"
-javadoc -d docs src/*
+javadoc -d docs src/*/*
 echo "Finished"
