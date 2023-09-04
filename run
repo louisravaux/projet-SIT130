@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp bin simulateur.Simulateur
+java -XX:+ShowCodeDetailsInExceptionMessages -cp bin simulateur.Simulateur
