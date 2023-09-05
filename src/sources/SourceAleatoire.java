@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class SourceAleatoire extends Source<Boolean> {
 
-    private int size;
+    private final int size;
 
 	/** Une source qui envoie un message aleatoire */
     public SourceAleatoire(int size) {
