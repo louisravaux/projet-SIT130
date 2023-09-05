@@ -99,7 +99,7 @@ public class Simulateur {
      *
      */   
     public  void analyseArguments(String[] args)  throws  ArgumentsException {
-
+		
     	for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
 
     		if (args[i].matches("-s")){
