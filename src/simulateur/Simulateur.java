@@ -62,15 +62,17 @@ public class Simulateur {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
 
+		// instanciation des éléments composant le transmetteur parfait
 		simulationTransmetteurParfait();
-
     }
 
 	public void simulationTransmetteurParfait() {
+
 		// Instanciation des variables
 		source = new SourceAleatoire(6);
 		transmetteurLogique = new TransmetteurParfait();
 		destination = new DestinationFinale();
+
 		// Connections de la source et du transmetteur
 		source.connecter(transmetteurLogique);
 		transmetteurLogique.connecter(destination);
