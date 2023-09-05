@@ -61,20 +61,26 @@ public class Simulateur {
     public  Simulateur(String [] args) throws ArgumentsException {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
-      
-      	// Instanciation des vars
-    	source = new SourceFixe();
-    	transmetteurLogique = new TransmetteurParfait();
-    	destination = new DestinationFinale();
 
-    	// Connections de la source et du transmetteur
-    	source.connecter(transmetteurLogique);
-    	source.connecter(new SondeLogique("Source", 200));
+		simulationTransmetteurParfait();
 
-    	transmetteurLogique.connecter(destination);
-    	transmetteurLogique.connecter(new SondeLogique("Destination", 200));
-    	
     }
+
+	public void simulationTransmetteurParfait() {
+		// Instanciation des variables
+		source = new SourceAleatoire(6);
+		transmetteurLogique = new TransmetteurParfait();
+		destination = new DestinationFinale();
+		// Connections de la source et du transmetteur
+		source.connecter(transmetteurLogique);
+		transmetteurLogique.connecter(destination);
+
+		if (affichage) {
+			source.connecter(new SondeLogique("Source", 200));
+			transmetteurLogique.connecter(new SondeLogique("Destination", 200));
+
+		}
+	}
    
    
    
