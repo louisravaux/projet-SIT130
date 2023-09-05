@@ -1,11 +1,12 @@
 #!/bin/bash
 echo "Compiling...."
-javac -d bin \
-    src/simulateur/*.java \
-    src/destinations/*.java \
-    src/information/*.java \
-    src/sources/*.java \
-    src/transmetteurs/*.java \
-    src/visualisations/*.java
+#javac -d bin \
+#    src/simulateur/*.java \
+#    src/destinations/*.java \
+#    src/information/*.java \
+#    src/sources/*.java \
+#    src/transmetteurs/*.java \
+#    src/visualisations/*.java
+javac -d bin src/*/*.java
 echo "Done !"
 

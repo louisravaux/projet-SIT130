@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp bin simulateur.Simulateur
+java -cp bin simulateur.Simulateur $1
