@@ -66,6 +66,15 @@ public class Simulateur {
 		simulationTransmetteurParfait();
     }
 
+	/**
+	 * Cette méthode réalise une simulation avec un transmetteur parfait en utilisant une source aléatoire.
+	 * Elle effectue les étapes suivantes :
+	 * 1. Instancie une Source fixe ou aléatoire.
+	 * 2. Instancie un transmetteur parfait.
+	 * 3. Instancie une destination finale.
+	 * 4. Connecte la source au transmetteur et le transmetteur à la destination.
+	 * 5. Optionnellement, effectue une connexion avec des sondes logiques pour afficher les signaux à l'écran si la variable "affichage" est true.
+	 */
 	public void simulationTransmetteurParfait() {
 
 		// Instanciation des variables
@@ -77,12 +86,13 @@ public class Simulateur {
 		source.connecter(transmetteurLogique);
 		transmetteurLogique.connecter(destination);
 
+		// Optionnel : Affichage des signaux avec des sondes logiques
 		if (affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			transmetteurLogique.connecter(new SondeLogique("Destination", 200));
-
 		}
 	}
+
    
    
    
