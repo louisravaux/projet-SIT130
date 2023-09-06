@@ -1,2 +1,6 @@
 #!/bin/bash
-echo "TODO...."
+echo "running tests...."
+
+echo "TODO"
+
+echo "done."
