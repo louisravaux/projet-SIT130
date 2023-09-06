@@ -83,9 +83,14 @@ public class Simulateur {
 	public void simulationTransmetteurParfait() {
 
 		// Instanciation des variables
-		source = new SourceAleatoire(6, seed);
-		transmetteurLogique = new TransmetteurParfait();
-		destination = new DestinationFinale();
+		try {
+			source = new SourceAleatoire(6, seed);
+			transmetteurLogique = new TransmetteurParfait();
+			destination = new DestinationFinale();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 
 		// Connections de la source et du transmetteur
 		source.connecter(transmetteurLogique);
