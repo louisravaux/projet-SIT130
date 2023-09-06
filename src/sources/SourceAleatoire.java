@@ -10,15 +10,18 @@ import java.util.Random;
 public class SourceAleatoire extends Source<Boolean> {
 
     private final int size;
+    private final int seed;
 
     /**
      * Constructeur de la classe SourceAleatoire.
      *
      * @param size La taille du signal aléatoire à générer.
      */
-    public SourceAleatoire(int size) {
+    public SourceAleatoire(int size, int seed) {
 
         this.size = size;
+        this.seed = seed;
+
         informationGeneree = new Information<Boolean>();
 
         generateSignal();
@@ -32,6 +35,7 @@ public class SourceAleatoire extends Source<Boolean> {
     public void generateSignal() {
 
         Random rd = new Random();
+        rd.setSeed(seed);
         for (int i = 0; i < size; i++) {
 
             boolean bool = rd.nextBoolean();
