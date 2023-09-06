@@ -1,7 +1,6 @@
 package transmetteurs;
 
 import destinations.DestinationFinale;
-import information.InformationNonConformeException;
 import org.junit.jupiter.api.Test;
 import sources.SourceAleatoire;
 
@@ -9,10 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TransmetteurParfaitTest {
 
-    SourceAleatoire s;
-    TransmetteurParfait t;
-    DestinationFinale d;
+    private SourceAleatoire s;
+    private TransmetteurParfait t;
+    private DestinationFinale d;
 
+    /**
+     * Cette méthode de classe permet la construction de la maquette de tests.
+     * les attributs s, t et d sont instanciés à chaque appel de la fonction
+     * */
     void init() throws Exception {
 
         s = new SourceAleatoire(6, 99);
@@ -25,6 +28,9 @@ class TransmetteurParfaitTest {
         s.emettre();
     }
 
+    /**
+     * Test de la méthode recevoir()
+     * */
     @Test
     void recevoir() throws Exception {
         init();
@@ -35,6 +41,9 @@ class TransmetteurParfaitTest {
         }
     }
 
+    /**
+     * Test de la méthode emettre()
+     * */
     @Test
     void emettre() throws Exception {
         init();
