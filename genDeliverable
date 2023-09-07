@@ -9,4 +9,5 @@ tar --exclude='genDeliverable' \
     --exclude='tex' \
     --exclude='.gitignore' \
     --exclude='sit213-projet.iml' \
+    --exclude='.idea' \
     -czvf FAVREL-RAVAUX.tar.gz .
