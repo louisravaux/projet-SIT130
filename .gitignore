@@ -29,3 +29,7 @@ docs/
 
 ### Mac OS ###
 .DS_Store
+
+# Latex
+tex/*
+!tex/*.tex
