@@ -82,9 +82,11 @@ public class Simulateur {
 		// Instanciation des variables
 		try {
 			
-			if (aleatoireAvecGerme) {
-				source = new SourceAleatoire(6, seed);
-			} else if (nbBitsMess != 0){
+			if (messageAleatoire && !aleatoireAvecGerme) {
+				source = new SourceAleatoire(nbBitsMess);
+			} else if (messageAleatoire && aleatoireAvecGerme) {
+				source = new SourceAleatoire(nbBitsMess, seed);
+			} else if (!messageAleatoire){
 				source = new SourceFixe(messageString);
 			}
 
