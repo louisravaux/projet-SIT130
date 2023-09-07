@@ -64,9 +64,6 @@ public class Simulateur {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
 
-		// genere un germe aléatoire si le germe
-		gestionGerme();
-
 		// instanciation des éléments composant le transmetteur parfait
 		simulationTransmetteurParfait();
     }
@@ -84,7 +81,13 @@ public class Simulateur {
 
 		// Instanciation des variables
 		try {
-			source = new SourceAleatoire(6, seed);
+			
+			if (aleatoireAvecGerme) {
+				source = new SourceAleatoire(6, seed);
+			} else {
+				source = new SourceAleatoire(6);
+			}
+
 			transmetteurLogique = new TransmetteurParfait();
 			destination = new DestinationFinale();
 		} catch (Exception e) {
@@ -102,18 +105,6 @@ public class Simulateur {
 			transmetteurLogique.connecter(new SondeLogique("Destination", 200));
 		}
 	}
-
-	/**
-	 * Cette méthode est utilisée pour gérer le seed d'une source aléatoire.
-	 * Si la génération avec graine n'est pas spécifiée, elle génère une nouvelle graine aléatoirement.
-	 *
-	 */
-   public void gestionGerme() {
-	   if (!aleatoireAvecGerme) {
-		   Random rd = new Random();
-		   seed = rd.nextInt(999999999);
-	   }
-   }
    
    
     /** La méthode analyseArguments extrait d'un tableau de chaînes de

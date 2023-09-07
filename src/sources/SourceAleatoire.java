@@ -10,7 +10,20 @@ import java.util.Random;
 public class SourceAleatoire extends Source<Boolean> {
 
     private final int size;
-    private final int seed;
+    private final Random rd;
+
+    public SourceAleatoire(int size) throws Exception{
+
+        if (size < 1) {
+            throw new Exception("La taille doit etre supérieure à 0");
+        }
+
+        this.informationGeneree = new Information<>();
+        this.size = size;
+        this.rd = new Random();
+
+        generateSignal();
+    }
 
     /**
      * Constructeur de la classe SourceAleatoire.
@@ -23,13 +36,12 @@ public class SourceAleatoire extends Source<Boolean> {
             throw new Exception("La taille doit etre supérieure à 0");
         }
 
+        this.informationGeneree = new Information<>();
         this.size = size;
-        this.seed = seed;
-
-        informationGeneree = new Information<Boolean>();
+        this.rd = new Random();
+        this.rd.setSeed(seed);
 
         generateSignal();
-
     }
 
     /**
@@ -38,8 +50,6 @@ public class SourceAleatoire extends Source<Boolean> {
      */
     public void generateSignal() {
 
-        Random rd = new Random();
-        rd.setSeed(seed);
         for (int i = 0; i < size; i++) {
 
             boolean bool = rd.nextBoolean();
