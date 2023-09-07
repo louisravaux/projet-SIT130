@@ -84,8 +84,8 @@ public class Simulateur {
 			
 			if (aleatoireAvecGerme) {
 				source = new SourceAleatoire(6, seed);
-			} else {
-				source = new SourceAleatoire(6);
+			} else if (nbBitsMess != 0){
+				source = new SourceFixe(messageString);
 			}
 
 			transmetteurLogique = new TransmetteurParfait();
