@@ -19,9 +19,7 @@ public class SourceAleatoire extends Source<Boolean> {
      */
     public SourceAleatoire(int size) throws Exception{
 
-        if (size < 1) {
-            throw new Exception("La taille doit etre supérieure à 0");
-        }
+        if (size < 1) throw new Exception("La taille doit etre supérieure à 0");
 
         this.informationGeneree = new Information<>();
         this.size = size;
@@ -38,9 +36,7 @@ public class SourceAleatoire extends Source<Boolean> {
      */
     public SourceAleatoire(int size, int seed) throws Exception{
 
-        if (size < 1) {
-            throw new Exception("La taille doit etre supérieure à 0");
-        }
+        if (size < 1) throw new Exception("La taille doit etre supérieure à 0");
 
         this.informationGeneree = new Information<>();
         this.size = size;

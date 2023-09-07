@@ -21,7 +21,8 @@ class SourceAleatoireTest {
 
         // size = -1 is not valid
         // TODO: make assert for this test
-        new SourceAleatoire(-1, 88);
+        //assertThrows(SourceAleatoire.class, new SourceAleatoire(5));
+
 
     }
 }

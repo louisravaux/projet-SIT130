@@ -1,6 +1,7 @@
 package destinations;
 
 import information.InformationNonConformeException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
@@ -10,17 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DestinationFinaleTest {
 
-    @Test
-    void recevoir() throws Exception {
+    SourceAleatoire s;
+    TransmetteurParfait t;
+    DestinationFinale d;
 
-        SourceAleatoire s = new SourceAleatoire(6, 1313);
-        TransmetteurParfait t = new TransmetteurParfait();
-        DestinationFinale d = new DestinationFinale();
+    @BeforeEach
+    void init() throws Exception {
+        s = new SourceAleatoire(6);
+        t = new TransmetteurParfait();
+        d = new DestinationFinale();
 
         s.connecter(t);
         t.connecter(d);
 
         s.emettre();
+    }
+
+    @Test
+    void recevoir() {
 
         for (int i = 0; i < s.getInformationEmise().nbElements(); i++) {
             if (s.getInformationEmise().iemeElement(i) != d.getInformationRecue().iemeElement(i)) {
