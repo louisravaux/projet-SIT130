@@ -12,6 +12,11 @@ public class SourceAleatoire extends Source<Boolean> {
     private final int size;
     private final Random rd;
 
+    /**
+     * Constructeur de la classe SourceAleatoire.
+     *
+     * @param size La taille du signal aléatoire à générer.
+     */
     public SourceAleatoire(int size) throws Exception{
 
         if (size < 1) {
@@ -29,6 +34,7 @@ public class SourceAleatoire extends Source<Boolean> {
      * Constructeur de la classe SourceAleatoire.
      *
      * @param size La taille du signal aléatoire à générer.
+     * @param seed La graine de génération aléatoire
      */
     public SourceAleatoire(int size, int seed) throws Exception{
 
