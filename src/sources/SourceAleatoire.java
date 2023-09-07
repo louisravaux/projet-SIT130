@@ -17,9 +17,9 @@ public class SourceAleatoire extends Source<Boolean> {
      *
      * @param size La taille du signal aléatoire à générer.
      */
-    public SourceAleatoire(int size) throws Exception{
+    public SourceAleatoire(int size) throws IllegalArgumentException{
 
-        if (size < 1) throw new Exception("La taille doit etre supérieure à 0");
+        if (size < 1) throw new IllegalArgumentException("La taille doit etre supérieure à 0");
 
         this.informationGeneree = new Information<>();
         this.size = size;

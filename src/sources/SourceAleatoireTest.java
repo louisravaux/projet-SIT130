@@ -1,14 +1,22 @@
 package sources;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SourceAleatoireTest {
 
+    SourceAleatoire src;
+
+    @BeforeEach
+    void init() throws Exception {
+        src = new SourceAleatoire(6, 88);
+
+    }
+
     @Test
     void generateSignal() throws Exception {
-        SourceAleatoire src = new SourceAleatoire(6, 88);
 
         // checking signal for seed 88
         assertTrue(src.getInformationGeneree().iemeElement(0));
@@ -17,12 +25,14 @@ class SourceAleatoireTest {
         assertFalse(src.getInformationGeneree().iemeElement(3));
         assertTrue(src.getInformationGeneree().iemeElement(4));
         assertFalse(src.getInformationGeneree().iemeElement(5));
-
-
-        // size = -1 is not valid
-        // TODO: make assert for this test
-        //assertThrows(SourceAleatoire.class, new SourceAleatoire(5));
-
-
     }
+
+    @Test
+    void testInvalidSize() {
+        // Test with an invalid size (-1)
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new SourceAleatoire(-1, 88));
+        assertEquals("La taille doit être supérieure à 0", exception.getMessage());
+    }
+
+
 }
