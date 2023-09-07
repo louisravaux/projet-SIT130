@@ -3,4 +3,10 @@
 # Cleaning binaries and docs
 ./cleanAll
 
-tar --exclude='genDeliverable' --exclude='.git' -czvf FAVREL-RAVAUX.tar.gz .
+tar --exclude='genDeliverable' \
+    --exclude='.git' \
+    --exclude='out' \
+    --exclude='tex' \
+    --exclude='.gitignore' \
+    --exclude='sit213-projet.iml' \
+    -czvf FAVREL-RAVAUX.tar.gz .
