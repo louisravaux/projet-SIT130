@@ -33,3 +33,4 @@ docs/
 # Latex
 tex/*
 !tex/*.tex
+!tex/img
