@@ -38,6 +38,7 @@ où **[options]** représente une liste d'arguments optionnels que vous pouvez u
 
 En utilisant un message binaire de 7 chiffres ou plus (0 ou 1) directement. Par exemple, -mess 1010101.
 En spécifiant le nombre de bits du message "aléatoire" à transmettre en utilisant un nombre de 1 à 6 chiffres. Par exemple, -mess 1000 générera un message aléatoire de 1000 bits.
+
 `-s` : Active l'affichage des sondes d'affichage. Si cette option est spécifiée, vous pourrez visualiser les signaux à l'écran pendant la simulation.
 
 `-seed v` : Initialise les générateurs aléatoires avec une valeur v. Cela permet de reproduire les mêmes résultats pour des simulations identiques, car les générateurs aléatoires seront initialisés de la même manière à chaque exécution.
