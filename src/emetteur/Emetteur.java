@@ -11,15 +11,15 @@ public abstract class Emetteur <R,E> implements  DestinationInterface <R>, Sourc
 	protected LinkedList <DestinationInterface <E>> destinationsConnectees;
 	protected Information <R>  informationRecue;
 	protected Information <E>  informationEmise;
-	protected int tmax;
-	protected int tmin;
+	protected int vmax;
+	protected int vmin;
 	
 	public Emetteur() {
 		destinationsConnectees = new LinkedList <DestinationInterface <E>> ();
 		informationRecue = null;
 		informationEmise = null;
-		tmax = 0;
-		tmin = 0;
+		vmax = 0;
+		vmin = 0;
 	}
 	
 	public Information <R>  getInformationRecue() {
