@@ -34,8 +34,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Double, Double> {
 	
 	public void emettre() throws InformationNonConformeException {
 		for (DestinationInterface<Double> destinationConnectee : destinationsConnectees) {
-            destinationConnectee.recevoir(informationRecue);
+            destinationConnectee.recevoir(informationEmise);
         }
-		this.informationEmise = informationRecue;
 	}
 }
