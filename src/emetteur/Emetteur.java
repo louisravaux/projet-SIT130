@@ -37,6 +37,14 @@ public abstract class Emetteur <R,E> implements  DestinationInterface <R>, Sourc
 	public void deconnecter (DestinationInterface <E> destination) {
 		destinationsConnectees.remove(destination); 
 	}
+
+	public static float convertLogAnalog(Boolean boolv) {
+		return boolv ? 1.0f : 0.0f;
+	}
+	
+	public static boolean convertAnalogLog(Float floatv) {
+		return floatv != 0.0f;
+	}
 	
 	public  abstract void recevoir(Information <R> information) throws InformationNonConformeException;
 	
