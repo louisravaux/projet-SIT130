@@ -4,7 +4,7 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
-public class EmetteurParfaitAnalogique extends Emetteur<Double, Double> {
+public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Double> {
 	private float amin;
 	private float amax;
 	private int nb_samples;
@@ -20,7 +20,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Double, Double> {
 		this.form = form;
 	}
 	
-	public void recevoir(Information<Double> information) throws InformationNonConformeException {
+	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
 		if(form.equals("RZ")) {
 			// TODO 
 		}
