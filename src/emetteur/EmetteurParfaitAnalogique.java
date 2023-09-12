@@ -22,25 +22,21 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 		informationEmise = new Information<Float>();
 	}
 
-
-	@Override
 	public void convert(Information<Boolean> receivedInformation) {
 		int signalLength = informationRecue.nbElements() * nb_samples * 2;
-		float[] rzSignal = new float[signalLength];
-		int index = 0;
 
 		if(form.equals("RZ")) {
 			for(Boolean b : informationRecue) {
 				for(int i=0; i<nb_samples; i++) {
 					if(b) {
-						rzSignal[index++] = vmax;
+						informationEmise.add(vmax);
 					}
 					else {
-						rzSignal[index++] = vmin;
+						informationEmise.add(vmin);
 					}
 				}
 				for(int i=0; i<nb_samples; i++) {
-					rzSignal[index++] = 0.0f;
+					informationEmise.add(0.0f);
 				}
 			}
 		}
@@ -48,18 +44,18 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 			for(Boolean b : informationRecue) {
 				for(int i=0; i<nb_samples; i++) {
 					if(b) {
-						rzSignal[index++] = vmax;
+						informationEmise.add(vmax);
 					}
 					else {
-						rzSignal[index++] = vmin;
+						informationEmise.add(vmin);
 					}
 				}
 				for(int i=0; i<nb_samples; i++) {
 					if(b) {
-						rzSignal[index++] = vmax;
+						informationEmise.add(vmax);
 					}
 					else {
-						rzSignal[index++] = vmin;
+						informationEmise.add(vmin);
 					}
 				}
 			}
@@ -68,10 +64,6 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 			// TODO
 		}
 
-		//TODO lowering complexity
-		for(float f : rzSignal) {
-			informationEmise.add(f);
-		}
 	}
 
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
