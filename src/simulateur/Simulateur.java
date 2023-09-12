@@ -1,11 +1,13 @@
 package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
+import emetteur.EmetteurParfaitAnalogique;
 import sources.Source;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
 import transmetteurs.Transmetteur;
 import transmetteurs.TransmetteurParfait;
+import visualisations.SondeAnalogique;
 import visualisations.SondeLogique;
 
 import java.util.Random;
@@ -65,7 +67,8 @@ public class Simulateur {
     	analyseArguments(args);
 
 		// instanciation des éléments composant le transmetteur parfait
-		simulationTransmetteurParfait();
+		//simulationTransmetteurParfait();
+		simulationTransmetteurAnalogique();
     }
 
 	/**
@@ -81,12 +84,12 @@ public class Simulateur {
 
 		// Instanciation des variables
 		try {
-			
+
 			if (messageAleatoire && !aleatoireAvecGerme) {
 				source = new SourceAleatoire(nbBitsMess);
 			} else if (messageAleatoire && aleatoireAvecGerme) {
 				source = new SourceAleatoire(nbBitsMess, seed);
-			} else if (!messageAleatoire){
+			} else if (!messageAleatoire) {
 				source = new SourceFixe(messageString);
 			} else {
 				source = new SourceFixe();
@@ -98,7 +101,6 @@ public class Simulateur {
 			e.printStackTrace();
 		}
 
-
 		// Connections de la source et du transmetteur
 		source.connecter(transmetteurLogique);
 		transmetteurLogique.connecter(destination);
@@ -108,6 +110,17 @@ public class Simulateur {
 			source.connecter(new SondeLogique("Source", 200));
 			transmetteurLogique.connecter(new SondeLogique("Destination", 200));
 		}
+	}
+
+	public void simulationTransmetteurAnalogique() {
+		source = new SourceAleatoire(nbBitsMess);
+		EmetteurParfaitAnalogique emetteur = new EmetteurParfaitAnalogique(0, 2, 5, "NRZ");
+		SondeAnalogique e = new SondeAnalogique("emetteur");
+		SondeLogique s = new SondeLogique("source", 200);
+
+		source.connecter(emetteur);
+		source.connecter(s);
+		emetteur.connecter(e);
 	}
    
    
@@ -230,7 +243,7 @@ public class Simulateur {
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
     		}
-    		System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+    		//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
     	}
     	catch (Exception e) {
     		System.out.println(e);

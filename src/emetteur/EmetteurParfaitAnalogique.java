@@ -18,10 +18,17 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 		this.vmax = vmax;
 		this.nb_samples = nb_samples;
 		this.form = form;
+		informationRecue = new Information<Boolean>();
+		informationEmise = new Information<Float>();
 	}
 	
 	
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
+
+		for (Boolean i : information) {
+			informationRecue.add(i);
+		}
+
 		int signalLength = informationRecue.nbElements() * nb_samples * 2; 
 		float[] rzSignal = new float[signalLength];
 		int index = 0;
@@ -70,9 +77,12 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 			// TODO 
 		}
 
+		//TODO lowering complexity
 		for(float f : rzSignal) {
 			informationEmise.add(f);
 		}
+		System.out.println(informationRecue);
+		emettre();
 	}
 	
 	public void emettre() throws InformationNonConformeException {
