@@ -68,7 +68,11 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 		}
 		if(form.equals("NRZT")) {
 			// TODO 
-		}	
+		}
+
+		for(float f : rzSignal) {
+			informationEmise.add(f);
+		}
 	}
 	
 	public void emettre() throws InformationNonConformeException {
