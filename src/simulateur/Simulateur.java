@@ -114,7 +114,7 @@ public class Simulateur {
 
 	public void simulationTransmetteurAnalogique() {
 		source = new SourceAleatoire(nbBitsMess);
-		EmetteurParfaitAnalogique emetteur = new EmetteurParfaitAnalogique(0, 2, 5, "NRZ");
+		EmetteurParfaitAnalogique emetteur = new EmetteurParfaitAnalogique(0, 2, 5, "RZ");
 		SondeAnalogique e = new SondeAnalogique("emetteur");
 		SondeLogique s = new SondeLogique("source", 200);
 

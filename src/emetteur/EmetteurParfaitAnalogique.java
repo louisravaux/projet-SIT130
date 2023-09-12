@@ -21,18 +21,14 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 		informationRecue = new Information<Boolean>();
 		informationEmise = new Information<Float>();
 	}
-	
-	
-	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
 
-		for (Boolean i : information) {
-			informationRecue.add(i);
-		}
 
-		int signalLength = informationRecue.nbElements() * nb_samples * 2; 
+	@Override
+	public void convert(Information<Boolean> receivedInformation) {
+		int signalLength = informationRecue.nbElements() * nb_samples * 2;
 		float[] rzSignal = new float[signalLength];
 		int index = 0;
-		
+
 		if(form.equals("RZ")) {
 			for(Boolean b : informationRecue) {
 				for(int i=0; i<nb_samples; i++) {
@@ -44,12 +40,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 					}
 				}
 				for(int i=0; i<nb_samples; i++) {
-					if(b) {
-						rzSignal[index++] = 0.0f;
-					}
-					else {
-						rzSignal[index++] = 0.0f;
-					}
+					rzSignal[index++] = 0.0f;
 				}
 			}
 		}
@@ -74,14 +65,24 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 			}
 		}
 		if(form.equals("NRZT")) {
-			// TODO 
+			// TODO
 		}
 
 		//TODO lowering complexity
 		for(float f : rzSignal) {
 			informationEmise.add(f);
 		}
-		System.out.println(informationRecue);
+	}
+
+	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
+
+		for (Boolean i : information) {
+			informationRecue.add(i);
+		}
+
+		convert(informationRecue);
+
+		// instantly emit converted data
 		emettre();
 	}
 	
