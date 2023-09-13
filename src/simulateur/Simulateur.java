@@ -1,12 +1,17 @@
 package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
+import destinations.DestinationFinaleAnalogique;
+import emetteur.Emetteur;
 import emetteur.EmetteurParfaitAnalogique;
+import recepteur.Recepteur;
+import recepteur.RecepteurParfaitAnalogique;
 import sources.Source;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
 import transmetteurs.Transmetteur;
 import transmetteurs.TransmetteurParfait;
+import transmetteurs.TransmetteurParfaitAnalogique;
 import visualisations.SondeAnalogique;
 import visualisations.SondeLogique;
 
@@ -71,6 +76,23 @@ public class Simulateur {
 		simulationTransmetteurAnalogique();
     }
 
+
+	public void initSource() {
+		try {
+			if (messageAleatoire && !aleatoireAvecGerme) {
+				source = new SourceAleatoire(nbBitsMess);
+			} else if (messageAleatoire) {
+				source = new SourceAleatoire(nbBitsMess, seed);
+			} else {
+				source = new SourceFixe(messageString);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	/**
 	 * Cette méthode réalise une simulation avec un transmetteur parfait en utilisant une source aléatoire.
 	 * Elle effectue les étapes suivantes :
@@ -82,24 +104,12 @@ public class Simulateur {
 	 */
 	public void simulationTransmetteurParfait() {
 
+		// checking args
+		initSource();
+
 		// Instanciation des variables
-		try {
-
-			if (messageAleatoire && !aleatoireAvecGerme) {
-				source = new SourceAleatoire(nbBitsMess);
-			} else if (messageAleatoire && aleatoireAvecGerme) {
-				source = new SourceAleatoire(nbBitsMess, seed);
-			} else if (!messageAleatoire) {
-				source = new SourceFixe(messageString);
-			} else {
-				source = new SourceFixe();
-			}
-
-			transmetteurLogique = new TransmetteurParfait();
-			destination = new DestinationFinale();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		transmetteurLogique = new TransmetteurParfait();
+		destination = new DestinationFinale();
 
 		// Connections de la source et du transmetteur
 		source.connecter(transmetteurLogique);
@@ -113,14 +123,30 @@ public class Simulateur {
 	}
 
 	public void simulationTransmetteurAnalogique() {
-		source = new SourceAleatoire(nbBitsMess);
-		EmetteurParfaitAnalogique emetteur = new EmetteurParfaitAnalogique(0, 2, 5, "RZ");
+
+		// init source with args
+		initSource();
+
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 30, "NRZT");
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 10, "RZ");
+
+		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
+		destination = new DestinationFinale();
+
 		SondeAnalogique e = new SondeAnalogique("emetteur");
-		SondeLogique s = new SondeLogique("source", 200);
+		SondeLogique sondeDestination = new SondeLogique("destination", 200);
+		SondeLogique sondeSource = new SondeLogique("source", 200);
 
 		source.connecter(emetteur);
-		source.connecter(s);
+		source.connecter(sondeSource);
+
+		emetteur.connecter(transmetteurAnalogique);
 		emetteur.connecter(e);
+
+		transmetteurAnalogique.connecter(recepteur);
+
+		recepteur.connecter(destination);
+		recepteur.connecter(sondeDestination);
 	}
    
    
