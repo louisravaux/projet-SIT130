@@ -15,7 +15,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 		this.vmax = vmax;
 		this.nb_samples = nb_samples;
 		this.form = form;
-		informationRecue = new Information<>(); //boolean
+		informationRecue = new Information<>(); // boolean
 		informationEmise = new Information<>(); // float
 	}
 
@@ -23,7 +23,10 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 
 		if(form.equals("RZ")) {
 			for(Boolean b : informationRecue) {
-				for(int i=0; i<nb_samples; i++) {
+				for (int i=0;i<nb_samples/3;i++) {
+					informationEmise.add(0.0f);
+				}
+				for(int i=0; i<nb_samples/3; i++) {
 					if(b) {
 						informationEmise.add(vmax);
 					}
@@ -31,21 +34,13 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 						informationEmise.add(vmin);
 					}
 				}
-				for(int i=0; i<nb_samples; i++) {
+				for (int i=0;i<nb_samples/3;i++) {
 					informationEmise.add(0.0f);
 				}
 			}
 		}
 		if(form.equals("NRZ")) {
 			for(Boolean b : informationRecue) {
-				for(int i=0; i<nb_samples; i++) {
-					if(b) {
-						informationEmise.add(vmax);
-					}
-					else {
-						informationEmise.add(vmin);
-					}
-				}
 				for(int i=0; i<nb_samples; i++) {
 					if(b) {
 						informationEmise.add(vmax);
