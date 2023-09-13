@@ -11,19 +11,15 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 	private String form;
 	
 	public EmetteurParfaitAnalogique(float vmin, float vmax, int nb_samples, String form) {
-		
-		// TODO verifications des vars a faire
-		
 		this.vmin = vmin;
 		this.vmax = vmax;
 		this.nb_samples = nb_samples;
 		this.form = form;
-		informationRecue = new Information<Boolean>();
-		informationEmise = new Information<Float>();
+		informationRecue = new Information<>(); //boolean
+		informationEmise = new Information<>(); // float
 	}
 
 	public void convert(Information<Boolean> receivedInformation) {
-		int signalLength = informationRecue.nbElements() * nb_samples * 2;
 
 		if(form.equals("RZ")) {
 			for(Boolean b : informationRecue) {
@@ -68,10 +64,12 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
 
+		// receiving data
 		for (Boolean i : information) {
 			informationRecue.add(i);
 		}
 
+		// convert data from boolean to float
 		convert(informationRecue);
 
 		// instantly emit converted data
