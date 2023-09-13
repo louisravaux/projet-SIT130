@@ -21,40 +21,55 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 
 	public void convert(Information<Boolean> receivedInformation) {
 
-		if(form.equals("RZ")) {
-			for(Boolean b : informationRecue) {
-				for (int i=0;i<nb_samples/3;i++) {
+		if (form.equals("RZ")) {
+			for (Boolean b : informationRecue) {
+				for (int i = 0; i < nb_samples / 3; i++) {
 					informationEmise.add(0.0f);
 				}
-				for(int i=0; i<nb_samples/3; i++) {
-					if(b) {
+				for (int i = 0; i < nb_samples / 3; i++) {
+					if (b) {
 						informationEmise.add(vmax);
-					}
-					else {
+					} else {
 						informationEmise.add(vmin);
 					}
 				}
-				for (int i=0;i<nb_samples/3;i++) {
+				for (int i = 0; i < nb_samples / 3; i++) {
 					informationEmise.add(0.0f);
 				}
 			}
 		}
-		if(form.equals("NRZ")) {
-			for(Boolean b : informationRecue) {
-				for(int i=0; i<nb_samples; i++) {
-					if(b) {
+		if (form.equals("NRZ")) {
+			for (Boolean b : informationRecue) {
+				for (int i = 0; i < nb_samples; i++) {
+					if (b) {
 						informationEmise.add(vmax);
-					}
-					else {
+					} else {
 						informationEmise.add(vmin);
 					}
 				}
 			}
 		}
-		if(form.equals("NRZT")) {
-			// TODO
+		if (form.equals("NRZT")) {
+			for (Boolean b : informationRecue) {
+				for (int i = 0; i < nb_samples / 3; i++) {
+					// checking the ramp side
+					if (b) informationEmise.add(i * vmax / (nb_samples / 3));
+					else informationEmise.add(i * vmin / (nb_samples / 3));
+				}
+				for (int i = 0; i < nb_samples / 3; i++) {
+					if (b) {
+						informationEmise.add(vmax);
+					} else {
+						informationEmise.add(vmin);
+					}
+				}
+				for (int i = 0; i < nb_samples / 3; i++) {
+					// checking the ramp side
+					if (b) informationEmise.add(vmax - (i * vmax) / (nb_samples / 3));
+					else informationEmise.add(vmin - (i * vmin) / (nb_samples / 3));
+				}
+			}
 		}
-
 	}
 
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {

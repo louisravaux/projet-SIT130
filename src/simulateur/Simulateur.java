@@ -127,8 +127,8 @@ public class Simulateur {
 		// init source with args
 		initSource();
 
-		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(0, 2, 30, "NRZ");
-		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 10, "NRZ");
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 30, "NRZT");
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 10, "RZ");
 
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
 		destination = new DestinationFinale();
