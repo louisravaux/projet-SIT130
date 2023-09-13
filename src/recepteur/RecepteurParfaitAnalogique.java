@@ -4,7 +4,7 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
-public class RecepteurParfaitAnalogique extends Recepteur<Double, Double> {
+public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 	private float amin;
 	private float amax;
 	private int nb_samples;
@@ -20,7 +20,7 @@ public class RecepteurParfaitAnalogique extends Recepteur<Double, Double> {
 		this.form = form;
 	}
 	
-	public void recevoir(Information<Double> information) throws InformationNonConformeException {
+	public void recevoir(Information<Float> information) throws InformationNonConformeException {
 		if(form.equals("RZ")) {
 			// TODO 
 		}
@@ -33,7 +33,7 @@ public class RecepteurParfaitAnalogique extends Recepteur<Double, Double> {
 	}
 	
 	public void emettre() throws InformationNonConformeException {
-		for (DestinationInterface<Double> destinationConnectee : destinationsConnectees) {
+		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
             destinationConnectee.recevoir(informationEmise);
         }
 	}
