@@ -5,10 +5,10 @@ import information.Information;
 import information.InformationNonConformeException;
 
 public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
-	private float vmin;
-	private float vmax;
-	private int nb_samples;
-	private String form;
+	private final float vmin;
+	private final float vmax;
+	private final int nb_samples;
+	private final String form;
 	
 	public EmetteurParfaitAnalogique(float vmin, float vmax, int nb_samples, String form) {
 		this.vmin = vmin;
