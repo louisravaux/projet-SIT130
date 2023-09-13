@@ -123,19 +123,30 @@ public class Simulateur {
 	}
 
 	public void simulationTransmetteurAnalogique() {
-		source = new SourceAleatoire(nbBitsMess);
+
+		// init source with args
+		initSource();
+
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(0, 2, 30, "NRZ");
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 10, "NRZ");
+
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
 		destination = new DestinationFinale();
 
-		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(0, 2, 5, "RZ");
-		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 5, "RZ");
-
 		SondeAnalogique e = new SondeAnalogique("emetteur");
-		SondeLogique s = new SondeLogique("source", 200);
+		SondeLogique sondeDestination = new SondeLogique("destination", 200);
+		SondeLogique sondeSource = new SondeLogique("source", 200);
 
 		source.connecter(emetteur);
-		source.connecter(s);
+		source.connecter(sondeSource);
+
+		emetteur.connecter(transmetteurAnalogique);
 		emetteur.connecter(e);
+
+		transmetteurAnalogique.connecter(recepteur);
+
+		recepteur.connecter(destination);
+		recepteur.connecter(sondeDestination);
 	}
    
    
@@ -258,7 +269,7 @@ public class Simulateur {
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
     		}
-    		System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+    		//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
     	}
     	catch (Exception e) {
     		System.out.println(e);
