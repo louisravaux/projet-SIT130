@@ -46,6 +46,10 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 						informationEmise.add(vmin);
 					}
 				}
+			}
+		}
+		if(form.equals("NRZT")) {
+			for(Boolean b : informationRecue) {
 				for(int i=0; i<nb_samples; i++) {
 					if(b) {
 						informationEmise.add(vmax);
@@ -55,9 +59,6 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 					}
 				}
 			}
-		}
-		if(form.equals("NRZT")) {
-			// TODO
 		}
 
 	}
