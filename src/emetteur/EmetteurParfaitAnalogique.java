@@ -54,6 +54,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 
 				if (i != 0 && informationRecue.iemeElement(i-1) == informationRecue.iemeElement(i) ) {
 					// TODO remove duplicate code
+					// convert 1 or 0 to vmax or vmin
 					for (int j = 0; j < nb_samples / 3; j++) {
 						if (informationRecue.iemeElement(i)) {
 							informationEmise.add(vmax);
@@ -72,6 +73,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 				}
 
 				// TODO remove duplicate code
+				// convert 1 or 0 to vmax or vmin
 				for (int j = 0; j < nb_samples / 3; j++) {
 					if (informationRecue.iemeElement(i)) {
 						informationEmise.add(vmax);
@@ -82,6 +84,7 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 
 				if (i != informationRecue.nbElements()-1 && informationRecue.iemeElement(i+1) == informationRecue.iemeElement(i) ) {
 					// TODO remove duplicate code
+					// convert 1 or 0 to vmax or vmin
 					for (int j = 0; j < nb_samples / 3; j++) {
 						if (informationRecue.iemeElement(i)) {
 							informationEmise.add(vmax);
