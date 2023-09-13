@@ -9,7 +9,7 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 	private float vmax;
 	private int nb_samples;
 	private String form;
-	
+
 	public RecepteurParfaitAnalogique(float vmin, float vmax, int nb_samples, String form) {
 		this.vmin = vmin;
 		this.vmax = vmax;
@@ -18,7 +18,7 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		informationRecue = new Information<>(); // float
 		informationEmise = new Information<>(); // boolean
 	}
-	
+
 	public void recevoir(Information<Float> information) throws InformationNonConformeException {
 
 		for (Float i : information) {
@@ -28,34 +28,27 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		int j = 0;
 		float somme = 0;
 		float esperance = (vmin + vmax) / 2;
-		
-		if(form.equals("RZ") || form.equals("NRZ") || form.equals("NRZT")) {
-			for (Float f : informationRecue) {
-				j++;
-				somme += f;
-				if(j < nb_samples) {
-					System.out.println(somme);
-					if(somme/j > esperance) {
-						informationEmise.add(true);
-					}
-					else {
-						informationEmise.add(false);
-					}
-					j = 0;
-					somme = 0;
-				}
-			} 
-		}
 
-		System.out.println(informationRecue);
-		System.out.println(informationEmise);
+		for (Float f : informationRecue) {
+			j++;
+			somme += f;
+			if (j >= nb_samples) {
+				if (somme / j > esperance) {
+					informationEmise.add(true);
+				} else {
+					informationEmise.add(false);
+				}
+				j = 0;
+				somme = 0;
+			}
+		}
 
 		emettre();
 	}
-	
+
 	public void emettre() throws InformationNonConformeException {
 		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
-            destinationConnectee.recevoir(informationEmise);
-        }
+			destinationConnectee.recevoir(informationEmise);
+		}
 	}
 }
