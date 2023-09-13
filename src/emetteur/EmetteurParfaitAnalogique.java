@@ -49,14 +49,6 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 						informationEmise.add(vmin);
 					}
 				}
-				for(int i=0; i<nb_samples; i++) {
-					if(b) {
-						informationEmise.add(vmax);
-					}
-					else {
-						informationEmise.add(vmin);
-					}
-				}
 			}
 		}
 		if(form.equals("NRZT")) {
