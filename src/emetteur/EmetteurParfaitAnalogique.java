@@ -50,24 +50,54 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 			}
 		}
 		if (form.equals("NRZT")) {
-			for (Boolean b : informationRecue) {
-				for (int i = 0; i < nb_samples / 3; i++) {
-					// checking the ramp side
-					if (b) informationEmise.add(i * vmax / (nb_samples / 3));
-					else informationEmise.add(i * vmin / (nb_samples / 3));
+			for (int i = 0; i<informationRecue.nbElements(); i++) {
+
+				if (i != 0 && informationRecue.iemeElement(i-1) == informationRecue.iemeElement(i) ) {
+					// TODO remove duplicate code
+					for (int j = 0; j < nb_samples / 3; j++) {
+						if (informationRecue.iemeElement(i)) {
+							informationEmise.add(vmax);
+						} else {
+							informationEmise.add(vmin);
+						}
+					}
+
+				} else {
+					// first ramp
+					for (int j = 0; j < nb_samples / 3; j++) {
+						// checking the ramp orientation
+						if (informationRecue.iemeElement(i)) informationEmise.add(j * vmax / (nb_samples / 3));
+						else informationEmise.add(j * vmin / (nb_samples / 3));
+					}
 				}
-				for (int i = 0; i < nb_samples / 3; i++) {
-					if (b) {
+
+				// TODO remove duplicate code
+				for (int j = 0; j < nb_samples / 3; j++) {
+					if (informationRecue.iemeElement(i)) {
 						informationEmise.add(vmax);
 					} else {
 						informationEmise.add(vmin);
 					}
 				}
-				for (int i = 0; i < nb_samples / 3; i++) {
-					// checking the ramp side
-					if (b) informationEmise.add(vmax - (i * vmax) / (nb_samples / 3));
-					else informationEmise.add(vmin - (i * vmin) / (nb_samples / 3));
+
+				if (i != informationRecue.nbElements()-1 && informationRecue.iemeElement(i+1) == informationRecue.iemeElement(i) ) {
+					// TODO remove duplicate code
+					for (int j = 0; j < nb_samples / 3; j++) {
+						if (informationRecue.iemeElement(i)) {
+							informationEmise.add(vmax);
+						} else {
+							informationEmise.add(vmin);
+						}
+					}
+				} else {
+					//second ramp
+					for (int j = 0; j < nb_samples / 3; j++) {
+						// checking the ramp orientation
+						if (informationRecue.iemeElement(i)) informationEmise.add(vmax - (j * vmax) / (nb_samples / 3));
+						else informationEmise.add(vmin - (j * vmin) / (nb_samples / 3));
+					}
 				}
+
 			}
 		}
 	}
