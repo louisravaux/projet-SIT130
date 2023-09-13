@@ -127,13 +127,14 @@ public class Simulateur {
 		// init source with args
 		initSource();
 
-		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 30, "NRZT");
-		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(0, 2, 10, "RZ");
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 3, "NRZT");
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(-2, 2, 3, "NRZT");
 
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
 		destination = new DestinationFinale();
 
 		SondeAnalogique e = new SondeAnalogique("emetteur");
+		SondeAnalogique t = new SondeAnalogique("transmetteur");
 		SondeLogique sondeDestination = new SondeLogique("destination", 200);
 		SondeLogique sondeSource = new SondeLogique("source", 200);
 
@@ -144,6 +145,7 @@ public class Simulateur {
 		emetteur.connecter(e);
 
 		transmetteurAnalogique.connecter(recepteur);
+		transmetteurAnalogique.connecter(t);
 
 		recepteur.connecter(destination);
 		recepteur.connecter(sondeDestination);

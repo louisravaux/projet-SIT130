@@ -20,8 +20,12 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 	}
 	
 	public void recevoir(Information<Float> information) throws InformationNonConformeException {
+
+		for (Float i : information) {
+			informationRecue.add(i);
+		}
+
 		int j = 0;
-		int k = 0;
 		float somme = 0;
 		float esperance = (vmin + vmax) / 2;
 		
@@ -29,18 +33,24 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 			for (Float f : informationRecue) {
 				j++;
 				somme += f;
-				if(j == nb_samples) {
-					if(somme > esperance) {
+				if(j < nb_samples) {
+					System.out.println(somme);
+					if(somme/j > esperance) {
 						informationEmise.add(true);
 					}
 					else {
 						informationEmise.add(false);
-						j = 0;
-						somme = 0;
 					}
+					j = 0;
+					somme = 0;
 				}
 			} 
 		}
+
+		System.out.println(informationRecue);
+		System.out.println(informationEmise);
+
+		emettre();
 	}
 	
 	public void emettre() throws InformationNonConformeException {
