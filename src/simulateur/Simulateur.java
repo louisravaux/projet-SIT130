@@ -76,6 +76,23 @@ public class Simulateur {
 		simulationTransmetteurAnalogique();
     }
 
+
+	public void initSource() {
+		try {
+			if (messageAleatoire && !aleatoireAvecGerme) {
+				source = new SourceAleatoire(nbBitsMess);
+			} else if (messageAleatoire) {
+				source = new SourceAleatoire(nbBitsMess, seed);
+			} else {
+				source = new SourceFixe(messageString);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	/**
 	 * Cette méthode réalise une simulation avec un transmetteur parfait en utilisant une source aléatoire.
 	 * Elle effectue les étapes suivantes :
@@ -87,24 +104,12 @@ public class Simulateur {
 	 */
 	public void simulationTransmetteurParfait() {
 
+		// checking args
+		initSource();
+
 		// Instanciation des variables
-		try {
-
-			if (messageAleatoire && !aleatoireAvecGerme) {
-				source = new SourceAleatoire(nbBitsMess);
-			} else if (messageAleatoire && aleatoireAvecGerme) {
-				source = new SourceAleatoire(nbBitsMess, seed);
-			} else if (!messageAleatoire) {
-				source = new SourceFixe(messageString);
-			} else {
-				source = new SourceFixe();
-			}
-
-			transmetteurLogique = new TransmetteurParfait();
-			destination = new DestinationFinale();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		transmetteurLogique = new TransmetteurParfait();
+		destination = new DestinationFinale();
 
 		// Connections de la source et du transmetteur
 		source.connecter(transmetteurLogique);
