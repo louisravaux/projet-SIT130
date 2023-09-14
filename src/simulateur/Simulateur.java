@@ -45,12 +45,16 @@ public class Simulateur {
     /** la chaîne de caractères correspondant à m dans l'argument -mess m */
     private String messageString = "100";
 
+	/** le type de signal à transmettre */
 	private String form = "NRZT";
 
+	/** le nombre d'échantillons par symbole */
 	private int nb_sample = 10;
 
+	/** le minimum de l'amplitude du signal analogique */
 	private int vmin = -5;
 
+	/** le maximum de l'amplitude du signal analogique */
 	private int vmax = 5;
    	
     /** le  composant Source de la chaine de transmission */
