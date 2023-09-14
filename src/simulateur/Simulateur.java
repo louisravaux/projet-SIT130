@@ -44,7 +44,8 @@ public class Simulateur {
     
     /** la chaîne de caractères correspondant à m dans l'argument -mess m */
     private String messageString = "100";
-   
+
+	private String form = "NRZT";
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -127,8 +128,8 @@ public class Simulateur {
 		// init source with args
 		initSource();
 
-		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 3, "NRZT");
-		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(-2, 2, 3, "NRZT");
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 3, form);
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(-2, 2, 3, form);
 
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
 		destination = new DestinationFinale();
@@ -209,6 +210,14 @@ public class Simulateur {
     		}
     		
     		//TODO : ajouter ci-après le traitement des nouvelles options
+			else if (args[i].matches("-form")) {
+				i++;
+				if (args[i].matches("NRZ|NRZT|RZ")) {
+					form = args[i];
+				} else {
+					throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
+				}
+			}
 
     		else throw new ArgumentsException("Option invalide :"+ args[i]);
     	}
