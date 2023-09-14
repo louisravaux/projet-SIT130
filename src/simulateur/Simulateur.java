@@ -281,7 +281,7 @@ public class Simulateur {
      */   	   
     public float  calculTauxErreurBinaire() {
     	int nb_fail = 0;
-    	int nb = source.getInformationEmise().nbElements();
+    	int nb = source.getInformationEmise().nbElements()-2;
     	for(int i=0; i<nb; i++) {
     		if(source.getInformationEmise().iemeElement(i) != destination.getInformationRecue().iemeElement(i)) {
     			nb_fail++;
@@ -316,7 +316,7 @@ public class Simulateur {
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
     		}
-    		//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+    		System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
     	}
     	catch (Exception e) {
     		System.out.println(e);
