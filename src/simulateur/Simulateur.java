@@ -46,6 +46,12 @@ public class Simulateur {
     private String messageString = "100";
 
 	private String form = "NRZT";
+
+	private int nb_sample = 10;
+
+	private int vmin = -5;
+
+	private int vmax = 5;
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -128,8 +134,8 @@ public class Simulateur {
 		// init source with args
 		initSource();
 
-		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 3, form);
-		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(-2, 2, 3, form);
+		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(vmin, vmax, nb_sample, form);
+		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
 		destination = new DestinationFinale();
@@ -218,6 +224,32 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
 				}
 			}
+
+			else if (args[i].matches("-nbEch")) {
+				i++;
+				try {
+					nb_sample = Integer.parseInt(args[i]);
+					if (nb_sample < 3) {
+						throw new ArgumentsException("Valeur du parametre -nbEch invalide : " + nb_sample);
+					}
+				} catch (Exception e) {
+					throw new ArgumentsException("Valeur du parametre -nbEch invalide : " + args[i]);
+				}
+			}
+
+			else if (args[i].matches("-ampl")) {
+				i++;
+				vmin = Integer.parseInt(args[i]);
+				i++;
+				vmax = Integer.parseInt(args[i]);
+				if (vmin > vmax) {
+					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + vmin);
+				}
+			}
+
+
+
+
 
     		else throw new ArgumentsException("Option invalide :"+ args[i]);
     	}
