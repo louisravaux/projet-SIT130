@@ -10,6 +10,7 @@ import sources.Source;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
 import transmetteurs.Transmetteur;
+import transmetteurs.TransmetteurBruiteAnalogique;
 import transmetteurs.TransmetteurParfait;
 import transmetteurs.TransmetteurParfaitAnalogique;
 import visualisations.SondeAnalogique;
@@ -141,7 +142,7 @@ public class Simulateur {
 		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 
-		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurParfaitAnalogique();
+		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurBruiteAnalogique(10, nb_sample);
 		destination = new DestinationFinale();
 
 		SondeAnalogique e = new SondeAnalogique("emetteur");
