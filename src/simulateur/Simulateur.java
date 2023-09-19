@@ -259,9 +259,6 @@ public class Simulateur {
 				i++;
 				try {
 					snr = Integer.parseInt(args[i]);
-					if (snr < 0) {
-						throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + snr);
-					}
 				} catch (Exception e) {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
