@@ -11,7 +11,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
     private int nb_sample;
 	
 	public TransmetteurBruiteAnalogique(float snr, int nb_sample) {
-        this.snr = (float) Math.pow(snr/10, 10);
+        this.snr = (float) Math.pow(10, snr/10);
         this.nb_sample = nb_sample;
 		informationRecue = new Information<>();
         informationEmise = new Information<>();
