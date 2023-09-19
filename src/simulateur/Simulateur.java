@@ -293,7 +293,7 @@ public class Simulateur {
      */   	   
     public float  calculTauxErreurBinaire() {
     	int nb_fail = 0;
-    	int nb = source.getInformationEmise().nbElements()-2;
+    	int nb = source.getInformationEmise().nbElements();
     	for(int i=0; i<nb; i++) {
     		if(source.getInformationEmise().iemeElement(i) != destination.getInformationRecue().iemeElement(i)) {
     			nb_fail++;
