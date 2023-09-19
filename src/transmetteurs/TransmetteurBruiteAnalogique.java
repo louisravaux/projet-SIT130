@@ -17,37 +17,42 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         informationEmise = new Information<>();
     }
 
-    @Override
-    public void recevoir(Information<Float> information) throws InformationNonConformeException {
-    	// vars
-    	float p_signal = 0f;
-    	float p_noise;
-    	float sigma_noise;
+    public void generateNoise(Information<Float> information) {
+        // vars
+        float p_signal = 0f;
+        float p_noise;
+        float sigma_noise;
         float bruit = 0f;
-    	Random a1;
+        Random a1;
         Random a2;
-        
-        // Calcul puissance du signal
+
+        // Calcul puissance du signal et reception des informations
         for (Float i : information) {
             informationRecue.add(i);
-    		p_signal += (float) Math.pow(i, 2);
+            p_signal += (float) Math.pow(i, 2);
         }
         p_signal /= informationRecue.nbElements();
-        
+
         // Calcul puissance du bruit
         p_noise = p_signal/snr;
-        
+
         // Calcul sigma
         sigma_noise = (float) Math.sqrt(p_noise);
-        
+
         // Generation du bruit gaussien
         for (Float i : information) {
             a1 = new Random();
             a2 = new Random();
-    		bruit = (float) (sigma_noise*Math.sqrt(-2*Math.log(1-a1.nextFloat()))*Math.cos(2*Math.PI*a2.nextFloat()));
-    		informationRecue.add(i);
+            bruit = (float) (sigma_noise*Math.sqrt(-2*Math.log(1-a1.nextFloat()))*Math.cos(2*Math.PI*a2.nextFloat()));
+            informationRecue.add(i);
             informationEmise.add(i+bruit);
         }
+    }
+
+    @Override
+    public void recevoir(Information<Float> information) throws InformationNonConformeException {
+
+        generateNoise(information);
         
         emettre();
     }

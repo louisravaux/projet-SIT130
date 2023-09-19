@@ -46,6 +46,9 @@ public class Simulateur {
     /** la chaîne de caractères correspondant à m dans l'argument -mess m */
     private String messageString = "100";
 
+	/** le rapport signal/bruit */
+	private int snr = 10;
+
 	/** le type de signal à transmettre */
 	private String form = "NRZT";
 
@@ -142,7 +145,7 @@ public class Simulateur {
 		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 
-		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurBruiteAnalogique(10, nb_sample);
+		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
 		destination = new DestinationFinale();
 
 		SondeAnalogique e = new SondeAnalogique("emetteur");
@@ -252,9 +255,17 @@ public class Simulateur {
 				}
 			}
 
-
-
-
+			else if (args[i].matches("-snrpb")) {
+				i++;
+				try {
+					snr = Integer.parseInt(args[i]);
+					if (snr < 0) {
+						throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + snr);
+					}
+				} catch (Exception e) {
+					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
+				}
+			}
 
     		else throw new ArgumentsException("Option invalide :"+ args[i]);
     	}
