@@ -34,3 +34,4 @@ docs/
 tex/*
 !tex/*.tex
 !tex/img
+!tex/frontmatter
