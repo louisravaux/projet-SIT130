@@ -78,11 +78,9 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 	 */
 	public void convertNRZT() {
 		for (int i = 0; i<informationRecue.nbElements(); i++) {
-
+			// Premier 1/3
 			if (i != 0 && informationRecue.iemeElement(i-1) == informationRecue.iemeElement(i) ) {
-				// TODO remove duplicate code
-				// convert 1 or 0 to vmax or vmin
-				for (int j = 0; j < nb_samples / 3; j++) {
+				for (int j = 0; j < (int) (nb_samples / 3); j++) {
 					if (informationRecue.iemeElement(i)) {
 						informationEmise.add(vmax);
 					} else {
@@ -90,17 +88,19 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 					}
 				}
 			} else {
-				// first ramp
-				for (int j = 0; j < nb_samples / 3; j++) {
+				for (int j = 0; j < (int) (nb_samples / 3); j++) {
 					// checking the ramp orientation
-					if (informationRecue.iemeElement(i)) informationEmise.add(j * vmax / (nb_samples / 3));
-					else informationEmise.add(j * vmin / (nb_samples / 3));
+					if (informationRecue.iemeElement(i)) {
+						informationEmise.add(j * vmax / (nb_samples / 3));
+					}
+					else {
+						informationEmise.add(j * vmin / (nb_samples / 3));
+					}
 				}
 			}
 
-			// TODO remove duplicate code
-			// convert 1 or 0 to vmax or vmin
-			for (int j = 0; j < nb_samples / 3; j++) {
+			// Deuxieme 1/3
+			for (int j = 0; j < nb_samples - 2 * ((int) (nb_samples / 3)); j++) {
 				if (informationRecue.iemeElement(i)) {
 					informationEmise.add(vmax);
 				} else {
@@ -108,10 +108,9 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 				}
 			}
 
+			// Troisieme 1/3
 			if (i != informationRecue.nbElements()-1 && informationRecue.iemeElement(i+1) == informationRecue.iemeElement(i) ) {
-				// TODO remove duplicate code
-				// convert 1 or 0 to vmax or vmin
-				for (int j = 0; j < nb_samples / 3; j++) {
+				for (int j = 0; j < (int) (nb_samples / 3); j++) {
 					if (informationRecue.iemeElement(i)) {
 						informationEmise.add(vmax);
 					} else {
@@ -119,11 +118,14 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 					}
 				}
 			} else {
-				//second ramp
-				for (int j = 0; j < nb_samples / 3; j++) {
+				for (int j = 0; j < (int) (nb_samples / 3); j++) {
 					// checking the ramp orientation
-					if (informationRecue.iemeElement(i)) informationEmise.add(vmax - (j * vmax) / (nb_samples / 3));
-					else informationEmise.add(vmin - (j * vmin) / (nb_samples / 3));
+					if (informationRecue.iemeElement(i)) {
+						informationEmise.add(vmax - (j * vmax) / (nb_samples / 3));
+					}
+					else {
+						informationEmise.add(vmin - (j * vmin) / (nb_samples / 3));
+					}
 				}
 			}
 
