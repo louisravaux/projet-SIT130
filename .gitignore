@@ -35,3 +35,6 @@ tex/*
 !tex/*.tex
 !tex/img
 !tex/frontmatter
+
+#csv simulations
+teb_fct_snr.csv

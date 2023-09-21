@@ -25,23 +25,71 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 			informationRecue.add(i);
 		}
 
+		int i = 0;
 		int j = 0;
 		float somme = 0;
 		float esperance = (vmin + vmax) / 2;
+		int nbBits = informationRecue.nbElements()/nb_samples;
 
-		for (Float f : informationRecue) {
-			j++;
-			somme += f;
-			if (j >= nb_samples) {
-				if (somme / j > esperance) {
-					informationEmise.add(true);
-				} else {
-					informationEmise.add(false);
+		if (form.equals("RZ") ||form.equals("NRZ")) {
+			for (Float f : informationRecue) {
+				j++;
+				somme += f;
+				if (j >= nb_samples) {
+					if (somme / j > esperance) {
+						informationEmise.add(true);
+					} else {
+						informationEmise.add(false);
+					}
+					j = 0;
+					somme = 0;
 				}
-				j = 0;
-				somme = 0;
+			}
+		} else if (form.equals("NRZT")) {
+			for (Float f : informationRecue) {
+				j++;
+				// Calcul somme
+				if (i == 0) {
+					if (j > (int)(nb_samples/3)) {
+						somme += f;
+					}
+				}
+				else if (i == nbBits-1) {
+					if (j < 2*(int)(nb_samples/3)) {
+						somme += f;
+					}
+				}
+				else {
+					somme += f;
+				}
+				// Determination si 0 ou 1
+				if (j == nb_samples) {
+					if (i == 0) {
+						if (somme / (2*(int)(nb_samples/3)) > esperance) {
+							informationEmise.add(true);
+						} else {
+							informationEmise.add(false);
+						}
+					}
+					else if (i == nbBits - 1) {
+						if (somme / (2*(int)(nb_samples/3)) > esperance) {
+							informationEmise.add(true);
+						} else {
+							informationEmise.add(false);
+						}
+					}
+					else if (somme / nb_samples > esperance) {
+						informationEmise.add(true);
+					} else {
+						informationEmise.add(false);
+					}
+					i++;
+					j = 0;
+					somme = 0;
+				}
 			}
 		}
+
 
 		emettre();
 	}

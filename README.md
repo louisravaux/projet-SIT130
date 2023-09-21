@@ -43,6 +43,14 @@ En spécifiant le nombre de bits du message "aléatoire" à transmettre en utili
 
 `-seed v` : Initialise les générateurs aléatoires avec une valeur v. Cela permet de reproduire les mêmes résultats pour des simulations identiques, car les générateurs aléatoires seront initialisés de la même manière à chaque exécution.
 
+`-form f` : Spécifie le type de formes d'onde à utiliser pour la mise en forme du signal. Les valeurs possibles sont : RZ, NRZ, NRZT. La valeur par défaut est NRZ.
+
+`-nbEch e` : Spécifie le nombre d'échantillons par bit. La valeur par défaut est 30.
+
+`-ampl min max` : Spécifie les valeurs minimale et maximale de l'amplitude du signal. La valeur par défaut est 0.0 1.0.
+
+`-snrpb v` : Spécifie le rapport signal/bruit (SNR). La valeur par défaut est 10.0.
+
 ## Exemples d'utilisation
 Voici quelques exemples d'utilisation du simulateur avec différentes options :
 
