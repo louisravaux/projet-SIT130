@@ -148,22 +148,26 @@ public class Simulateur {
 		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
 		destination = new DestinationFinale();
 
-		SondeAnalogique e = new SondeAnalogique("emetteur");
-		SondeAnalogique t = new SondeAnalogique("transmetteur");
-		SondeLogique sondeDestination = new SondeLogique("destination", 200);
-		SondeLogique sondeSource = new SondeLogique("source", 200);
+		if (affichage) {
+			SondeAnalogique e = new SondeAnalogique("emetteur");
+			SondeAnalogique t = new SondeAnalogique("transmetteur");
+			SondeLogique sondeDestination = new SondeLogique("destination", 200);
+			SondeLogique sondeSource = new SondeLogique("source", 200);
+
+			source.connecter(sondeSource);
+			emetteur.connecter(e);
+			transmetteurAnalogique.connecter(t);
+			recepteur.connecter(sondeDestination);
+		}
 
 		source.connecter(emetteur);
-		source.connecter(sondeSource);
 
 		emetteur.connecter(transmetteurAnalogique);
-		emetteur.connecter(e);
 
 		transmetteurAnalogique.connecter(recepteur);
-		transmetteurAnalogique.connecter(t);
 
 		recepteur.connecter(destination);
-		recepteur.connecter(sondeDestination);
+
 	}
    
    

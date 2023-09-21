@@ -34,3 +34,6 @@ docs/
 tex/*
 !tex/*.tex
 !tex/img
+
+#csv simulations
+teb_fct_snr.csv
