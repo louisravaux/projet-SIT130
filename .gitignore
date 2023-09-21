@@ -36,5 +36,7 @@ tex/*
 !tex/img
 !tex/frontmatter
 
+sit213-projet.iml
+
 #csv simulations
 teb_fct_snr.csv
