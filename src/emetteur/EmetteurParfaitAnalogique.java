@@ -42,17 +42,17 @@ public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 	 */
 	public void convertRZ() {
 		for (Boolean b : informationRecue) {
-			for (int i = 0; i < nb_samples / 3; i++) {
+			for (int i = 0; i < (int) (nb_samples / 3); i++) {
 				informationEmise.add(0.0f);
 			}
-			for (int i = 0; i < nb_samples / 3; i++) {
+			for (int i = 0; i < nb_samples - 2 * ((int) (nb_samples / 3)); i++) {
 				if (b) {
 					informationEmise.add(vmax);
 				} else {
 					informationEmise.add(vmin);
 				}
 			}
-			for (int i = 0; i < nb_samples / 3; i++) {
+			for (int i = 0; i < (int) (nb_samples / 3); i++) {
 				informationEmise.add(0.0f);
 			}
 		}
