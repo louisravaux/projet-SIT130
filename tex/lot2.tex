@@ -6,10 +6,10 @@ Dans cette nouvelle itération, nous allons devoir coder des émetteurs et un r�
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 5.png}
-    \caption{\label{fig:image5}Chaine de transmission itération n°2.}
+    \caption{\label{fig:image5}Chaîne de transmission itération n°2.}
 \end{figure}
 
-Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique pendant la première demi-période. Il y a un retour à 0 à la deuxième demi-période du symbole (figure de gauche). Cependant dans ce projet, nous partirons du principe que l'émission à Vmax ou Vmin se situe entre le 1er et le 3ème tiers de la période symbole (figure de droite).
+Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique pendant la première demi-période. Il y a un retour à 0 à la deuxième demi-période du symbole (figure de gauche). Cependant dans ce projet, nous partirons du principe que l'émission à $V_{max}$ ou $V_{min}$ se situe entre le 1er et le 3ème tiers de la période symbole (figure de droite).
 
 \begin{figure}[H]
     \centering
@@ -25,7 +25,7 @@ Un signal NRZ signifie que le signal sera à l'état haut lorsque des 1 logiques
     \caption{\label{fig:image7}Schéma explicatif signal NRZ.}
 \end{figure}
 
-Un signal NRZT possède les mêmes propriétés qu'un signal NRZ. Cependant pour simuler le temps de montés des composants, chaque changement d'état sera représenté par une monté et descente progressive symbolisé sur 1/3 des périodes symboles.
+Un signal NRZT possède les mêmes propriétés qu'un signal NRZ. Cependant pour simuler le temps de montés des composants, chaque changement d'état sera représenté par une monté et descente progressive symbolisé sur $\frac{1}{3}$ des périodes symboles.
 
 \begin{figure}[H]
     \centering
@@ -50,11 +50,11 @@ Pour le développement de notre code, nous allons utiliser l'application Intelli
 \subsection{Procédures de développement}
 \subsubsection{Emetteur}
 
-L'émetteur à un rôle important. Il permet de convertir un signal logique en signal pseudo-analogique. Trois codages en ligne sont attendus pour ce projet. La logique qui repose sur ceux-ci sont la même. On prend le signal logique en entrée, puis en fonction de son état (0 ou 1), on le transforme en une série de flottant qui sera adapté au codage en ligne souhaité. Le nombre d'échantillonnage par symbole sera un paramètre à choisir lors des lancements de simulations (nommé nb\_samples par la suite) ainsi que l'amplitude maximum (Vmax) et minimum (Vmin).
+L'émetteur à un rôle important. Il permet de convertir un signal logique en signal pseudo-analogique. Trois codages en ligne sont attendus pour ce projet. La logique qui repose sur ceux-ci sont la même. On prend le signal logique en entrée, puis en fonction de son état (0 ou 1), on le transforme en une série de flottant qui sera adapté au codage en ligne souhaité. Le nombre d'échantillonnage par symbole sera un paramètre à choisir lors des lancements de simulations (nommé nb\_samples par la suite) ainsi que l'amplitude maximum ($V_{max}$) et minimum ($V_{min}$).
 
 \textbf{Emetteur NRZ :}
 
-Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en entrée et s'il s'agit d'un état à 1, alors on émet un nombre de flottant égale à nb\_samples ayant pour amplitude Vmax. Pour l'état à 0, on émet le même nombre de flottant mais ayant pour amplitude Vmin.
+Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en entrée et s'il s'agit d'un état à 1, alors on émet un nombre de flottant égale à nb\_samples ayant pour amplitude $V_max$. Pour l'état à 0, on émet le même nombre de flottant mais ayant pour amplitude $V_{min}$.
 
 \begin{figure}[H]
     \centering
@@ -62,7 +62,7 @@ Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en
     \caption{\label{fig:image10}Sortie de la source et de l'émetteur NRZ.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur NRZ. On retrouve bien une amplitude égale à Vmax pendant une durée symbole pour un état logique 1 et une amplitude égale à Vmin pendant une durée symbole pour un état logique à 0.
+Ci-dessus le graphique en sortie de la source et de l'émetteur NRZ. On retrouve bien une amplitude égale à $V_{max}$ pendant une durée symbole pour un état logique 1 et une amplitude égale à $V_{min}$ pendant une durée symbole pour un état logique à 0.
 
 Emetteur RZ :
 
@@ -70,7 +70,7 @@ L'émetteur RZ est légèrement plus compliqué que le signal NRZ. La constructi
 
 \begin{itemize}
     \item Sur le premier tiers $(\frac{nb\_samples}{3})$, les flottants ont pour amplitude 0.
-    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}$,$\frac{nb\_samples}{3}*2])$, les flottants ont pour valeur Vmax si le bit d'état logique est à 1 et Vmin si le bit est à 0.
+    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}$,$\frac{nb\_samples}{3}*2])$, les flottants ont pour valeur $V_{max}$ si le bit d'état logique est à 1 et $V_{min}$ si le bit est à 0.
     \item Sur ce dernier tiers, les flottants ont de nouveau une amplitude de 0.
 \end{itemize}
 
@@ -80,17 +80,17 @@ L'émetteur RZ est légèrement plus compliqué que le signal NRZ. La constructi
     \caption{\label{fig:image11}Sortie de la source et de l'émetteur RZ.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur RZ. On apercevoir qu'un symbole logique est représenté par un symbole analogique composé en trois parties : le premier et dernier tiers à 0 et le deuxième tiers avec une amplitude à Vmax ou Vmin.
+Ci-dessus le graphique en sortie de la source et de l'émetteur RZ. On apercevoir qu'un symbole logique est représenté par un symbole analogique composé en trois parties : le premier et dernier tiers à 0 et le deuxième tiers avec une amplitude à $V_{max}$ ou $V_{min}$.
 
 \textbf{Emetteur NRZT :}
 
-C'est le transmetteur le plus complexe à faire. Il reprend les caractéristiques du NRZ mais possède une pente montante et descendante au 1er et dernier tiers. Avant toute chose, il faut calculer un pas qui sera utilisé pour la pente. Pour cela, on utilise cette formule : $ pas = \frac{Vx}{\frac{nb\_samples}{3}} $ avec Vx ayant Vmax ou Vmin en fonction du bit logique.
+C'est le transmetteur le plus complexe à faire. Il reprend les caractéristiques du NRZ mais possède une pente montante et descendante au 1er et dernier tiers. Avant toute chose, il faut calculer un pas qui sera utilisé pour la pente. Pour cela, on utilise cette formule : $ pas = \frac{Vx}{\frac{nb\_samples}{3}} $ avec $V_x$ ayant $V_{max}$ ou $V_{min}$ en fonction du bit logique.
 
 La construction d'un sylmbole se passe en trois étapes :
 \begin{itemize}
-    \item Sur le premier tiers $ \left(\frac{nb\_samples}{3} \right) $, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers Vx.
-    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}, \frac{nb\_samples}{3}*2]) $, les flottants ont pour valeur Vmax si le bit d'état logique est à 1 et Vmin si le bit est à 0.
-    \item •	Sur le dernier tiers, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers 0. Néanmoins, si plusieurs bits logiques de même signe se suivent, il n'y a pas de rampe entre le premier et le dernier tiers des bits analogiques correspondants. On reste sur une amplitude Vmax et Vmin.
+    \item Sur le premier tiers $ \left(\frac{nb\_samples}{3} \right) $, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers $V_x$.
+    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}, \frac{nb\_samples}{3}*2]) $, les flottants ont pour valeur $V_{max}$ si le bit d'état logique est à 1 et $V_{min}$ si le bit est à 0.
+    \item Sur le dernier tiers, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers 0. Néanmoins, si plusieurs bits logiques de même signe se suivent, il n'y a pas de rampe entre le premier et le dernier tiers des bits analogiques correspondants. On reste sur une amplitude $V_{max}$ et $V_{min}$.
 \end{itemize}
 
 \begin{figure}[H]
@@ -99,12 +99,12 @@ La construction d'un sylmbole se passe en trois étapes :
     \caption{\label{fig:image12}Sortie de la source et de l'émetteur NRZT.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur NRZT. On remarque que le signal en sortie d'émetteur correspond bien à la description faite précédemment. On observe bien les pentes vers Vx et 0 mais également la conservation de l'amplitude Vx lorsque plusieurs bits logiques se suivent.
+Ci-dessus le graphique en sortie de la source et de l'émetteur NRZT. On remarque que le signal en sortie d'émetteur correspond bien à la description faite précédemment. On observe bien les pentes vers $V_x$ et 0 mais également la conservation de l'amplitude $V_x$ lorsque plusieurs bits logiques se suivent.
 
 \subsubsection{Récepteur}
 
 Le récepteur à un enjeu primordial, il est capable de recevoir un signal analogique et de le convertir en un signal logique (même type que le signal source). Notre exigence était d'avoir un seul récepteur qui puisse traiter n'importe quel signal analogique.
-Pour ce faire, on utilise comme méthode de moyenner les valeurs reçues sur la durée d'un temps symbole. Préalablement, nous avons déterminer un seuil de décision qui correspond à $\frac{Vmax + Vmin}{2}$.
+Pour ce faire, on utilise comme méthode de moyenner les valeurs reçues sur la durée d'un temps symbole. Préalablement, nous avons déterminer un seuil de décision qui correspond à $\frac{V_{max} + V_{min}}{2}$.
 Il peut ainsi fluctuer en fonction des valeurs seuil choisi. Si la moyenne se situe au-dessus du seuil de décision, alors le bit d'état logique sera à 1. Si la moyenne se situe en-dessous du seuil de décision, alors le bit d'état logique sera à 0.
 
 \subsection{Tests}
