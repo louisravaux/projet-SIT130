@@ -24,6 +24,7 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		for (Float i : information) {
 			informationRecue.add(i);
 		}
+
 		int i = 0;
 		int j = 0;
 		float somme = 0;
