@@ -27,7 +27,7 @@ Les principaux canaux de transmission rencontrés dans la nature sont : le canal
 
 Par la suite, chaque composant du système de transmission entre la source et la destination sera dénommé transmetteur.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 1.png}
     \caption{\label{fig:image1}Composants de la chaine de transmission.}
@@ -48,7 +48,7 @@ L'application principale calcule le taux d'erreur binaire (TEB) du système.
 
 Voici un schéma de la chaine :
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 2.png}
     \caption{\label{fig:image2}Chaine de transmission itération 1.}
@@ -71,14 +71,14 @@ Enfin, nous avons créé une destination. Cette classe joue le rôle de récepte
 \subsection{Simulation}
 
 Voici la simulation avec une source fixe :
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 3.png}
     \caption{\label{fig:image3}Simulation source fixe source et transmetteur.}
 \end{figure}
 
 Voici la simulation avec une source aléatoire :
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 4.png}
     \caption{\label{fig:image4}Simulation source aléatoire source et transmetteur.}
@@ -97,7 +97,7 @@ Pour le moment, nous n'avons qu'un seul type de transmetteur et que deux types d
 
 Dans cette nouvelle itération, nous allons devoir coder des émetteurs et un récepteur afin de convertir le signal logique en un signal "analogique" NRZ (non-retour à zéro), RZ (retour à zéro) et NRZT. Le rôle du récepteur sera de convertir n'importe quel signal analogique en un signal logique. Pour se faire, nous allons donc devoir modifier notre code afin de répondre aux exigences.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 5.png}
     \caption{\label{fig:image5}Chaine de transmission itération n°2.}
@@ -105,7 +105,7 @@ Dans cette nouvelle itération, nous allons devoir coder des émetteurs et un r�
 
 Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique pendant la première demi-période. Il y a un retour à 0 à la deuxième demi-période du symbole (figure de gauche). Cependant dans ce projet, nous partirons du principe que l'émission à Vmax ou Vmin se situe entre le 1er et le 3ème tiers de la période symbole (figure de droite).
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 6.png}
     \caption{\label{fig:image6}Schémas explicatifs signal RZ.}
@@ -113,7 +113,7 @@ Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques 
 
 Un signal NRZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique. Contrairement au RZ, l'état est le même pendant toute la durée du temps symbole et d'utiliser trois fois moins de bande passante dans notre cas.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{image 7.png}
     \caption{\label{fig:image7}Schéma explicatif signal NRZ.}
@@ -121,7 +121,7 @@ Un signal NRZ signifie que le signal sera à l'état haut lorsque des 1 logiques
 
 Un signal NRZT possède les mêmes propriétés qu'un signal NRZ. Cependant pour simuler le temps de montés des composants, chaque changement d'état sera représenté par une monté et descente progressive symbolisé sur 1/3 des périodes symboles.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{image 8.png}
     \caption{\label{fig:image8}Schéma explicatif signal NRZT.}
@@ -133,7 +133,7 @@ Pour nous permettre de répondre aux demandes de l'itération (mise en place d'u
 Nous ne devrions plus avoir d'erreurs sur notre code et ne pas avoir d'erreurs sur les signaux émis et reçus. Pour vérifier cela, nous utiliserons le calcul du TEB et afficherons les graphiques permettant de comparer à vue d'œil les éventuelles erreurs et leur emplacement.
 Avant de commencer à développer notre code nous avons utilisé l'application "Project" d'Office 365 afin de nous permettre de créer un diagramme de Gant. Ce diagramme nous permet de classer les actions à faire (par catégories, par acteurs, par priorité) et de mettre des échéances afin de respecter les délais. Vous trouverez ci-dessous un exemple de diagramme Gant que nous avons fait pour cette seconde itération :
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 9.png}
     \caption{\label{fig:image9}Diagramme de Gant itération 2.}
@@ -150,7 +150,7 @@ L'émetteur à un rôle important. Il permet de convertir un signal logique en s
 
 Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en entrée et s'il s'agit d'un état à 1, alors on émet un nombre de flottant égale à nb\_samples ayant pour amplitude Vmax. Pour l'état à 0, on émet le même nombre de flottant mais ayant pour amplitude Vmin.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 10.png}
     \caption{\label{fig:image10}Sortie de la source et de l'émetteur NRZ.}
@@ -168,7 +168,7 @@ L'émetteur RZ est légèrement plus compliqué que le signal NRZ. La constructi
     \item Sur ce dernier tiers, les flottants ont de nouveau une amplitude de 0.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 11.png}
     \caption{\label{fig:image11}Sortie de la source et de l'émetteur RZ.}
@@ -187,7 +187,7 @@ La construction d'un sylmbole se passe en trois étapes :
     \item •	Sur le dernier tiers, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers 0. Néanmoins, si plusieurs bits logiques de même signe se suivent, il n'y a pas de rampe entre le premier et le dernier tiers des bits analogiques correspondants. On reste sur une amplitude Vmax et Vmin.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 12.png}
     \caption{\label{fig:image12}Sortie de la source et de l'émetteur NRZT.}
@@ -212,7 +212,7 @@ Nous sommes toujours dans le cas d'un canal de transmission parfait. Que ce soit
 
 Voici la simulation pour un signal généré grâce à une source aléatoire puis encodé en NRZ :
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 13.png}
     \caption{\label{fig:image13}Simulation d'un signal généré puis encodé en NRZ.}
@@ -220,7 +220,7 @@ Voici la simulation pour un signal généré grâce à une source aléatoire pui
 
 Voici la simulation pour un signal généré grâce à une source aléatoire puis encodé en RZ :
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 14.png}
     \caption{\label{fig:image14}Simulation d'un signal généré puis encodé en RZ.}
@@ -228,7 +228,7 @@ Voici la simulation pour un signal généré grâce à une source aléatoire pui
 
 Voici la simulation pour un signal généré grâce à une source aléatoire puis encodé en NRZT :
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 15.png}
     \caption{\label{fig:image15}Simulation d'un signal généré puis encodé en NRZT.}
