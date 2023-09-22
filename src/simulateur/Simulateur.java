@@ -47,7 +47,7 @@ public class Simulateur {
     private String messageString = "100";
 
 	/** le rapport signal/bruit */
-	private int snr = 10;
+	private float snr = 10.0F;
 
 	/** le type de signal à transmettre */
 	private String form = "NRZT";
@@ -262,7 +262,7 @@ public class Simulateur {
 			else if (args[i].matches("-snrpb")) {
 				i++;
 				try {
-					snr = Integer.parseInt(args[i]);
+					snr = Float.parseFloat(args[i]);
 				} catch (Exception e) {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
