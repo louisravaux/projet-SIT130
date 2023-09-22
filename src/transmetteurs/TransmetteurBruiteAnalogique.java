@@ -8,43 +8,41 @@ import information.InformationNonConformeException;
 
 public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
 	private float snr;
-    private int nb_sample;
-	
+    private float p_signal;
+    private float p_noise;
+    private float sigma_noise;
+    private float bruit;
+    private Random a1;
+    private Random a2;
+    private final int nb_sample;
+
 	public TransmetteurBruiteAnalogique(float snr, int nb_sample) {
         this.snr = (float) Math.pow(10, snr/10);
+        a1 = new Random();
+        a2 = new Random();
         this.nb_sample = nb_sample;
 		informationRecue = new Information<>();
         informationEmise = new Information<>();
     }
 
-    public void generateNoise(Information<Float> information) {
-        // vars
-        float p_signal = 0f;
-        float p_noise;
-        float sigma_noise;
-        float bruit = 0f;
-        Random a1;
-        Random a2;
-
-        // Calcul puissance du signal et reception des informations
-        for (Float i : information) {
-            informationRecue.add(i);
-            p_signal += (float) Math.pow(i, 2);
-        }
+    public void calculateNoisePower() {
+        // Calcul puissance du signal
         p_signal /= informationRecue.nbElements();
 
         // Calcul puissance du bruit
         p_noise = p_signal/snr;
+    }
 
-        // Calcul sigma
+    public void generateNoise(Information<Float> information) {
+
+        calculateNoisePower();
+
+        // Calcul ecart type du bruit
         sigma_noise = (float) Math.sqrt(p_noise);
 
         // Generation du bruit gaussien
         for (Float i : information) {
-            a1 = new Random();
-            a2 = new Random();
             bruit = (float) (sigma_noise*Math.sqrt(-2*Math.log(1-a1.nextFloat()))*Math.cos(2*Math.PI*a2.nextFloat()));
-            informationRecue.add(i);
             informationEmise.add(i+bruit);
         }
     }
@@ -52,6 +50,13 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
 
+        // reception des informations
+        for (Float i : information) {
+            informationRecue.add(i);
+            p_signal += (float) Math.pow(i, 2);
+        }
+
+        // generating noise
         generateNoise(information);
         
         emettre();
