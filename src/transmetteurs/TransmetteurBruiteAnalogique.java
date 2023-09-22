@@ -39,7 +39,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
     /**
      * Calcul de la puissance du signal et du bruit.
      */
-    public void calculateNoisePower() {
+    public void calculatePower() {
         // Calcul puissance du signal
         p_signal /= informationRecue.nbElements();
 
@@ -53,7 +53,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
      */
     public void generateNoise(Information<Float> information) {
 
-        calculateNoisePower();
+        calculatePower();
 
         // Calcul ecart type du bruit
         sigma_noise = (float) Math.sqrt(p_noise);
