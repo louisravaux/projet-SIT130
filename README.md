@@ -69,4 +69,4 @@ Le simulateur construit une chaîne de transmission composée d'une source, de t
 La simulation consiste en l'envoi du message à travers la chaîne de transmission, puis le calcul du taux d'erreur binaire (TEB) en comparant les bits du message émis avec ceux du message reçu. Le TEB est un indicateur de la qualité de la transmission.
 
 ## Auteur
-L'implémentation des classes abstraites de ce programme a été développé par Antoine FAVREL et Louis RAVAUX.
+L'implémentation des classes abstraites de ce programme a été développé par Antoine FAVREL, Louis RAVAUX Benjamin HUGUET, Maëva DONATIEN.
