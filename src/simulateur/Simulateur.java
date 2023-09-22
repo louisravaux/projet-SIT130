@@ -50,16 +50,16 @@ public class Simulateur {
 	private float snr = 10.0F;
 
 	/** le type de signal à transmettre */
-	private String form = "NRZT";
+	private String form = "RZ";
 
 	/** le nombre d'échantillons par symbole */
 	private int nb_sample = 10;
 
 	/** le minimum de l'amplitude du signal analogique */
-	private int vmin = -5;
+	private float vmin = -5;
 
 	/** le maximum de l'amplitude du signal analogique */
-	private int vmax = 5;
+	private float vmax = 5;
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -251,9 +251,9 @@ public class Simulateur {
 
 			else if (args[i].matches("-ampl")) {
 				i++;
-				vmin = Integer.parseInt(args[i]);
+				vmin = Float.parseFloat(args[i]);
 				i++;
-				vmax = Integer.parseInt(args[i]);
+				vmax = Float.parseFloat(args[i]);
 				if (vmin > vmax) {
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + vmin);
 				}
