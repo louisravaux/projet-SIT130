@@ -9,9 +9,6 @@ import information.InformationNonConformeException;
  * Cette conversion peut se faire selon trois formats : RZ, NRZ ou NRZT.
  * L'émetteur génère un signal analogique en fonction des valeurs booléennes d'entrée et des paramètres
  * de conversion spécifiés lors de l'initialisation de l'objet.
- *
- * @param <T> Le type de données d'entrée (Boolean ici).
- * @param <R> Le type de données de sortie (Float ici).
  */
 public class EmetteurParfaitAnalogique extends Emetteur<Boolean, Float> {
 

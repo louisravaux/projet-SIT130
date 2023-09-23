@@ -9,8 +9,6 @@ import information.InformationNonConformeException;
 /**
  * Classe d'un transmetteur qui transmet des informations float en ajoutant un bruit gaussien.
  *
- * @param <T> Le type de données d'entrée (Float ici).
- * @param <R> Le type de données de sortie (Float ici).
  */
 public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
 	private float snr;
@@ -24,8 +22,8 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
 
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.
-     * @param snr
-     * @param nb_sample
+     * @param snr bruit ajouté au signal (en dB)
+     * @param nb_sample nombre d'échantillons par symbole
      */
 	public TransmetteurBruiteAnalogique(float snr, int nb_sample) {
         this.snr = (float) Math.pow(10, snr/10);
@@ -49,7 +47,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
 
     /**
      * Génération du bruit gaussien.
-     * @param information
+     * @param information information recue par le transmetteur
      */
     public void generateNoise(Information<Float> information) {
 

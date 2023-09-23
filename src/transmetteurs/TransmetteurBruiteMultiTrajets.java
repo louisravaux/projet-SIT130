@@ -15,8 +15,8 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.
      *
-     * @param snr
-     * @param nb_sample
+     * @param snr bruit ajouté au signal (en dB)
+     * @param nb_sample nombre d'échantillons par symbole
      */
     public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, ArrayList<Float> tau, ArrayList<Float> a) {
         super(snr, nb_sample);
