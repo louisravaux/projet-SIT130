@@ -56,7 +56,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         calculatePower();
 
         // Calcul ecart type du bruit
-        sigma_noise = (float) Math.sqrt(p_noise);
+        sigma_noise = (float) (nb_sample*p_noise)/(2*snr);
 
         // Generation du bruit gaussien
         for (Float i : information) {
