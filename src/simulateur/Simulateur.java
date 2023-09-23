@@ -47,19 +47,19 @@ public class Simulateur {
     private String messageString = "100";
 
 	/** le rapport signal/bruit */
-	private int snr = 10;
+	private float snr = 10.0F;
 
 	/** le type de signal à transmettre */
-	private String form = "NRZT";
+	private String form = "RZ";
 
 	/** le nombre d'échantillons par symbole */
-	private int nb_sample = 10;
+	private int nb_sample = 30;
 
 	/** le minimum de l'amplitude du signal analogique */
-	private int vmin = -5;
+	private float vmin = 0.0F;
 
 	/** le maximum de l'amplitude du signal analogique */
-	private int vmax = 5;
+	private float vmax = 1.0F;
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -69,7 +69,8 @@ public class Simulateur {
     
     /** le  composant Destination de la chaine de transmission */
     private Destination <Boolean>  destination = null;
-   	
+	/** TODO flags */
+	private boolean analog = false;
    
     /** Le constructeur de Simulateur construit une chaîne de
      * transmission composée d'une Source <Boolean>, d'une Destination
@@ -86,9 +87,14 @@ public class Simulateur {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
 
-		// instanciation des éléments composant le transmetteur parfait
-		//simulationTransmetteurParfait();
-		simulationTransmetteurAnalogique();
+		//TODO faire les codages selon les flags
+		if(analog == true) {
+			TransmissionAnalogiqueBruite();
+		} else if (messageAleatoire == true) {
+
+		} else {
+			TransmissionLogiqueParfaite();
+		}
     }
 
 
@@ -117,7 +123,7 @@ public class Simulateur {
 	 * 4. Connecte la source au transmetteur et le transmetteur à la destination.
 	 * 5. Optionnellement, effectue une connexion avec des sondes logiques pour afficher les signaux à l'écran si la variable "affichage" est true.
 	 */
-	public void simulationTransmetteurParfait() {
+	public void TransmissionLogiqueParfaite() {
 
 		// checking args
 		initSource();
@@ -137,7 +143,7 @@ public class Simulateur {
 		}
 	}
 
-	public void simulationTransmetteurAnalogique() {
+	public void TransmissionAnalogiqueBruite() {
 
 		// init source with args
 		initSource();
@@ -230,6 +236,7 @@ public class Simulateur {
     		//TODO : ajouter ci-après le traitement des nouvelles options
 			else if (args[i].matches("-form")) {
 				i++;
+				analog = true;
 				if (args[i].matches("NRZ|NRZT|RZ")) {
 					form = args[i];
 				} else {
@@ -239,6 +246,7 @@ public class Simulateur {
 
 			else if (args[i].matches("-nbEch")) {
 				i++;
+				analog = true;
 				try {
 					nb_sample = Integer.parseInt(args[i]);
 					if (nb_sample < 3) {
@@ -251,9 +259,10 @@ public class Simulateur {
 
 			else if (args[i].matches("-ampl")) {
 				i++;
-				vmin = Integer.parseInt(args[i]);
+				analog = true;
+				vmin = Float.parseFloat(args[i]);
 				i++;
-				vmax = Integer.parseInt(args[i]);
+				vmax = Float.parseFloat(args[i]);
 				if (vmin > vmax) {
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + vmin);
 				}
@@ -261,8 +270,9 @@ public class Simulateur {
 
 			else if (args[i].matches("-snrpb")) {
 				i++;
+				analog = true;
 				try {
-					snr = Integer.parseInt(args[i]);
+					snr = Float.parseFloat(args[i]);
 				} catch (Exception e) {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
