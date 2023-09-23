@@ -47,7 +47,7 @@ public class Simulateur {
     private String messageString = "100";
 
 	/** le rapport signal/bruit */
-	private float snr = 10.0F;
+	private float snr = 150f;
 
 	/** le type de signal à transmettre */
 	private String form = "RZ";
@@ -56,10 +56,10 @@ public class Simulateur {
 	private int nb_sample = 30;
 
 	/** le minimum de l'amplitude du signal analogique */
-	private float vmin = 0.0F;
+	private float vmin = 0.0f;
 
 	/** le maximum de l'amplitude du signal analogique */
-	private float vmax = 1.0F;
+	private float vmax = 1.0f;
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
