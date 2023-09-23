@@ -91,7 +91,6 @@ public class Simulateur {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
 
-		//TODO faire les codages selon les flags
 		if(analog) {
 			TransmissionAnalogiqueBruite();
 		} else {
@@ -145,6 +144,11 @@ public class Simulateur {
 		}
 	}
 
+	/**
+	 * Cette méthode initie une transmission analogique bruitée en connectant des composants
+	 * tels que l'émetteur, le récepteur, le transmetteur analogique, etc., pour simuler
+	 * la transmission d'un signal dans un environnement bruité.
+	 */
 	public void TransmissionAnalogiqueBruite() {
 
 		// init source with args
@@ -152,10 +156,10 @@ public class Simulateur {
 
 		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(vmin, vmax, nb_sample, form);
-
 		Transmetteur<Float, Float> transmetteurAnalogique;
-		// TODO test remove after
-		if (dt == 0) {
+
+		// checking if multi path is used
+		if (dt == 0 && ar == 0.0f) {
 			transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
 		} else {
 			transmetteurAnalogique = new TransmetteurBruiteMultiTrajets(snr, nb_sample, dt, ar);
