@@ -25,10 +25,10 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
      * @param nb_sample nombre d'échantillons par symbole
      */
 	public TransmetteurBruiteAnalogique(float snr, int nb_sample) {
+        this.nb_sample = nb_sample;
         this.snr = (float) Math.pow(10, snr/10);
         a1 = new Random();
         a2 = new Random();
-        this.nb_sample = nb_sample;
 		informationRecue = new Information<>();
         informationEmise = new Information<>();
     }
@@ -82,14 +82,15 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
             p_signal += (float) Math.pow(i, 2);
         }
 
-        // generating noise
+        // génération du bruit
         generateNoise();
-        
+
+        // émission des informations apres réception et génération du bruit
         emettre();
     }
 
     /**
-     * Emission des informations.
+     * Emission des informations à toutes les destinations connectées.
      */
     @Override
     public void emettre() throws InformationNonConformeException {
