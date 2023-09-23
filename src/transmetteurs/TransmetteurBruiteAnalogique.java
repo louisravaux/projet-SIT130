@@ -11,13 +11,12 @@ import information.InformationNonConformeException;
  *
  */
 public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
-	private float snr;
+	private final float snr;
     private float p_signal;
     private float p_noise;
     private float sigma_noise;
-    private float bruit;
-    private Random a1;
-    private Random a2;
+    private final Random a1;
+    private final Random a2;
     private final int nb_sample;
 
     /**
@@ -35,31 +34,39 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
     }
 
     /**
-     * Calcul de la puissance du signal et du bruit.
+     * Calcul de la puissance du signal
      */
-    public void calculatePower() {
-        // Calcul puissance du signal
+    public void calculateSignalPower() {
         p_signal /= informationRecue.nbElements();
+    }
 
-        // Calcul puissance du bruit
+    /**
+     * Calcul de la puissance du bruit.
+     */
+    public void calculateNoisePower() {
         p_noise = p_signal/snr;
     }
 
     /**
-     * Génération du bruit gaussien.
-     * @param information information recue par le transmetteur
+     * Calcul de l'écart type du bruit.
      */
-    public void generateNoise(Information<Float> information) {
+    public void calculateSigmaNoise() {
+        sigma_noise = (nb_sample*p_noise)/(2*snr);
+    }
 
-        calculatePower();
+    /**
+     * Génération du bruit gaussien.
+     */
+    public void generateNoise() {
 
-        // Calcul ecart type du bruit
-        sigma_noise = (float) (nb_sample*p_noise)/(2*snr);
+        calculateSignalPower();
+        calculateNoisePower();
+        calculateSigmaNoise();
 
         // Generation du bruit gaussien
-        for (Float i : information) {
-            bruit = (float) (sigma_noise*Math.sqrt(-2*Math.log(1-a1.nextFloat()))*Math.cos(2*Math.PI*a2.nextFloat()));
-            informationEmise.add(i+bruit);
+        for (Float i : informationRecue) {
+            float bruit = (float) (sigma_noise * Math.sqrt(-2 * Math.log(1 - a1.nextFloat())) * Math.cos(2 * Math.PI * a2.nextFloat()));
+            informationEmise.add(i+ bruit);
         }
     }
 
@@ -76,7 +83,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         }
 
         // generating noise
-        generateNoise(information);
+        generateNoise();
         
         emettre();
     }

@@ -37,7 +37,7 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
         super.recevoir(information);
 
-        generateNoise(information);
+        generateNoise();
 
         for(Float i : information) {
 
