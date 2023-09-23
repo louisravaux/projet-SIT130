@@ -9,10 +9,7 @@ import recepteur.RecepteurParfaitAnalogique;
 import sources.Source;
 import sources.SourceAleatoire;
 import sources.SourceFixe;
-import transmetteurs.Transmetteur;
-import transmetteurs.TransmetteurBruiteAnalogique;
-import transmetteurs.TransmetteurParfait;
-import transmetteurs.TransmetteurParfaitAnalogique;
+import transmetteurs.*;
 import visualisations.SondeAnalogique;
 import visualisations.SondeLogique;
 
@@ -60,6 +57,12 @@ public class Simulateur {
 
 	/** le maximum de l'amplitude du signal analogique */
 	private float vmax = 1.0f;
+
+	/** le décalage temporel */
+	private int dt = 0;
+
+	/** amplitude du signal analogique décalé*/
+	private float ar = 0.0f;
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -69,7 +72,8 @@ public class Simulateur {
     
     /** le  composant Destination de la chaine de transmission */
     private Destination <Boolean>  destination = null;
-	/** TODO flags */
+
+	/** la chaine de transmission est analogique ou logique */
 	private boolean analog = false;
    
     /** Le constructeur de Simulateur construit une chaîne de
@@ -149,7 +153,15 @@ public class Simulateur {
 		Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 		Recepteur<Float, Boolean> recepteur = new RecepteurParfaitAnalogique(vmin, vmax, nb_sample, form);
 
-		Transmetteur<Float, Float> transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
+		Transmetteur<Float, Float> transmetteurAnalogique;
+		// TODO test remove after
+		if (dt == 0) {
+			transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
+		} else {
+			transmetteurAnalogique = new TransmetteurBruiteMultiTrajets(snr, nb_sample, dt, ar);
+
+		}
+
 		destination = new DestinationFinale();
 
 		if (affichage) {
@@ -269,6 +281,14 @@ public class Simulateur {
 					snr = Float.parseFloat(args[++i]);
 				} catch (Exception e) {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
+				}
+
+			} else if (args[i].matches("-ti")) {
+				analog = true;
+				dt = Integer.parseInt(args[++i]);
+				ar = Float.parseFloat(args[++i]);
+				if (dt >= nb_sample || dt < 0) {
+					throw new ArgumentsException("Valeur du parametre -ti invalide : " + dt);
 				}
 			}
 
