@@ -11,13 +11,13 @@ import information.InformationNonConformeException;
  *
  */
 public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
-	private final float snr;
-    private float p_signal;
-    private float p_noise;
-    private float sigma_noise;
-    private final Random a1;
-    private final Random a2;
-    private final int nb_sample;
+	protected final float snr;
+    protected float p_signal;
+    protected float p_noise;
+    protected float sigma_noise;
+    protected final Random a1;
+    protected final Random a2;
+    protected final int nb_sample;
 
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.

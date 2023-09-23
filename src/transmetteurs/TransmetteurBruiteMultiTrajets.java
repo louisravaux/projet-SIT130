@@ -1,6 +1,7 @@
 package transmetteurs;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import com.sun.source.tree.ArrayAccessTree;
@@ -10,42 +11,38 @@ import information.InformationNonConformeException;
 
 public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique {
 
-    ArrayList<Float> tau;
-    ArrayList<Float> a;
+    private final int tau;
+    private final float ar;
+
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.
      *
      * @param snr bruit ajouté au signal (en dB)
      * @param nb_sample nombre d'échantillons par symbole
      */
-    public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, ArrayList<Float> tau, ArrayList<Float> a) {
+    public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, int tau, float ar) {
         super(snr, nb_sample);
         this.tau = tau;
-        this.a = a;
+        this.ar = ar;
     }
 
-    public void addMultiTrajets(Information<Float> information) {
-        for(Float i : information) {
-            for(Float t : tau) {
-                //multiX = a*;
-                //informationEmise.add(i+multiX);
-            }
+    public void addMultiTrajets() {
+        for(int i = tau; i < informationRecue.nbElements(); i++) {
+            informationEmise.add(informationRecue.iemeElement(i) + ar*informationRecue.iemeElement(i-tau));
         }
     }
 
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
-        super.recevoir(information);
+        // reception des informations
+        for (Float i : information) {
+            informationRecue.add(i);
+            p_signal += (float) Math.pow(i, 2);
+        }
+        addMultiTrajets();
 
         generateNoise();
 
-        for(Float i : information) {
-
-        }
-    }
-
-    @Override
-    public void emettre() throws InformationNonConformeException {
-        super.emettre();
+        emettre();
     }
 }
