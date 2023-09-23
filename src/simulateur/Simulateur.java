@@ -88,10 +88,8 @@ public class Simulateur {
     	analyseArguments(args);
 
 		//TODO faire les codages selon les flags
-		if(analog == true) {
+		if(analog) {
 			TransmissionAnalogiqueBruite();
-		} else if (messageAleatoire == true) {
-
 		} else {
 			TransmissionLogiqueParfaite();
 		}
@@ -232,8 +230,7 @@ public class Simulateur {
     			else 
     				throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
     		}
-    		
-    		//TODO : ajouter ci-après le traitement des nouvelles options
+
 			else if (args[i].matches("-form")) {
 				i++;
 				analog = true;
@@ -258,25 +255,24 @@ public class Simulateur {
 			}
 
 			else if (args[i].matches("-ampl")) {
-				i++;
 				analog = true;
-				vmin = Float.parseFloat(args[i]);
-				i++;
-				vmax = Float.parseFloat(args[i]);
-				if (vmin > vmax) {
+				vmin = Float.parseFloat(args[++i]);
+				vmax = Float.parseFloat(args[++i]);
+				if (vmin >= vmax) {
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + vmin);
 				}
 			}
 
 			else if (args[i].matches("-snrpb")) {
-				i++;
 				analog = true;
 				try {
-					snr = Float.parseFloat(args[i]);
+					snr = Float.parseFloat(args[++i]);
 				} catch (Exception e) {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
 			}
+
+			// next args
 
     		else throw new ArgumentsException("Option invalide :"+ args[i]);
     	}
