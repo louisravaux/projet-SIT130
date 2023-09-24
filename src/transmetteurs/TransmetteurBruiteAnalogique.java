@@ -57,16 +57,16 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
     /**
      * Génération du bruit gaussien.
      */
-    public void generateNoise() {
+    public void generateNoise(Information<Float> informationEntree, Information<Float> informationSortie) {
 
         calculateSignalPower();
         calculateNoisePower();
         calculateSigmaNoise();
 
         // Generation du bruit gaussien
-        for (Float i : informationRecue) {
+        for (Float i : informationEntree) {
             float bruit = (float) (sigma_noise * Math.sqrt(-2 * Math.log(1 - a1.nextFloat())) * Math.cos(2 * Math.PI * a2.nextFloat()));
-            informationEmise.add(i+ bruit);
+            informationSortie.add(i + bruit);
         }
     }
 
@@ -83,7 +83,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         }
 
         // génération du bruit
-        generateNoise();
+        generateNoise(information, informationEmise);
 
         // émission des informations apres réception et génération du bruit
         emettre();

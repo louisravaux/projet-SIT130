@@ -13,6 +13,7 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
     private final int tau;
     private final float ar;
+    private final Information<Float> multiTrajets;
 
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.
@@ -22,13 +23,15 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
      */
     public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, int tau, float ar) {
         super(snr, nb_sample);
+        multiTrajets = new Information<>();
         this.tau = tau;
         this.ar = ar;
     }
 
     public void addMultiTrajets() {
         for(int i = tau; i < informationRecue.nbElements(); i++) {
-            informationEmise.add(informationRecue.iemeElement(i) + ar*informationRecue.iemeElement(i-tau));
+            // r(t) = s(t) + ar*s(t-tau)
+            multiTrajets.add(informationRecue.iemeElement(i) + ar*informationRecue.iemeElement(i-tau));
         }
     }
 
@@ -41,8 +44,10 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         }
         addMultiTrajets();
 
-        generateNoise();
+        generateNoise(multiTrajets, informationEmise);
 
         emettre();
     }
+
 }
+
