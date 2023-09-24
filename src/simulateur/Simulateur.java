@@ -291,8 +291,11 @@ public class Simulateur {
 				analog = true;
 				dt = Integer.parseInt(args[++i]);
 				ar = Float.parseFloat(args[++i]);
-				if (dt >= nb_sample || dt < 0) {
+				if (dt > nb_sample || dt < 0) {
 					throw new ArgumentsException("Valeur du parametre -ti invalide : " + dt);
+				}
+				if (ar < 0.0f || ar > 1.0f) {
+					throw new ArgumentsException("Valeur du parametre -ti invalide : " + ar);
 				}
 			}
 
