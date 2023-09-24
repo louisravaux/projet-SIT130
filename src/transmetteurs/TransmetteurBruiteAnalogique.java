@@ -83,7 +83,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         }
 
         // génération du bruit
-        generateNoise(information, informationEmise);
+        generateNoise(informationRecue, informationEmise);
 
         // émission des informations apres réception et génération du bruit
         emettre();

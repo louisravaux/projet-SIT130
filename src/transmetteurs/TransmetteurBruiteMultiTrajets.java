@@ -29,9 +29,9 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     }
 
     public void addMultiTrajets() {
-        for(int i = tau; i < informationRecue.nbElements(); i++) {
-            // r(t) = s(t) + ar*s(t-tau)
-            multiTrajets.add(informationRecue.iemeElement(i) + ar*informationRecue.iemeElement(i-tau));
+        for (int i = tau; i < informationRecue.nbElements(); i++) {
+            float rt = informationRecue.iemeElement(i) + ar * informationRecue.iemeElement(i - tau);
+            multiTrajets.add(rt);
         }
     }
 
