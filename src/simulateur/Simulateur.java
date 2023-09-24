@@ -295,38 +295,32 @@ public class Simulateur {
 			} else if (args[i].matches("-ti")) {
 				analog = true;
 				// TODO réussir a parser le bordel
-				//dt = Integer.parseInt(args[++i]);
-				//ar = Float.parseFloat(args[++i]);
 				i++;
 				int pairimpair = 1;
 				int pos_tau = 0;
 				int pos_ar = 0;
 				while(i < args.length && !args[i].matches("^-[a-z]+") && pairimpair < 11) {
-					System.out.println(args[i]);
-					System.out.println("dans while");
-					if(pairimpair%2 == 1 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
-						System.out.println("dans ar");
+					if(pairimpair%2 == 0 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
 						if(Float.parseFloat(args[i]) == 0 || Float.parseFloat(args[i]) < 0.0f || Float.parseFloat(args[i]) > 1.0f) {
 							throw new ArgumentsException("Valeur d'amplitude -ti invalide : " + args[i]);
 						} else {
 							ar.set(pos_ar, Float.parseFloat(args[i]));
-							System.out.println(ar.get(pos_ar));
 							pos_ar++;
 						}
 						pairimpair++;
-					} else if (pairimpair%2 == 0 && args[i].matches("^-?\\d*$")) {
-						System.out.println("dans tau");
+					} else if (pairimpair%2 == 1 && args[i].matches("^-?\\d*$")) {
 						if(Integer.parseInt(args[i]) > nb_sample || Integer.parseInt(args[i]) < 0) {
 							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
 						} else {
 							dt.set(pos_tau, Integer.parseInt(args[i]));
-							System.out.println(dt.get(pos_tau));
 							pos_tau++;
 						}
 						pairimpair++;
 					}
 					i++;
 				}
+				System.out.println(dt);
+				System.out.println(ar);
 			}
 
 			// next args
