@@ -11,8 +11,8 @@ import information.InformationNonConformeException;
 
 public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique {
 
-    private final int tau;
-    private final float ar;
+    private final ArrayList<Integer> tau;
+    private final ArrayList<Float> ar;
     private final Information<Float> multiTrajets;
 
     /**
@@ -21,7 +21,7 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
      * @param snr bruit ajouté au signal (en dB)
      * @param nb_sample nombre d'échantillons par symbole
      */
-    public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, int tau, float ar) {
+    public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, ArrayList<Integer> tau, ArrayList<Float> ar) {
         super(snr, nb_sample);
         multiTrajets = new Information<>();
         this.tau = tau;
@@ -29,9 +29,14 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     }
 
     public void addMultiTrajets() {
-        for (int i = tau; i < informationRecue.nbElements(); i++) {
-            // r(t) = s(t) + a*r(t-tau)
-            multiTrajets.add(informationRecue.iemeElement(i) + ar * informationRecue.iemeElement(i - tau));
+        for(int tauX : tau) {
+            System.out.println(tauX);
+            for (int i = tauX; i < informationRecue.nbElements(); i++) {
+                // pb d'ampl ?
+                System.out.println("i:" + i + "ar:" + ar.get(i));
+                System.out.println("taux:" + tauX);
+                multiTrajets.add(informationRecue.iemeElement(i) + ar.get(i) * informationRecue.iemeElement(i - tauX));
+            }
         }
     }
 

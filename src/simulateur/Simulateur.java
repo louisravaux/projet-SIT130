@@ -4,6 +4,7 @@ import destinations.DestinationFinale;
 import destinations.DestinationFinaleAnalogique;
 import emetteur.Emetteur;
 import emetteur.EmetteurParfaitAnalogique;
+import information.Information;
 import recepteur.Recepteur;
 import recepteur.RecepteurParfaitAnalogique;
 import sources.Source;
@@ -13,6 +14,9 @@ import transmetteurs.*;
 import visualisations.SondeAnalogique;
 import visualisations.SondeLogique;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
 
 
@@ -44,7 +48,7 @@ public class Simulateur {
     private String messageString = "100";
 
 	/** le rapport signal/bruit */
-	private float snr = 150f;
+	private float snr = 10f;
 
 	/** le type de signal à transmettre */
 	private String form = "RZ";
@@ -59,11 +63,11 @@ public class Simulateur {
 	private float vmax = 1.0f;
 
 	/** le décalage temporel */
-	private int dt = 0;
+	private ArrayList<Integer> dt = new ArrayList<>(Arrays.asList(0,0,0,0,0));
 
 	/** amplitude du signal analogique décalé*/
-	private float ar = 0.0f;
-   	
+	private ArrayList<Float> ar = new ArrayList<>(Arrays.asList(0.0f,0.0f,0.0f,0.0f,0.0f));
+
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
     
@@ -159,7 +163,7 @@ public class Simulateur {
 		Transmetteur<Float, Float> transmetteurAnalogique;
 
 		// checking if multi path is used
-		if (dt == 0 && ar == 0.0f) {
+		if (dt.equals(new ArrayList<>(Arrays.asList(0,0,0,0,0))) && ar.equals(new ArrayList<>(Arrays.asList(0.0f,0.0f,0.0f,0.0f,0.0f)))) {
 			transmetteurAnalogique = new TransmetteurBruiteAnalogique(snr, nb_sample);
 		} else {
 			transmetteurAnalogique = new TransmetteurBruiteMultiTrajets(snr, nb_sample, dt, ar);
@@ -176,6 +180,7 @@ public class Simulateur {
 
 			source.connecter(sondeSource);
 			emetteur.connecter(e);
+			transmetteurAnalogique.connecter(t);
 			transmetteurAnalogique.connecter(t);
 			recepteur.connecter(sondeDestination);
 		}
@@ -289,13 +294,38 @@ public class Simulateur {
 
 			} else if (args[i].matches("-ti")) {
 				analog = true;
-				dt = Integer.parseInt(args[++i]);
-				ar = Float.parseFloat(args[++i]);
-				if (dt > nb_sample || dt < 0) {
-					throw new ArgumentsException("Valeur du parametre -ti invalide : " + dt);
-				}
-				if (ar < 0.0f || ar > 1.0f) {
-					throw new ArgumentsException("Valeur du parametre -ti invalide : " + ar);
+				// TODO réussir a parser le bordel
+				//dt = Integer.parseInt(args[++i]);
+				//ar = Float.parseFloat(args[++i]);
+				i++;
+				int pairimpair = 1;
+				int pos_tau = 0;
+				int pos_ar = 0;
+				while(i < args.length && !args[i].matches("^-[a-z]+") && pairimpair < 11) {
+					System.out.println(args[i]);
+					System.out.println("dans while");
+					if(pairimpair%2 == 1 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
+						System.out.println("dans ar");
+						if(Float.parseFloat(args[i]) == 0 || Float.parseFloat(args[i]) < 0.0f || Float.parseFloat(args[i]) > 1.0f) {
+							throw new ArgumentsException("Valeur d'amplitude -ti invalide : " + args[i]);
+						} else {
+							ar.set(pos_ar, Float.parseFloat(args[i]));
+							System.out.println(ar.get(pos_ar));
+							pos_ar++;
+						}
+						pairimpair++;
+					} else if (pairimpair%2 == 0 && args[i].matches("^-?\\d*$")) {
+						System.out.println("dans tau");
+						if(Integer.parseInt(args[i]) > nb_sample || Integer.parseInt(args[i]) < 0) {
+							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
+						} else {
+							dt.set(pos_tau, Integer.parseInt(args[i]));
+							System.out.println(dt.get(pos_tau));
+							pos_tau++;
+						}
+						pairimpair++;
+					}
+					i++;
 				}
 			}
 
