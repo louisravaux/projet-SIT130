@@ -300,20 +300,22 @@ public class Simulateur {
 				int pos_tau = 0;
 				int pos_ar = 0;
 				while(i < args.length && !args[i].matches("^-[a-z]+") && pairimpair < 11) {
-					if(pairimpair%2 == 0 && args[i].matches("^-?\\d*$")) {
+					if(pairimpair%2 == 1 && args[i].matches("^-?\\d*$")) {
 						if(Integer.parseInt(args[i]) > nb_sample || Integer.parseInt(args[i]) < 0) {
 							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
 						} else {
+							System.out.println("tau : " + args[i]);
 							dt.set(pos_tau, Integer.parseInt(args[i]));
 							pos_tau++;
 						}
 						pairimpair++;
 
 
-					} else if (pairimpair%2 == 1 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
+					} else if (pairimpair%2 == 0 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
 						if(Float.parseFloat(args[i]) == 0 || Float.parseFloat(args[i]) < 0.0f || Float.parseFloat(args[i]) > 1.0f) {
 							throw new ArgumentsException("Valeur d'amplitude -ti invalide : " + args[i]);
 						} else {
+							System.out.println("ar : " + args[i]);
 							ar.set(pos_ar, Float.parseFloat(args[i]));
 							pos_ar++;
 						}
