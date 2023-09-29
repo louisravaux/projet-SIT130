@@ -181,7 +181,6 @@ public class Simulateur {
 			source.connecter(sondeSource);
 			emetteur.connecter(e);
 			transmetteurAnalogique.connecter(t);
-			transmetteurAnalogique.connecter(t);
 			recepteur.connecter(sondeDestination);
 		}
 
