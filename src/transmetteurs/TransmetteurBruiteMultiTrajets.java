@@ -56,7 +56,6 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
         for (Float i : information) {
             informationRecue.add(i);
-            multiTrajet.add(i);
             p_signal += (float) Math.pow(i, 2);
         }
 
