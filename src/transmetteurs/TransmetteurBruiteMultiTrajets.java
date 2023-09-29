@@ -10,8 +10,12 @@ import information.Information;
 import information.InformationNonConformeException;
 
 public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique {
+    protected final float snr;
+    protected final int nb_sample;
     protected float p_signal;
     protected float p_noise;
+    protected final Random a1;
+    protected final Random a2;
     private final ArrayList<Integer> tau;
     private final ArrayList<Float> ar;
     private Information<Float> multiTrajets;
@@ -24,8 +28,49 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
      */
     public TransmetteurBruiteMultiTrajets(float snr, int nb_sample, ArrayList<Integer> tau, ArrayList<Float> ar) {
         super(snr, nb_sample);
+        this.nb_sample = nb_sample;
+        this.snr = (float) Math.pow(10, snr/10);
+        a1 = new Random();
+        a2 = new Random();
         this.tau = tau;
         this.ar = ar;
+    }
+
+    public void calculateSignalPower() {
+        p_signal /= informationRecue.nbElements();
+    }
+
+    /**
+     * Calcul de la puissance du bruit.
+     */
+    public void calculateNoisePower() {
+        p_noise = p_signal/snr;
+    }
+
+    /**
+     * Calcul de l'écart type du bruit.
+     */
+    public void calculateSigmaNoise() {
+        sigma_noise = (nb_sample*p_noise)/(2*snr);
+    }
+
+    /**
+     * Génération du bruit gaussien.
+     */
+    public void generateNoise(Information<Float> informationEntree, Information<Float> informationSortie) {
+
+        calculateSignalPower();
+        calculateNoisePower();
+        calculateSigmaNoise();
+
+        int j=0;
+        // Generation du bruit gaussien
+        for(Float i : informationEntree) {
+            float bruit = (float) (sigma_noise * Math.sqrt(-2 * Math.log(1 - a1.nextFloat())) * Math.cos(2 * Math.PI * a2.nextFloat()));
+            //System.out.println("i : " + i + " // i+bruit : " + i+bruit);
+            informationSortie.setIemeElement(j, i+bruit);
+            j++;
+        }
     }
 
     private int tauMax() {
@@ -54,16 +99,25 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         }
     }
 
+    public void emettre() throws InformationNonConformeException {
+        for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
+            destinationConnectee.recevoir(informationEmise);
+        }
+    }
+
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
+        informationRecue = information;
         int tauMAx = tauMax();
 
-        for(int i = 0; i < information.nbElements() + tauMAx; i++) {
-            if(i<information.nbElements()) {
-                informationRecue.add(information.iemeElement(i));
-            }
-            else {
-                informationRecue.add(0f);
+        for (Float i : information) {
+            p_signal += (float) Math.pow(i, 2);
+        }
+
+        // TODO
+        for(int i = 0; i < informationRecue.nbElements() + tauMAx; i++) {
+            if(i<informationRecue.nbElements()) {
+                informationEmise.add(informationRecue.iemeElement(i));
             }
         }
 
