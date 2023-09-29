@@ -12,6 +12,7 @@ import information.InformationNonConformeException;
 public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique {
     private final ArrayList<Integer> tau;
     private final ArrayList<Float> ar;
+    private Information<Float> multiTrajet;
 
     /**
      * Constructeur de la classe TransmetteurBruiteAnalogique.
@@ -23,6 +24,7 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         super(snr, nb_sample);
         this.tau = tau;
         this.ar = ar;
+        multiTrajet = new Information<>();
     }
 
 
@@ -33,13 +35,14 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
      * sur la liste "informationEmise".
      */
     public void addMultiTrajets() {
+        multiTrajet = informationRecue;
         for(int i=0; tau.get(i) != 0; i++) {
-            for(int j=0; j<informationEmise.nbElements(); j++) {
+            for(int j=0; j<multiTrajet.nbElements(); j++) {
                 if(j < tau.get(i)) {
-                    informationEmise.setIemeElement(j, informationEmise.iemeElement(j));
+                    multiTrajet.setIemeElement(j, multiTrajet.iemeElement(j));
                 }
                 else {
-                    informationEmise.setIemeElement(j, informationEmise.iemeElement(j) + ar.get(i) * informationEmise.iemeElement(j-tau.get(i)));
+                    multiTrajet.setIemeElement(j, multiTrajet.iemeElement(j) + ar.get(i) * informationRecue.iemeElement(j-tau.get(i)));
                 }
             }
         }
@@ -53,6 +56,7 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
         for (Float i : information) {
             informationRecue.add(i);
+            multiTrajet.add(i);
             p_signal += (float) Math.pow(i, 2);
         }
 
