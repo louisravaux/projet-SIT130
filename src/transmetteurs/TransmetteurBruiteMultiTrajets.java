@@ -28,42 +28,6 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         this.ar = ar;
     }
 
-    public void calculateSignalPower() {
-        p_signal /= informationRecue.nbElements();
-    }
-
-    /**
-     * Calcul de la puissance du bruit.
-     */
-    public void calculateNoisePower() {
-        p_noise = p_signal/snr;
-    }
-
-    /**
-     * Calcul de l'écart type du bruit.
-     */
-    public void calculateSigmaNoise() {
-        sigma_noise = (nb_sample*p_noise)/(2*snr);
-    }
-
-    /**
-     * Génération du bruit gaussien.
-     */
-    public void generateNoise(Information<Float> informationEntree, Information<Float> informationSortie) {
-
-        calculateSignalPower();
-        calculateNoisePower();
-        calculateSigmaNoise();
-
-        int j=0;
-        // Generation du bruit gaussien
-        for(Float i : informationEntree) {
-            float bruit = (float) (sigma_noise * Math.sqrt(-2 * Math.log(1 - a1.nextFloat())) * Math.cos(2 * Math.PI * a2.nextFloat()));
-            informationSortie.setIemeElement(j, i+bruit);
-            j++;
-        }
-    }
-
     private int tauMax() {
         int max = tau.get(0);
 
@@ -79,46 +43,27 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     public void addMultiTrajets() {
         multiTrajets = informationRecue;
         for(int i=0; tau.get(i) != 0; i++) {
-            //System.out.println("tau  > " + tau.get(i));
             for(int j=0; j<multiTrajets.nbElements(); j++) {
                 if(j < tau.get(i)) {
-                    //System.out.println("j < tau !");
                     multiTrajets.setIemeElement(j, multiTrajets.iemeElement(j));
                 }
                 else {
-                    //System.out.println("j > tau ! YES");
-                    //System.out.println(multiTrajets.iemeElement(j));
-                    //System.out.println(informationRecue.iemeElement(j-tau.get(i)));
-
                     multiTrajets.setIemeElement(j, multiTrajets.iemeElement(j) + ar.get(i) * informationRecue.iemeElement(j-tau.get(i)));
                 }
             }
         }
     }
 
-    public void emettre() throws InformationNonConformeException {
-        for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
-            destinationConnectee.recevoir(multiTrajets);
-        }
-    }
-
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
-        // reception des informations
-
-
         int tauMAx = tauMax();
 
-        informationRecue = information;
-        //informationEmise = new Information<Float>(informationRecue.nbElements() + tau );
-
-
-        for(int i = 0; i < informationRecue.nbElements() + tauMAx; i++) {
-            if(i<informationRecue.nbElements()) {
-                informationEmise.add(informationRecue.iemeElement(i));
+        for(int i = 0; i < information.nbElements() + tauMAx; i++) {
+            if(i<information.nbElements()) {
+                informationRecue.add(information.iemeElement(i));
             }
             else {
-                informationEmise.add(0f);
+                informationRecue.add(0f);
             }
         }
 
