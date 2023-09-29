@@ -79,17 +79,11 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
     public void addMultiTrajets() {
         multiTrajets = informationRecue;
         for(int i=0; tau.get(i) != 0; i++) {
-            //System.out.println("tau  > " + tau.get(i));
             for(int j=0; j<multiTrajets.nbElements(); j++) {
                 if(j < tau.get(i)) {
-                    //System.out.println("j < tau !");
                     multiTrajets.setIemeElement(j, multiTrajets.iemeElement(j));
                 }
                 else {
-                    //System.out.println("j > tau ! YES");
-                    //System.out.println(multiTrajets.iemeElement(j));
-                    //System.out.println(informationRecue.iemeElement(j-tau.get(i)));
-
                     multiTrajets.setIemeElement(j, multiTrajets.iemeElement(j) + ar.get(i) * informationRecue.iemeElement(j-tau.get(i)));
                 }
             }
@@ -98,27 +92,20 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
     public void emettre() throws InformationNonConformeException {
         for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
-            destinationConnectee.recevoir(multiTrajets);
+            destinationConnectee.recevoir(informationEmise);
         }
     }
 
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
-        // reception des informations
-
-
-        int tauMAx = tauMax();
-
         informationRecue = information;
         //informationEmise = new Information<Float>(informationRecue.nbElements() + tau );
+        int tauMAx = tauMax();
 
-
+        // TODO
         for(int i = 0; i < informationRecue.nbElements() + tauMAx; i++) {
             if(i<informationRecue.nbElements()) {
                 informationEmise.add(informationRecue.iemeElement(i));
-            }
-            else {
-                informationEmise.add(0f);
             }
         }
 
