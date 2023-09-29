@@ -31,7 +31,21 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		float esperance = (vmin + vmax) / 2;
 		int nbBits = informationRecue.nbElements()/nb_samples;
 
-		if (form.equals("RZ") ||form.equals("NRZ")) {
+		if (form.equals("RZ")) {
+			for (Float f : informationRecue) {
+				j++;
+				somme += f;
+				if (j == nb_samples) {
+					if (somme > esperance) {
+						informationEmise.add(true);
+					} else {
+						informationEmise.add(false);
+					}
+					j = 0;
+					somme = 0;
+				}
+			}
+		} else if (form.equals("NRZ")) {
 			for (Float f : informationRecue) {
 				j++;
 				somme += f;

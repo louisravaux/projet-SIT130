@@ -301,7 +301,7 @@ public class Simulateur {
 				int pos_ar = 0;
 				while(i < args.length && !args[i].matches("^-[a-z]+") && pairimpair < 11) {
 					if(pairimpair%2 == 1 && args[i].matches("^-?\\d*$")) {
-						if(Integer.parseInt(args[i]) > nb_sample || Integer.parseInt(args[i]) < 0) {
+						if(Integer.parseInt(args[i]) < 0) {
 							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
 						} else {
 							System.out.println("tau : " + args[i]);
