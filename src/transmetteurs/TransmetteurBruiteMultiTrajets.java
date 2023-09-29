@@ -25,20 +25,13 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         this.ar = ar;
     }
 
-    //TODO remove this and modify TransmetteurBruiteAnalogique
-    public void generateNoise(Information<Float> informationEntree, Information<Float> informationSortie) {
 
-        calculateSignalPower();
-        calculateNoisePower();
-        calculateSigmaNoise();
-
-        // Generation du bruit gaussien
-        for(int i = 0; i < informationEntree.nbElements(); i++) {
-            float bruit = (float) (sigma_noise * Math.sqrt(-2 * Math.log(1 - a1.nextFloat())) * Math.cos(2 * Math.PI * a2.nextFloat()));
-            informationSortie.setIemeElement(i, informationEntree.iemeElement(i)+bruit);
-        }
-    }
-
+    /**
+     * Effectue une opération de mise à jour sur une collection d'informations émises
+     * en utilisant une liste de coefficients multiplicatifs et de décalages temporels.
+     * Cette méthode parcourt les éléments de la liste "tau" pour appliquer les calculs
+     * sur la liste "informationEmise".
+     */
     public void addMultiTrajets() {
         for(int i=0; tau.get(i) != 0; i++) {
             for(int j=0; j<informationEmise.nbElements(); j++) {
@@ -52,12 +45,14 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         }
     }
 
+    /**
+     * Réception des informations, génération du bruit et ajout des trajets multiples.
+     */
     @Override
     public void recevoir(Information<Float> information) throws InformationNonConformeException {
 
         for (Float i : information) {
             informationRecue.add(i);
-            informationEmise.add(i);
             p_signal += (float) Math.pow(i, 2);
         }
 
