@@ -9,9 +9,18 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
+/**
+ * Classe d'un transmetteur qui transmet des informations float en ajoutant les trajets multiples ainsi que du bruit gaussien.
+ */
 public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique {
+
+    /** ArrayList contenant les différentes valeurs de décalage */
     private final ArrayList<Integer> tau;
+
+    /** ArrayList contenant les différentes valeurs de coefficient multiplicatif d'amplitude */
     private final ArrayList<Float> ar;
+
+    /** Information<Float> contenant les informations avec trajets multiples */
     private Information<Float> multiTrajet;
 
     /**
