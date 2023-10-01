@@ -10,7 +10,7 @@ import simulateur.Simulateur;
 public class TEBvsSNRGraph {
 
     public static void main(String[] args) {
-        List<Integer> snrValues = new ArrayList<>();
+        List<Double> snrValues = new ArrayList<>();
         List<Float> tebValues = new ArrayList<>();
 
         // Créer un fichier CSV pour enregistrer les résultats
@@ -24,7 +24,7 @@ public class TEBvsSNRGraph {
             csvWriter.append("\n");
 
             // Réaliser 60 simulations en incrémentant le nombre d'échantillons par symbole
-            for (int snr = -40; snr <= 10; snr++) {
+            for (double snr = -40; snr <= 10; snr+=0.5) {
                 // Effectuer la simulation
                 float teb = runSimulation(snr);
 
@@ -45,7 +45,7 @@ public class TEBvsSNRGraph {
         }
     }
 
-    private static float runSimulation(int snr) {
+    private static float runSimulation(double snr) {
         float teb = 0;
         try {
             Simulateur sim = new Simulateur(
