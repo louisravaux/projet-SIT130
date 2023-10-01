@@ -9,9 +9,6 @@ import information.InformationNonConformeException;
  * dans un système de communication. Ce transmetteur ne fait aucun traitement
  * sur les données reçues et les transmet telles quelles aux destinations connectées.
  * Il s'agit d'un transmetteur parfait sans altération du signal.
- *
- * @param <T> Le type des données d'entrée.
- * @param <R> Le type des données de sortie.
  */
 public class TransmetteurParfait extends Transmetteur<Boolean, Boolean> {
 
