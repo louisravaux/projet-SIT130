@@ -38,21 +38,36 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
 
     /**
+     * Calcul du décalage maximal.
+     */
+    public void calculateShift() {
+        int decalageMax = 0;
+        for (Integer i : tau) {
+            if (i > decalageMax) {
+                decalageMax = i;
+            }
+        }
+        if (decalageMax%nb_sample != 0) {
+            decalageMax = decalageMax + (nb_sample - decalageMax%nb_sample);
+        }
+
+        //on calcul le decalage max
+        for (int i = 0; i < decalageMax; i++) {
+            multiTrajet.add(0f);
+        }
+    }
+
+    /**
      * Effectue une opération de mise à jour sur une collection d'informations émises
      * en utilisant une liste de coefficients multiplicatifs et de décalages temporels.
      * Cette méthode parcourt les éléments de la liste "tau" pour appliquer les calculs
      * sur la liste "informationEmise".
      */
     public void addMultiTrajets() {
-        multiTrajet = informationRecue;
+        calculateShift();
         for (int i = 0; i < tau.size() && tau.get(i) != 0; i++) {
-            for(int j = 0; j < multiTrajet.nbElements(); j++) {
-                if(j < tau.get(i)) {
-                    multiTrajet.setIemeElement(j, multiTrajet.iemeElement(j));
-                }
-                else {
-                    multiTrajet.setIemeElement(j, multiTrajet.iemeElement(j) + ar.get(i) * informationRecue.iemeElement(j-tau.get(i)));
-                }
+            for(int j = 0; j < informationRecue.nbElements(); j++) {
+                multiTrajet.setIemeElement(j + tau.get(i), multiTrajet.iemeElement(j+ tau.get(i)) + ar.get(i) * informationRecue.iemeElement(j));
             }
         }
     }
@@ -65,12 +80,13 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
 
         for (Float i : information) {
             informationRecue.add(i);
+            multiTrajet.add(i);
             p_signal += (float) Math.pow(i, 2);
         }
 
         addMultiTrajets();
 
-        generateNoise(informationRecue, informationEmise);
+        generateNoise(multiTrajet, informationEmise);
 
         emettre();
     }
