@@ -73,13 +73,15 @@ Lors de cette itération, nous avons utilisé la formule de Rice pour générer 
 \subsubsection{Test de la performance des codages de canal}
 
 La deuxième série de valeur à générer permet de savoir à quelle SNR notre codage de ligne est considéré comme fiable.
-Pour ce faire, on va tracer un graphique représentant le TEB en fonction du $\frac{TEB}{bit}$.
+Pour ce faire, on va tracer un graphique représentant le TEB en fonction du $\frac{RSB}{bit}$.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/graphe ddes teb en fonction des snr.png}
-\caption{\label{fig:TEBenFonctionDesSNR}Graphique des TEB en fonction des SNR.}
+\includegraphics[width=0.9\textwidth]{img/tebvssnrpb.png}
+\caption{\label{fig:TEBenFonctionDesSNR}Graphique du TEB en fonction du SNRPB.}
 \end{figure}
+
+\textcolor{red}{Après correction de notre calcul du bruit blanc gaussien, nous trouvons désormais des valeurs plus proche de la réalité. La courbe orange représente le TEB théorique du NRZ. Nous constatons que notre méthode de réception peut être améliorée mais quelle semble parfaitement gérer un signal bruité avec un snrpb de 5 et au delà}
 
 On remarque que le signal NRZ est le signal qui a le plus robuste au bruit car son TEB est le premier à descendre  en asymptote pour un SNR/bit de -7. Il est suivi du NRZT et du RZ. La performance du codage NRZ est peut-être du au fait qu'il est défini sur un intervalle Amax et Amin plus important que le NRZT/RZ
 
