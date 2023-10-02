@@ -34,6 +34,8 @@ public class DecodageReception extends Codeur<Boolean> {
                 informationEmise.add(true);
             } else if (!c) {
                 informationEmise.add(false);
+            } else {
+                informationEmise.add(true);
             }
         }
     }
