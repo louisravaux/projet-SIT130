@@ -14,20 +14,25 @@ public class DecodageReception extends Codeur<Boolean> {
     }
 
     public void conversion() {
-        for (int i = 0; i < informationRecue.nbElements()-2; i++) {
-            if (!informationRecue.iemeElement(i) && !informationRecue.iemeElement(i+1) && !informationRecue.iemeElement(i+2)) {
+        for (int i = 0; i < informationRecue.nbElements(); i+=3) {
+
+            Boolean a = informationRecue.iemeElement(i);
+            Boolean b = informationRecue.iemeElement(i+1);
+            Boolean c = informationRecue.iemeElement(i+2);
+
+            if (!a && !b && !c) {
                 informationEmise.add(false);
-            } else if (!informationRecue.iemeElement(i) && !informationRecue.iemeElement(i+1) && informationRecue.iemeElement(i+2)) {
+            } else if (!a && !b) {
                 informationEmise.add(true);
-            } else if (!informationRecue.iemeElement(i) && informationRecue.iemeElement(i+1) && !informationRecue.iemeElement(i+2)) {
+            } else if (!a && !c) {
                 informationEmise.add(false);
-            } else if (!informationRecue.iemeElement(i) && informationRecue.iemeElement(i+1) && informationRecue.iemeElement(i+2)) {
+            } else if (!a) {
                 informationEmise.add(false);
-            } else if (informationRecue.iemeElement(i) && !informationRecue.iemeElement(i+1) && !informationRecue.iemeElement(i+2)) {
+            } else if (!b && !c) {
                 informationEmise.add(true);
-            } else if (informationRecue.iemeElement(i) && !informationRecue.iemeElement(i+1) && informationRecue.iemeElement(i+2)) {
+            } else if (!b) {
                 informationEmise.add(true);
-            } else if (informationRecue.iemeElement(i) && informationRecue.iemeElement(i+1) && !informationRecue.iemeElement(i+2)) {
+            } else if (!c) {
                 informationEmise.add(false);
             }
         }

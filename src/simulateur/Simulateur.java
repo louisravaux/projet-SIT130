@@ -1,4 +1,7 @@
 package simulateur;
+import codeurs.CodageEmission;
+import codeurs.Codeur;
+import codeurs.DecodageReception;
 import destinations.Destination;
 import destinations.DestinationFinale;
 import destinations.DestinationFinaleAnalogique;
@@ -175,6 +178,9 @@ public class Simulateur {
 
 		destination = new DestinationFinale();
 
+		Codeur<Boolean> codeurEmission = new CodageEmission();
+		Codeur<Boolean> decodeur = new DecodageReception();
+
 		if (affichage) {
 			SondeAnalogique e = new SondeAnalogique("emetteur");
 			SondeAnalogique t = new SondeAnalogique("transmetteur");
@@ -185,19 +191,28 @@ public class Simulateur {
 			emetteur.connecter(e);
 			transmetteurAnalogique.connecter(t);
 			recepteur.connecter(sondeDestination);
+
+			if (codeur) {
+				SondeLogique sondeDecodeur = new SondeLogique("decodeur", 200);
+				decodeur.connecter(sondeDecodeur);
+			}
 		}
 
 		if (codeur) {
-			// TODO
+			source.connecter(codeurEmission);
+			codeurEmission.connecter(emetteur);
+			emetteur.connecter(transmetteurAnalogique);
+			transmetteurAnalogique.connecter(recepteur);
+			recepteur.connecter(decodeur);
+			decodeur.connecter(destination);
+		} else {
+			source.connecter(emetteur);
+			emetteur.connecter(transmetteurAnalogique);
+			transmetteurAnalogique.connecter(recepteur);
+			recepteur.connecter(destination);
 		}
 
-		source.connecter(emetteur);
 
-		emetteur.connecter(transmetteurAnalogique);
-
-		transmetteurAnalogique.connecter(recepteur);
-
-		recepteur.connecter(destination);
 
 	}
    
@@ -227,6 +242,10 @@ public class Simulateur {
     		if (args[i].matches("-s")){
     			affichage = true;
     		}
+
+			else if (args[i].matches("-codeur")){
+				codeur = true;
+			}
     		
     		else if (args[i].matches("-seed")) {
     			aleatoireAvecGerme = true;
@@ -331,10 +350,6 @@ public class Simulateur {
 				}
 				//System.out.println(dt);
 				//System.out.println(ar);
-			}
-
-			if (args[i].matches("-codeur")){
-				codeur = true;
 			}
 
 			// next args

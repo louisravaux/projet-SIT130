@@ -42,6 +42,8 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
         for (Boolean i : information) {
             informationRecue.add(i);
         }
+        conversion();
+        emettre();
     }
 
     /**
