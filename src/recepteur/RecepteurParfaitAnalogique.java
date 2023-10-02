@@ -31,78 +31,87 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		float esperance = (vmin + vmax) / 2;
 		int nbBits = informationRecue.nbElements()/nb_samples;
 
-		if (form.equals("RZ")) {
-			for (Float f : informationRecue) {
-				j++;
-				somme += f;
-				if (j == nb_samples) {
-					if (somme > esperance) {
-						informationEmise.add(true);
-					} else {
-						informationEmise.add(false);
-					}
-					j = 0;
-					somme = 0;
-				}
-			}
-		} else if (form.equals("NRZ")) {
-			for (Float f : informationRecue) {
-				j++;
-				somme += f;
-				if (j >= nb_samples) {
-					if (somme / j > esperance) {
-						informationEmise.add(true);
-					} else {
-						informationEmise.add(false);
-					}
-					j = 0;
-					somme = 0;
-				}
-			}
-		} else if (form.equals("NRZT")) {
-			for (Float f : informationRecue) {
-				j++;
-				// Calcul somme
-				if (i == 0) {
-					if (j > (int)(nb_samples/3)) {
+        switch (form) {
+            case "RZ" -> {
+				for (Float f : informationRecue) {
+					if (j < nb_samples / 3) {
+						j++;
+					} else if (j >= nb_samples / 3 && j < (((nb_samples / 3)*2))){
+						j++;
 						somme += f;
-					}
-				}
-				else if (i == nbBits-1) {
-					if (j < 2*(int)(nb_samples/3)) {
-						somme += f;
-					}
-				}
-				else {
-					somme += f;
-				}
-				// Determination si 0 ou 1
-				if (j == nb_samples) {
-					if (i == 0) {
-						if (somme / (2*(int)(nb_samples/3)) > esperance) {
-							informationEmise.add(true);
-						} else {
-							informationEmise.add(false);
+						if (j >= (((nb_samples / 3)*2))){
+							if (somme / ((float) nb_samples / 3) > esperance) {
+								informationEmise.add(true);
+							} else {
+								informationEmise.add(false);
+							}
 						}
 					}
-					else if (i == nbBits - 1) {
-						if (somme / (2*(int)(nb_samples/3)) > esperance) {
-							informationEmise.add(true);
-						} else {
-							informationEmise.add(false);
+                else if (j >= (((nb_samples / 3) * 2))) {
+						j++;
+						if (j == nb_samples) {
+							j = 0;
+							somme = 0;
 						}
 					}
-					else if (somme / nb_samples > esperance) {
-						informationEmise.add(true);
-					} else {
-						informationEmise.add(false);
-					}
-					i++;
-					j = 0;
-					somme = 0;
 				}
 			}
-		}
+            case "NRZ" -> {
+                for (Float f : informationRecue) {
+                    j++;
+                    somme += f;
+                    if (j >= nb_samples) {
+                        if (somme / j > esperance) {
+                            informationEmise.add(true);
+                        } else {
+                            informationEmise.add(false);
+                        }
+                        j = 0;
+                        somme = 0;
+                    }
+                }
+            }
+            case "NRZT" -> {
+                for (Float f : informationRecue) {
+                    j++;
+                    // Calcul somme
+                    if (i == 0) {
+                        if (j > (int) (nb_samples / 3)) {
+                            somme += f;
+                        }
+                    } else if (i == nbBits - 1) {
+                        if (j < 2 * (int) (nb_samples / 3)) {
+                            somme += f;
+                        }
+                    } else {
+                        somme += f;
+                    }
+                    // Determination si 0 ou 1
+                    if (j == nb_samples) {
+                        if (i == 0) {
+                            if (somme / (2 * (int) (nb_samples / 3)) > esperance) {
+                                informationEmise.add(true);
+                            } else {
+                                informationEmise.add(false);
+                            }
+                        } else if (i == nbBits - 1) {
+                            if (somme / (2 * (int) (nb_samples / 3)) > esperance) {
+                                informationEmise.add(true);
+                            } else {
+                                informationEmise.add(false);
+                            }
+                        } else if (somme / nb_samples > esperance) {
+                            informationEmise.add(true);
+                        } else {
+                            informationEmise.add(false);
+                        }
+                        i++;
+                        j = 0;
+                        somme = 0;
+                    }
+                }
+            }
+        }
 
 
 		emettre();
