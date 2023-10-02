@@ -79,6 +79,9 @@ public class Simulateur {
 
 	/** la chaine de transmission est analogique ou logique */
 	private boolean analog = false;
+
+	/** la chaine de transmission dispose d'un decodeur */
+	private boolean codeur = false;
    
     /** Le constructeur de Simulateur construit une chaîne de
      * transmission composée d'une Source de type Boolean, d'une Destination
@@ -182,6 +185,10 @@ public class Simulateur {
 			emetteur.connecter(e);
 			transmetteurAnalogique.connecter(t);
 			recepteur.connecter(sondeDestination);
+		}
+
+		if (codeur) {
+			// TODO
 		}
 
 		source.connecter(emetteur);
@@ -324,6 +331,10 @@ public class Simulateur {
 				}
 				//System.out.println(dt);
 				//System.out.println(ar);
+			}
+
+			if (args[i].matches("-codeur")){
+				codeur = true;
 			}
 
 			// next args
