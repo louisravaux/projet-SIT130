@@ -20,19 +20,7 @@ public class DecodageReception extends Codeur<Boolean> {
             Boolean b = informationRecue.iemeElement(i+1);
             Boolean c = informationRecue.iemeElement(i+2);
 
-            if (!a && !b && !c) {
-                informationEmise.add(false);
-            } else if (!a && !b) {
-                informationEmise.add(true);
-            } else if (!a && !c) {
-                informationEmise.add(false);
-            } else if (!a) {
-                informationEmise.add(false);
-            } else if (!b && !c) {
-                informationEmise.add(true);
-            } else if (!b) {
-                informationEmise.add(true);
-            } else if (!c) {
+            if (!a && !b && !c || !a && b && !c || !a && b && c || a && b && !c) {
                 informationEmise.add(false);
             } else {
                 informationEmise.add(true);
