@@ -128,13 +128,6 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
             }
         }
 
-
 		emettre();
-	}
-
-	public void emettre() throws InformationNonConformeException {
-		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
-			destinationConnectee.recevoir(informationEmise);
-		}
 	}
 }

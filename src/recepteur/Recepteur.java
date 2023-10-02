@@ -49,7 +49,11 @@ public abstract class Recepteur <R,E> implements  DestinationInterface <R>, Sour
 	
 	public  abstract void recevoir(Information <R> information) throws InformationNonConformeException;
 	
-	public  abstract void emettre() throws InformationNonConformeException;
+	public void emettre() throws InformationNonConformeException {
+		for (DestinationInterface<E> destinationConnectee : destinationsConnectees) {
+			destinationConnectee.recevoir(informationEmise);
+		}
+	};
 	
 	
 }
