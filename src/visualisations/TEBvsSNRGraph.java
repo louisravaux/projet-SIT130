@@ -49,8 +49,8 @@ public class TEBvsSNRGraph {
         float teb = 0;
         try {
             Simulateur sim = new Simulateur(
-                    new String[] { "-seed", "78373", "-mess", "10000", "-form", "NRZ", "-ampl", "-2", "2", "-snrpb",
-                            String.valueOf(snr) });
+                    new String[] { "-seed", "78373", "-mess", "10000", "-form", "NRZ", "-ampl", "-2", "2","-snrpb",
+                            String.valueOf(snr),"-ti", "40", "0.75", "40", "0.75"});
             sim.execute();
             teb = sim.calculTauxErreurBinaire();
         } catch (Exception e) {

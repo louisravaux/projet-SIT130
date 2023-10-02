@@ -303,7 +303,7 @@ public class Simulateur {
 						if(Integer.parseInt(args[i]) < 0) {
 							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
 						} else {
-							System.out.println("tau : " + args[i]);
+							//System.out.println("tau : " + args[i]);
 							dt.set(pos_tau, Integer.parseInt(args[i]));
 							pos_tau++;
 						}
@@ -314,7 +314,7 @@ public class Simulateur {
 						if(Float.parseFloat(args[i]) == 0 || Float.parseFloat(args[i]) < 0.0f || Float.parseFloat(args[i]) > 1.0f) {
 							throw new ArgumentsException("Valeur d'amplitude -ti invalide : " + args[i]);
 						} else {
-							System.out.println("ar : " + args[i]);
+							//System.out.println("ar : " + args[i]);
 							ar.set(pos_ar, Float.parseFloat(args[i]));
 							pos_ar++;
 						}
@@ -322,8 +322,8 @@ public class Simulateur {
 					}
 					i++;
 				}
-				System.out.println(dt);
-				System.out.println(ar);
+				//System.out.println(dt);
+				//System.out.println(ar);
 			}
 
 			// next args

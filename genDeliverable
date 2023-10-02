@@ -10,4 +10,4 @@ tar --exclude='genDeliverable' \
     --exclude='.gitignore' \
     --exclude='sit213-projet.iml' \
     --exclude='.idea' \
-    -czvf A5.Favrel.Huget.Donatien.Ravaux.etape2.tar.gz .
+    -czvf A5.Favrel.Huget.Donatien.Ravaux.etapeX.tar.gz .
