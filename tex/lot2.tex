@@ -1,97 +1,3 @@
-
-
-DONATIEN Maëva,
-FAVREL Antoine,
-HUGUET Benjamin,
-RAVAUX Louis
-
-FIP A2 Promo 2025
-
-\section{SIT213 - Compte rendu de projet}
-
-A l'attention de l'équipe pédagogique
-\newpage
-\section{Le Projet}
-\subsection{Objet du document}
-
-Ce document a pour objectif le suivi du projet "Atelier logiciel - système de transmission"
-Vous trouverez dans ce document l'ensemble des itérations, les tests réalisés, et les modifications apportées tout au long du projet.
-
-\subsection{Cahier des charges}
-
-L'objectif consiste à transmettre un message d'un point d'entrée à un point de sortie, via un canal de transmission (ou de communication). Le message d'entrée est émis par une source d'entrée. Les messages considérés dans ce projet seront des suites de symboles binaires (0 ou 1) correspondant à des informations échantillonnées et quantifiées sur deux niveaux logiques. Le message de sortie sera - autant que faire se peut - semblable au message d'entrée. Ce dernier étant incapable de traverser le canal de propagation tel quel, on l'adaptera aux caractéristiques physiques du canal en le convertissant au moyen d'un transducteur en un " vecteur " adapté à la transmission, appelé signal.
-
-Ce dernier sera injecté dans le canal au moyen d'un émetteur. À l'autre extrémité du canal, il sera récupéré et traité par le récepteur et le transducteur de réception.
-
-Les principaux canaux de transmission rencontrés dans la nature sont : le canal Hertzien (espace libre), le canal guidé électrique (câble), le canal guidé Optique (fibre), le canal acoustique aérien et le canal acoustique sous-marin. Chaque canal de propagation devant être utilisé à une fréquence bien particulière, le message est transposé autour de cette fréquence par l'opération de modulation. En outre, le canal sera une source de bruit pour les signaux qu'il transporte. Les principales sources de bruit rencontrées en pratique sont : la dispersion de trajets, la dispersion chromatique, le bruit de détection (grenaille), le bruit thermique et le bruit d'amplification.
-
-Par la suite, chaque composant du système de transmission entre la source et la destination sera dénommé transmetteur.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{image 1.png}
-    \caption{\label{fig:image1}Composants de la chaine de transmission.}
-\end{figure}
-\newpage
-\section{Iteration n°1}
-\subsection{Objectifs}
-
-L'objectif de cette première itération est avant tout de prendre en main la chaine de transmission.
-
-Pour cette itération, la chaine respectera les propriétés suivantes :
-
-La source émet une séquence booléenne soit fixée, soit aléatoire.
-Le transmetteur logique parfait se contente, à la réception d'un signal, de l'émettre tel quel vers les destinations qui lui sont connectées.
-La destination se contente de recevoir le signal du composant sur lequel elle est connectée.
-Des sondes logiques permettent de visualiser les signaux émis par la source et le transmetteur parfait.
-L'application principale calcule le taux d'erreur binaire (TEB) du système.
-
-Voici un schéma de la chaine :
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{image 2.png}
-    \caption{\label{fig:image2}Chaine de transmission itération 1.}
-\end{figure}
-
-\subsection{Actions réalisées}
-
-\subsubsection{Sources}
-
-Dans un premier temps, nous avons créé deux classes sources. Une source fixe, qui envoie toujours la même séquence de données. Puis une source aléatoire qui envoie une nouvelle séquence à chaque appel.
-
-\subsubsection{Transmetteur}
-
-Par la suite, nous avons créé un transmetteur parfait. Il joue le rôle du canal de propagation. Pour ce transmetteur parfait, le canal transmet exactement ce qu'il reçoit.
-
-\subsubsection{Destination}
-
-Enfin, nous avons créé une destination. Cette classe joue le rôle de récepteur dans la chaine de transmission.
-
-\subsection{Simulation}
-
-Voici la simulation avec une source fixe :
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{image 3.png}
-    \caption{\label{fig:image3}Simulation source fixe source et transmetteur.}
-\end{figure}
-
-Voici la simulation avec une source aléatoire :
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{image 4.png}
-    \caption{\label{fig:image4}Simulation source aléatoire source et transmetteur.}
-\end{figure}
-
-Nous observons que la sortie du transmetteur est purement identique à la source. C'est normal car il s'agit d'un canal parfait. Le TEB est donc de 0.
-
-\subsection{Conclusion}
-
-Pour conclure, notre chaine de transmission est fonctionnelle, nous sommes en mesure de choisir le type de source et observer la sortie du canal.
-
-Pour le moment, nous n'avons qu'un seul type de transmetteur et que deux types de sources. Par la suite, nous serons amenés à mettre en œuvre une chaine de transmission avec des signaux analogiques et des canaux de propagations non-parfaits.
-\newpage
 \section{Itération n°2}
 \subsection{Objectif de l'itération}
 
@@ -100,10 +6,10 @@ Dans cette nouvelle itération, nous allons devoir coder des émetteurs et un r�
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{image 5.png}
-    \caption{\label{fig:image5}Chaine de transmission itération n°2.}
+    \caption{\label{fig:image5}Chaîne de transmission itération n°2.}
 \end{figure}
 
-Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique pendant la première demi-période. Il y a un retour à 0 à la deuxième demi-période du symbole (figure de gauche). Cependant dans ce projet, nous partirons du principe que l'émission à Vmax ou Vmin se situe entre le 1er et le 3ème tiers de la période symbole (figure de droite).
+Un signal RZ signifie que le signal sera à l'état haut lorsque des 1 logiques seront transmis et à l'état bas lorsqu'il s'agit de 0 logique pendant la première demi-période. Il y a un retour à 0 à la deuxième demi-période du symbole (figure de gauche). Cependant dans ce projet, nous partirons du principe que l'émission à $V_{max}$ ou $V_{min}$ se situe entre le 1er et le 3ème tiers de la période symbole (figure de droite).
 
 \begin{figure}[H]
     \centering
@@ -119,13 +25,16 @@ Un signal NRZ signifie que le signal sera à l'état haut lorsque des 1 logiques
     \caption{\label{fig:image7}Schéma explicatif signal NRZ.}
 \end{figure}
 
-Un signal NRZT possède les mêmes propriétés qu'un signal NRZ. Cependant pour simuler le temps de montés des composants, chaque changement d'état sera représenté par une monté et descente progressive symbolisé sur 1/3 des périodes symboles.
+Un signal NRZT possède les mêmes propriétés qu'un signal NRZ. Cependant pour simuler le temps de montés des composants, chaque changement d'état sera représenté par une monté et descente progressive symbolisé sur $\frac{1}{3}$ des périodes symboles.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{image 8.png}
     \caption{\label{fig:image8}Schéma explicatif signal NRZT.}
 \end{figure}
+
+\textcolor{red}{Le cahier des charges nous donne des amplitudes maximum et minimum à respecter. Pour le codage NZR et NRZT, il faut que $V_{max} >= 0$ et $V_{min} >= 0$ et $V_{max} > V_{min} $
+Pour le signal RZ, il faut que $V_{max} >= 0$ et $V_{min} = 0$ et $V_{max} > V_{min} $ }
 
 \subsection{Organisation}
 
@@ -144,11 +53,11 @@ Pour le développement de notre code, nous allons utiliser l'application Intelli
 \subsection{Procédures de développement}
 \subsubsection{Emetteur}
 
-L'émetteur à un rôle important. Il permet de convertir un signal logique en signal pseudo-analogique. Trois codages en ligne sont attendus pour ce projet. La logique qui repose sur ceux-ci sont la même. On prend le signal logique en entrée, puis en fonction de son état (0 ou 1), on le transforme en une série de flottant qui sera adapté au codage en ligne souhaité. Le nombre d'échantillonnage par symbole sera un paramètre à choisir lors des lancements de simulations (nommé nb\_samples par la suite) ainsi que l'amplitude maximum (Vmax) et minimum (Vmin).
+L'émetteur à un rôle important. Il permet de convertir un signal logique en signal pseudo-analogique. Trois codages en ligne sont attendus pour ce projet. La logique qui repose sur ceux-ci sont la même. On prend le signal logique en entrée, puis en fonction de son état (0 ou 1), on le transforme en une série de flottant qui sera adapté au codage en ligne souhaité. Le nombre d'échantillonnage par symbole sera un paramètre à choisir lors des lancements de simulations (nommé nb\_samples par la suite) ainsi que l'amplitude maximum ($V_{max}$) et minimum ($V_{min}$).
 
 \textbf{Emetteur NRZ :}
 
-Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en entrée et s'il s'agit d'un état à 1, alors on émet un nombre de flottant égale à nb\_samples ayant pour amplitude Vmax. Pour l'état à 0, on émet le même nombre de flottant mais ayant pour amplitude Vmin.
+Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en entrée et s'il s'agit d'un état à 1, alors on émet un nombre de flottant égale à nb\_samples ayant pour amplitude $V_max$. Pour l'état à 0, on émet le même nombre de flottant mais ayant pour amplitude $V_{min}$.
 
 \begin{figure}[H]
     \centering
@@ -156,7 +65,7 @@ Il s'agit de l'émetteur le plus simple à coder. On prend le symbole logique en
     \caption{\label{fig:image10}Sortie de la source et de l'émetteur NRZ.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur NRZ. On retrouve bien une amplitude égale à Vmax pendant une durée symbole pour un état logique 1 et une amplitude égale à Vmin pendant une durée symbole pour un état logique à 0.
+Ci-dessus le graphique en sortie de la source et de l'émetteur NRZ. On retrouve bien une amplitude égale à $V_{max}$ pendant une durée symbole pour un état logique 1 et une amplitude égale à $V_{min}$ pendant une durée symbole pour un état logique à 0.
 
 Emetteur RZ :
 
@@ -164,7 +73,7 @@ L'émetteur RZ est légèrement plus compliqué que le signal NRZ. La constructi
 
 \begin{itemize}
     \item Sur le premier tiers $(\frac{nb\_samples}{3})$, les flottants ont pour amplitude 0.
-    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}$,$\frac{nb\_samples}{3}*2])$, les flottants ont pour valeur Vmax si le bit d'état logique est à 1 et Vmin si le bit est à 0.
+    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}$,$\frac{nb\_samples}{3}*2])$, les flottants ont pour valeur $V_{max}$ si le bit d'état logique est à 1 et $V_{min}$ si le bit est à 0.
     \item Sur ce dernier tiers, les flottants ont de nouveau une amplitude de 0.
 \end{itemize}
 
@@ -174,17 +83,17 @@ L'émetteur RZ est légèrement plus compliqué que le signal NRZ. La constructi
     \caption{\label{fig:image11}Sortie de la source et de l'émetteur RZ.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur RZ. On apercevoir qu'un symbole logique est représenté par un symbole analogique composé en trois parties : le premier et dernier tiers à 0 et le deuxième tiers avec une amplitude à Vmax ou Vmin.
+Ci-dessus le graphique en sortie de la source et de l'émetteur RZ. On apercevoir qu'un symbole logique est représenté par un symbole analogique composé en trois parties : le premier et dernier tiers à 0 et le deuxième tiers avec une amplitude à $V_{max}$ ou $V_{min}$.
 
 \textbf{Emetteur NRZT :}
 
-C'est le transmetteur le plus complexe à faire. Il reprend les caractéristiques du NRZ mais possède une pente montante et descendante au 1er et dernier tiers. Avant toute chose, il faut calculer un pas qui sera utilisé pour la pente. Pour cela, on utilise cette formule : $ pas = \frac{Vx}{\frac{nb\_samples}{3}} $ avec Vx ayant Vmax ou Vmin en fonction du bit logique.
+C'est le transmetteur le plus complexe à faire. Il reprend les caractéristiques du NRZ mais possède une pente montante et descendante au 1er et dernier tiers. Avant toute chose, il faut calculer un pas qui sera utilisé pour la pente. Pour cela, on utilise cette formule : $ pas = \frac{Vx}{\frac{nb\_samples}{3}} $ avec $V_x$ ayant $V_{max}$ ou $V_{min}$ en fonction du bit logique.
 
 La construction d'un sylmbole se passe en trois étapes :
 \begin{itemize}
-    \item Sur le premier tiers $ \left(\frac{nb\_samples}{3} \right) $, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers Vx.
-    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}, \frac{nb\_samples}{3}*2]) $, les flottants ont pour valeur Vmax si le bit d'état logique est à 1 et Vmin si le bit est à 0.
-    \item •	Sur le dernier tiers, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers 0. Néanmoins, si plusieurs bits logiques de même signe se suivent, il n'y a pas de rampe entre le premier et le dernier tiers des bits analogiques correspondants. On reste sur une amplitude Vmax et Vmin.
+    \item Sur le premier tiers $ \left(\frac{nb\_samples}{3} \right) $, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers $V_x$.
+    \item Sur le deuxième tiers $(]\frac{nb\_samples}{3}, \frac{nb\_samples}{3}*2]) $, les flottants ont pour valeur $V_{max}$ si le bit d'état logique est à 1 et $V_{min}$ si le bit est à 0.
+    \item Sur le dernier tiers, les flottants ont une amplitude déterminée par le pas pour construire une rampe vers 0. Néanmoins, si plusieurs bits logiques de même signe se suivent, il n'y a pas de rampe entre le premier et le dernier tiers des bits analogiques correspondants. On reste sur une amplitude $V_{max}$ et $V_{min}$.
 \end{itemize}
 
 \begin{figure}[H]
@@ -193,12 +102,12 @@ La construction d'un sylmbole se passe en trois étapes :
     \caption{\label{fig:image12}Sortie de la source et de l'émetteur NRZT.}
 \end{figure}
 
-Ci-dessus le graphique en sortie de la source et de l'émetteur NRZT. On remarque que le signal en sortie d'émetteur correspond bien à la description faite précédemment. On observe bien les pentes vers Vx et 0 mais également la conservation de l'amplitude Vx lorsque plusieurs bits logiques se suivent.
+Ci-dessus le graphique en sortie de la source et de l'émetteur NRZT. On remarque que le signal en sortie d'émetteur correspond bien à la description faite précédemment. On observe bien les pentes vers $V_x$ et 0 mais également la conservation de l'amplitude $V_x$ lorsque plusieurs bits logiques se suivent.
 
 \subsubsection{Récepteur}
 
 Le récepteur à un enjeu primordial, il est capable de recevoir un signal analogique et de le convertir en un signal logique (même type que le signal source). Notre exigence était d'avoir un seul récepteur qui puisse traiter n'importe quel signal analogique.
-Pour ce faire, on utilise comme méthode de moyenner les valeurs reçues sur la durée d'un temps symbole. Préalablement, nous avons déterminer un seuil de décision qui correspond à $\frac{Vmax + Vmin}{2}$.
+Pour ce faire, on utilise comme méthode de moyenner les valeurs reçues sur la durée d'un temps symbole. Préalablement, nous avons déterminer un seuil de décision qui correspond à $\frac{V_{max} + V_{min}}{2}$.
 Il peut ainsi fluctuer en fonction des valeurs seuil choisi. Si la moyenne se situe au-dessus du seuil de décision, alors le bit d'état logique sera à 1. Si la moyenne se situe en-dessous du seuil de décision, alors le bit d'état logique sera à 0.
 
 \subsection{Tests}

@@ -3,6 +3,9 @@
 \usepackage{sectsty}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage{eso-pic}
 
 \usepackage{listings}
 \usepackage{color}
@@ -12,7 +15,7 @@
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-
+\setcounter{section}{-1}
 \lstset{frame=tb,
   language=Java,
   aboveskip=3mm,
@@ -38,31 +41,80 @@
 \textheight=9.0in
 \headsep=0.25in
 
-\title{Rapport de suivi de projet}
-\author{SIT 213 -- Projet fil rouge \\\\ FAVREL Antoine, RAVAUX Louis, Huguet Benjamin, Donatien Maëva}
-\date{\today}
+% Template
+
+\definecolor{greenIMT}{rgb}{0.6431,0.8235,0.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\setlength{\headheight}{16pt}
+\setlength{\footskip}{45pt}
+
+
+\renewcommand{\headrule}{%
+\vspace{-8pt}\hrulefill
+\raisebox{-2.1pt}{}\hrulefill}
+
+\fancyhead[L]{\nouppercase{\rightmark\hfill\leftmark}}
+%\fancyhead[R]{\nouppercase{\leftmark\hfill\rightmark}}
+
+\fancyfoot[L]{
+    \includegraphics[width=0.15\textwidth]{IMTAlogo.jpg}
+}
+
+\fancyfoot[C]{
+    \thepage
+}
+
+\fancypagestyle{firstPage}{
+    \fancyhf{}
+    \fancyhead[R]{
+        \includegraphics[width=0.8\textwidth]{deco_cover_page.png}
+    }
+    \fancyfoot[L]{
+        \includegraphics[width=0.25\textwidth]{IMTAlogo.jpg}
+    }
+    
+}
+%SOLUTION : faire des minipages (2), 1 en bas et 1 en haut
+%\renewcommand{\maketitle}{
+	%\singlespacing
+	%\thispagestyle{firstPage}
+	%\renewcommand{\headrulewidth}{0pt}
+	%\begin{flushleft}
+	%\vspace*{320pt}
+    %\begin{minipage}{20cm}
+	\title{\textbf{\textcolor{greenIMT}{\Huge Rapport de suivi de projet}}}
+    \author{{\Large SIT 213 -- Projet fil rouge} \\\\ FAVREL Antoine, RAVAUX Louis, Huguet Benjamin, Donatien Maëva}
+    \date{\today}
+    %\end{minipage}
+    %\end{flushleft}
+    %\vspace*{\fill} 
+ %}   
 
 \begin{document}
- % \input{frontmatter/coverpage}
-\maketitle	
+%\AddToShipoutPicture*{\BackgroundPic}
+
+\maketitle
 \pagebreak
 
 % Optional TOC
 \tableofcontents
 \pagebreak
-
 %--Paper--
 
 \input{lot1.tex}
-
 \pagebreak
 
 \input{lot2.tex}
-
 \pagebreak
 
 \input{lot3.tex}
+\pagebreak
 
+\input{lot4.tex}
+\pagebreak
 
 %--/Paper--
 
