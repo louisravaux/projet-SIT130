@@ -1,4 +1,4 @@
-package recepteur;
+package codeurs;
 
 import destinations.DestinationInterface;
 import information.Information;
@@ -7,26 +7,31 @@ import sources.SourceInterface;
 
 import java.util.LinkedList;
 
-public class Decodeur<Boolean> implements DestinationInterface<Boolean>, SourceInterface<Boolean> {
+public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, SourceInterface <Boolean> {
+
     protected LinkedList<DestinationInterface <Boolean>> destinationsConnectees;
     protected Information <Boolean>  informationRecue;
     protected Information <Boolean>  informationEmise;
-    protected int vmax;
-    protected int vmin;
 
-    public Decodeur() {
-        destinationsConnectees = new LinkedList <DestinationInterface <Boolean>> ();
-        informationRecue = null;
-        informationEmise = null;
-        this.vmax = 0;
-        this.vmin = 0;
+
+    public Codeur() {
+        destinationsConnectees = new LinkedList<>();
+        informationRecue = new Information<>();
+        informationEmise = new Information<>();
     }
+
+    /**
+     * Méthode de conversion du signal
+     */
+    public abstract void conversion();
 
     /**
      * @return informationRecue
      */
     @Override
-    public Information<Boolean> getInformationRecue() { return this.informationRecue; }
+    public Information<Boolean> getInformationRecue() {
+        return this.informationRecue;
+    }
 
     /**
      * @param information l'information  à recevoir
@@ -34,26 +39,34 @@ public class Decodeur<Boolean> implements DestinationInterface<Boolean>, SourceI
      */
     @Override
     public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
-
+        for (Boolean i : information) {
+            informationRecue.add(i);
+        }
     }
 
     /**
      * @return informationEmise
      */
     @Override
-    public Information<Boolean> getInformationEmise() { return this.informationEmise; }
+    public Information<Boolean> getInformationEmise() {
+        return this.informationEmise;
+    }
 
     /**
      * @param destination la destination à connecter
      */
     @Override
-    public void connecter(DestinationInterface<Boolean> destination) { destinationsConnectees.add(destination); }
+    public void connecter(DestinationInterface<Boolean> destination) {
+        destinationsConnectees.add(destination);
+    }
 
     /**
      * @throws InformationNonConformeException
      */
     @Override
     public void emettre() throws InformationNonConformeException {
-
+        for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
+            destinationConnectee.recevoir(informationEmise);
+        }
     }
 }
