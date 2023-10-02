@@ -184,7 +184,7 @@ public class Simulateur {
 		if (affichage) {
 			SondeAnalogique e = new SondeAnalogique("emetteur");
 			SondeAnalogique t = new SondeAnalogique("transmetteur");
-			SondeLogique sondeDestination = new SondeLogique("destination", 200);
+			SondeLogique sondeDestination = new SondeLogique("decodeur", 200);
 			SondeLogique sondeSource = new SondeLogique("source", 200);
 
 			source.connecter(sondeSource);
@@ -193,7 +193,7 @@ public class Simulateur {
 			recepteur.connecter(sondeDestination);
 
 			if (codeur) {
-				SondeLogique sondeDecodeur = new SondeLogique("decodeur", 200);
+				SondeLogique sondeDecodeur = new SondeLogique("Destination", 200);
 				decodeur.connecter(sondeDecodeur);
 			}
 		}
