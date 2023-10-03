@@ -13,8 +13,12 @@ public class DecodageReception extends Codeur<Boolean> {
         super();
     }
 
+    /**
+     * ඞ
+     * Décode le signal codé reçu
+     * */
     public void conversion() {
-        for (int i = 0; i < informationRecue.nbElements(); i+=3) {
+        for (int i = 0; i < informationRecue.nbElements()-1; i+=3) {
 
             Boolean a = informationRecue.iemeElement(i);
             Boolean b = informationRecue.iemeElement(i+1);
