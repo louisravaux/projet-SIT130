@@ -319,7 +319,6 @@ public class Simulateur {
 
 			} else if (args[i].matches("-ti")) {
 				analog = true;
-				// TODO réussir a parser le bordel
 				i++;
 				int pairimpair = 1;
 				int pos_tau = 0;
