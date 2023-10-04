@@ -51,6 +51,10 @@ En spécifiant le nombre de bits du message "aléatoire" à transmettre en utili
 
 `-snrpb v` : Spécifie le rapport signal/bruit (SNR). La valeur par défaut est 10.0.
 
+`-ti dt ar` : Ajoute un trajet de décalage dt et d'ampliture ar au signal envoyé. Il est possible d'ajouter jusqu'à 5 trajets au signal envoyé.
+
+`-codeur` : active l'utilisation du codeur et décodeur. Ce dernier transforme les 1 en 101 et les 0 en 010.
+
 ## Exemples d'utilisation
 Voici quelques exemples d'utilisation du simulateur avec différentes options :
 
