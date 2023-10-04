@@ -51,7 +51,7 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
      * Calcul de l'écart type du bruit.
      */
     public void calculateSigmaNoise() {
-        sigma_noise = (nb_sample*p_noise)/(2*snr);
+        sigma_noise = (float) Math.sqrt((nb_sample*p_signal)/(2*snr));
     }
 
     /**

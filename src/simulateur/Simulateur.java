@@ -1,4 +1,7 @@
 package simulateur;
+import codeurs.CodageEmission;
+import codeurs.Codeur;
+import codeurs.DecodageReception;
 import destinations.Destination;
 import destinations.DestinationFinale;
 import destinations.DestinationFinaleAnalogique;
@@ -79,6 +82,9 @@ public class Simulateur {
 
 	/** la chaine de transmission est analogique ou logique */
 	private boolean analog = false;
+
+	/** la chaine de transmission dispose d'un decodeur */
+	private boolean codeur = false;
    
     /** Le constructeur de Simulateur construit une chaîne de
      * transmission composée d'une Source de type Boolean, d'une Destination
@@ -172,25 +178,41 @@ public class Simulateur {
 
 		destination = new DestinationFinale();
 
+		Codeur<Boolean> codeurEmission = new CodageEmission();
+		Codeur<Boolean> decodeur = new DecodageReception();
+
 		if (affichage) {
 			SondeAnalogique e = new SondeAnalogique("emetteur");
 			SondeAnalogique t = new SondeAnalogique("transmetteur");
-			SondeLogique sondeDestination = new SondeLogique("destination", 200);
+			SondeLogique sondeDestination = new SondeLogique("decodeur", 200);
 			SondeLogique sondeSource = new SondeLogique("source", 200);
 
 			source.connecter(sondeSource);
 			emetteur.connecter(e);
 			transmetteurAnalogique.connecter(t);
 			recepteur.connecter(sondeDestination);
+
+			if (codeur) {
+				SondeLogique sondeDecodeur = new SondeLogique("Destination", 200);
+				decodeur.connecter(sondeDecodeur);
+			}
 		}
 
-		source.connecter(emetteur);
+		if (codeur) {
+			source.connecter(codeurEmission);
+			codeurEmission.connecter(emetteur);
+			emetteur.connecter(transmetteurAnalogique);
+			transmetteurAnalogique.connecter(recepteur);
+			recepteur.connecter(decodeur);
+			decodeur.connecter(destination);
+		} else {
+			source.connecter(emetteur);
+			emetteur.connecter(transmetteurAnalogique);
+			transmetteurAnalogique.connecter(recepteur);
+			recepteur.connecter(destination);
+		}
 
-		emetteur.connecter(transmetteurAnalogique);
 
-		transmetteurAnalogique.connecter(recepteur);
-
-		recepteur.connecter(destination);
 
 	}
    
@@ -220,6 +242,10 @@ public class Simulateur {
     		if (args[i].matches("-s")){
     			affichage = true;
     		}
+
+			else if (args[i].matches("-codeur")){
+				codeur = true;
+			}
     		
     		else if (args[i].matches("-seed")) {
     			aleatoireAvecGerme = true;
@@ -293,7 +319,6 @@ public class Simulateur {
 
 			} else if (args[i].matches("-ti")) {
 				analog = true;
-				// TODO réussir a parser le bordel
 				i++;
 				int pairimpair = 1;
 				int pos_tau = 0;
