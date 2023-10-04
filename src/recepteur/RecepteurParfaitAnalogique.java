@@ -1,9 +1,12 @@
 package recepteur;
 
-import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
+/**
+ * Classe représentant un récepteur parfait analogique. Cette classe hérite de la classe abstraite Recepteur
+ * et implémente la réception d'informations analogiques et leur conversion en informations binaires.
+ */
 public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 	private final int nb_samples;
 	private final String form;
@@ -14,6 +17,14 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 	private final int nbBits;
 	private final int thirdSample;
 
+	/**
+	 * Constructeur de la classe RecepteurParfaitAnalogique.
+	 *
+	 * @param vmin      La valeur minimale de l'amplitude analogique.
+	 * @param vmax      La valeur maximale de l'amplitude analogique.
+	 * @param nb_samples Le nombre d'échantillons à utiliser pour la conversion.
+	 * @param form      Le format de conversion (RZ, NRZ ou NRZT).
+	 */
 	public RecepteurParfaitAnalogique(float vmin, float vmax, int nb_samples, String form) {
 		this.nb_samples = nb_samples;
 		this.form = form;
@@ -28,6 +39,9 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		thirdSample = nb_samples / 3;
 	}
 
+	/**
+	 * Méthode pour recevoir une information analogique en utilisant le format NRZ.
+	 */
 	public void receiveNRZ() {
 		for (Float f : informationRecue) {
 			j++;
@@ -44,6 +58,9 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		}
 	}
 
+	/**
+	 * Méthode pour recevoir une information analogique en utilisant le format RZ.
+	 */
 	public void receiveRZ() {
 		for (Float f : informationRecue) {
 			if (j < thirdSample) {
@@ -69,6 +86,9 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		}
 	}
 
+	/**
+	 * Méthode pour recevoir une information analogique en utilisant le format NRZT.
+	 */
 	public void receiveNRZT() {
 		for (Float f : informationRecue) {
 			j++;
@@ -110,6 +130,13 @@ public class RecepteurParfaitAnalogique extends Recepteur<Float, Boolean> {
 		}
 	}
 
+	/**
+	 * Méthode pour recevoir une information analogique, la traiter selon le format spécifié,
+	 * puis émettre l'information binaire résultante aux destinations connectées.
+	 *
+	 * @param information L'information analogique à recevoir.
+	 * @throws InformationNonConformeException Si l'information reçue n'est pas conforme.
+	 */
 	public void recevoir(Information<Float> information) throws InformationNonConformeException {
 
 		for (Float i : information) {

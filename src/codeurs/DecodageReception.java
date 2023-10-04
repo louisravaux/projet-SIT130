@@ -7,11 +7,11 @@ import sources.SourceInterface;
 
 import java.util.LinkedList;
 
+/**
+ * Classe représentant un décodeur. Elle fonctionne de pair avec la classe CodageEmission
+ * Elle décode les 101 en 1 et les 010 en 0
+ */
 public class DecodageReception extends Codeur<Boolean> {
-
-    public DecodageReception() {
-        super();
-    }
 
     /**
      * ඞ

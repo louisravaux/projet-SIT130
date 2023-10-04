@@ -7,11 +7,15 @@ import sources.SourceInterface;
 
 import java.util.LinkedList;
 
-public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, SourceInterface <Boolean> {
+/**
+ * Classe abstraite Codeur. Cette classe définit les méthodes et les attributs communs aux codeurs et décodeurs.
+ * @param <T> le type de l'information à traiter
+ */
+public abstract class Codeur<T> implements DestinationInterface<T>, SourceInterface <T> {
 
-    protected LinkedList<DestinationInterface <Boolean>> destinationsConnectees;
-    protected Information <Boolean>  informationRecue;
-    protected Information <Boolean>  informationEmise;
+    protected LinkedList<DestinationInterface <T>> destinationsConnectees;
+    protected Information <T>  informationRecue;
+    protected Information <T>  informationEmise;
 
 
     public Codeur() {
@@ -29,7 +33,7 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
      * @return informationRecue
      */
     @Override
-    public Information<Boolean> getInformationRecue() {
+    public Information<T> getInformationRecue() {
         return this.informationRecue;
     }
 
@@ -38,8 +42,8 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
      * @throws InformationNonConformeException
      */
     @Override
-    public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
-        for (Boolean i : information) {
+    public void recevoir(Information<T> information) throws InformationNonConformeException {
+        for (T i : information) {
             informationRecue.add(i);
         }
         conversion();
@@ -50,7 +54,7 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
      * @return informationEmise
      */
     @Override
-    public Information<Boolean> getInformationEmise() {
+    public Information<T> getInformationEmise() {
         return this.informationEmise;
     }
 
@@ -58,7 +62,7 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
      * @param destination la destination à connecter
      */
     @Override
-    public void connecter(DestinationInterface<Boolean> destination) {
+    public void connecter(DestinationInterface<T> destination) {
         destinationsConnectees.add(destination);
     }
 
@@ -67,7 +71,7 @@ public abstract class Codeur<Boolean> implements DestinationInterface<Boolean>, 
      */
     @Override
     public void emettre() throws InformationNonConformeException {
-        for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
+        for (DestinationInterface<T> destinationConnectee : destinationsConnectees) {
             destinationConnectee.recevoir(informationEmise);
         }
     }
