@@ -23,6 +23,7 @@ public class TEBvsSNRGraph {
             csvWriter.append("Taux d'erreur binaire (TEB)");
             csvWriter.append("\n");
 
+            int progress = 0;
             // Réaliser 60 simulations en incrémentant le nombre d'échantillons par symbole
             for (double snr = -40; snr <= 10; snr+=0.5) {
                 // Effectuer la simulation
@@ -37,6 +38,8 @@ public class TEBvsSNRGraph {
                 csvWriter.append(",");
                 csvWriter.append(String.valueOf(teb));
                 csvWriter.append("\n");
+
+                System.out.println("Simulation " + progress++ + " / " + 100 + " terminée.");
             }
 
             System.out.println("Simulation terminée. Résultats enregistrés dans " + csvFileName);
@@ -49,8 +52,8 @@ public class TEBvsSNRGraph {
         float teb = 0;
         try {
             Simulateur sim = new Simulateur(
-                    new String[] { "-seed", "78373", "-mess", "10000", "-form", "NRZ", "-ampl", "-2", "2","-snrpb",
-                            String.valueOf(snr),"-ti", "40", "0.75", "40", "0.75"});
+                    new String[] { "-seed", "78373", "-mess", "100000", "-form", "NRZ", "-ampl", "-2", "2","-snrpb",
+                            String.valueOf(snr)});
             sim.execute();
             teb = sim.calculTauxErreurBinaire();
         } catch (Exception e) {
