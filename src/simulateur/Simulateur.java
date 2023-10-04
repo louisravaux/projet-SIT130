@@ -317,43 +317,23 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
 
-			} else if (args[i].matches("-ti")) {
+			} else if (args[i++].matches("-ti")) {
 				analog = true;
-				i++;
-				int pairimpair = 1;
-				int pos_tau = 0;
-				int pos_ar = 0;
-				while(i < args.length && !args[i].matches("^-[a-z]+") && pairimpair < 11) {
-					if(pairimpair%2 == 1 && args[i].matches("^-?\\d*$")) {
-						if(Integer.parseInt(args[i]) < 0) {
-							throw new ArgumentsException("Valeur de tau -ti invalide : " + args[i]);
-						} else {
-							//System.out.println("tau : " + args[i]);
-							dt.set(pos_tau, Integer.parseInt(args[i]));
-							pos_tau++;
-						}
-						pairimpair++;
-
-
-					} else if (pairimpair%2 == 0 && i < args.length && args[i].matches("^-?\\d*(\\.\\d+)?$")) {
-						if(Float.parseFloat(args[i]) == 0 || Float.parseFloat(args[i]) < 0.0f || Float.parseFloat(args[i]) > 1.0f) {
-							throw new ArgumentsException("Valeur d'amplitude -ti invalide : " + args[i]);
-						} else {
-							//System.out.println("ar : " + args[i]);
-							ar.set(pos_ar, Float.parseFloat(args[i]));
-							pos_ar++;
-						}
-						pairimpair++;
+				int k = 0;
+				int l = 0;
+				for (int j = 0; j < 10 && i < args.length; j++) {
+					if (args[i].matches("\\d+")) {
+						dt.set(k++, Integer.parseInt(args[i++]));
+					} else if (args[i].matches("\\d+\\.\\d+")) {
+						ar.set(l++, Float.parseFloat(args[i++]));
 					}
-					i++;
 				}
-				//System.out.println(dt);
-				//System.out.println(ar);
+				i--;
 			}
 
 			// next args
 
-    		else throw new ArgumentsException("Option invalide :"+ args[i]);
+    		else throw new ArgumentsException("Option invalide :" + args[i]);
     	}
       
     }
