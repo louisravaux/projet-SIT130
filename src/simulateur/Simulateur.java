@@ -109,6 +109,9 @@ public class Simulateur {
     }
 
 
+	/**
+	 * Cette méthode initialise la source en fonction des arguments passés au simulateur.
+	 */
 	public void initSource() {
 		try {
 			if (messageAleatoire && !aleatoireAvecGerme) {
@@ -118,7 +121,6 @@ public class Simulateur {
 			} else {
 				source = new SourceFixe(messageString);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -317,6 +319,7 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
 
+				// TODO: fix error logs
 			} else if (args[i++].matches("-ti")) {
 				analog = true;
 				int k = 0;
