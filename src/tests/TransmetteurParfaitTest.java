@@ -1,8 +1,9 @@
-package transmetteurs;
+package tests;
 
 import destinations.DestinationFinale;
 import org.junit.jupiter.api.Test;
 import sources.SourceAleatoire;
+import transmetteurs.TransmetteurParfait;
 
 import static org.junit.jupiter.api.Assertions.*;
 

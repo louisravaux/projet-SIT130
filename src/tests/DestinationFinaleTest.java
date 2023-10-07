@@ -1,5 +1,6 @@
-package destinations;
+package tests;
 
+import destinations.DestinationFinale;
 import information.InformationNonConformeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
