@@ -51,7 +51,7 @@ public class Simulateur {
     private String messageString = "100";
 
 	/** le rapport signal/bruit */
-	private float snr = 10f;
+	private float snr = 1000f;
 
 	/** le type de signal à transmettre */
 	private String form = "RZ";

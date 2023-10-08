@@ -34,8 +34,8 @@ public class NoiseGaussianGraph implements DestinationInterface<Float> {
     public static void main(String[] args) throws Exception {
         NoiseGaussianGraph graph = new NoiseGaussianGraph();
         SourceFixe src = new SourceFixe("0000000000");
-        Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 10000, "NRZ");
-        TransmetteurBruiteAnalogique transmetteur = new TransmetteurBruiteAnalogique(-10, 10000);
+        Emetteur<Boolean, Float> emetteur = new EmetteurParfaitAnalogique(-2, 2, 100000, "NRZ");
+        TransmetteurBruiteAnalogique transmetteur = new TransmetteurBruiteAnalogique(-10, 100000);
 
         src.connecter(emetteur);
         emetteur.connecter(transmetteur);
@@ -43,6 +43,8 @@ public class NoiseGaussianGraph implements DestinationInterface<Float> {
         transmetteur.connecter(graph);
 
         src.emettre();
+
+        System.out.println(transmetteur.getSigma());
 
         // Enregistrement dans un fichier CSV
         String csvFileName = "noise_gaussian.csv";

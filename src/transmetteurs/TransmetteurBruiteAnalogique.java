@@ -54,6 +54,10 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         sigma_noise = (float) Math.sqrt((nb_sample*p_signal)/(2*snr));
     }
 
+    public float getSigma() {
+        return sigma_noise;
+    }
+
     /**
      * Génération du bruit gaussien.
      */
