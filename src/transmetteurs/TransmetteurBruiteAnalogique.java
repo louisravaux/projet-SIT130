@@ -58,6 +58,14 @@ public class TransmetteurBruiteAnalogique extends Transmetteur<Float, Float> {
         return sigma_noise;
     }
 
+    public float getP_signal() {
+        return p_signal;
+    }
+
+    public float getSnr() {
+        return snr;
+    }
+
     /**
      * Génération du bruit gaussien.
      */

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 public class RecepteurParfaitAnalogiqueTest {
 
+
+
     @BeforeEach
     void init() throws Exception {
 
