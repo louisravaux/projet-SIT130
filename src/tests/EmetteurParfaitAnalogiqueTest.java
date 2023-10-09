@@ -1,22 +1,28 @@
 package tests;
 
+import destinations.DestinationFinaleAnalogique;
 import emetteur.EmetteurParfaitAnalogique;
 import information.Information;
 import information.InformationNonConformeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class EmetteurParfaitAnalogiqueTest {
+
     EmetteurParfaitAnalogique e;
-    Information infos = new Information<>();
+    Information<Boolean> infos;
+    DestinationFinaleAnalogique d;
 
     @BeforeEach
-    void init() throws Exception {
+    void init() {
+        d = new DestinationFinaleAnalogique();
         e = new EmetteurParfaitAnalogique(0f,1f,6,"RZ");
-        infos.add(true); infos.add(false); infos.add(true);
-
+        infos = new Information<>(); infos.add(true); infos.add(false); infos.add(true);
     }
 
     @Test
@@ -62,6 +68,18 @@ public class EmetteurParfaitAnalogiqueTest {
 
     @Test
     public void testEmettre() throws InformationNonConformeException {
-        //TODO
+        e.connecter(d);
+        e.recevoir(infos);
+
+        if (d.getInformationRecue().nbElements() != 18) {
+            fail("La taille de l'information reçue est incorrecte");
+        }
+
+        for (int i = 0; i < d.getInformationRecue().nbElements(); i++) {
+            if (!Objects.equals(d.getInformationRecue().iemeElement(i), e.getInformationEmise().iemeElement(i))) {
+                fail("Les informations reçues sont incorrectes ou manquantes");
+            }
+        }
     }
+
 }
