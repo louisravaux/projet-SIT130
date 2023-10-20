@@ -183,6 +183,7 @@ public class Simulateur {
 		Codeur<Boolean> codeurEmission = new CodageEmission();
 		Codeur<Boolean> decodeur = new DecodageReception();
 
+		// affichage des sondes si -s est utilisé
 		if (affichage) {
 			SondeAnalogique e = new SondeAnalogique("emetteur");
 			SondeAnalogique t = new SondeAnalogique("transmetteur");
@@ -200,6 +201,7 @@ public class Simulateur {
 			}
 		}
 
+		// ajoute les composants lié au codage canal à la chaine de transmission si -codeur est utilisé
 		if (codeur) {
 			source.connecter(codeurEmission);
 			codeurEmission.connecter(emetteur);
