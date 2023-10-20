@@ -91,5 +91,13 @@ public class TransmetteurBruiteMultiTrajets extends TransmetteurBruiteAnalogique
         emettre();
     }
 
+    /**
+     * Retourne l'information avec trajets multiples.
+     * @return l'information avec trajets multiples
+     */
+    public Information<Float> getMultiTrajet() {
+        return multiTrajet;
+    }
+
 }
 
