@@ -327,10 +327,17 @@ public class Simulateur {
 				int l = 0;
 				for (int j = 0; j < 10 && i < args.length; j++) {
 					if (args[i].matches("\\d+") && Integer.parseInt(args[i]) > 0) {
-						dt.set(k++, Integer.parseInt(args[i++]));
+						try {
+							dt.set(k++, Integer.parseInt(args[i++]));
+						} catch (Exception e) {
+							throw new ArgumentsException("Valeur du parametre -ti invalide : " + args[i]);
+						}
 					} else if (args[i].matches("\\d+\\.\\d+") && Float.parseFloat(args[i]) > 0) {
-						ar.set(l++, Float.parseFloat(args[i++]));
-					}
+						try {
+							ar.set(l++, Float.parseFloat(args[i++]));
+						} catch (Exception e) {
+							throw new ArgumentsException("Valeur du parametre -ti invalide : " + args[i]);
+						}}
 				}
 				i--;
 			}
