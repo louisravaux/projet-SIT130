@@ -321,7 +321,6 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -snrpb invalide : " + args[i]);
 				}
 
-				// TODO: fix error logs
 			} else if (args[i++].matches("-ti")) {
 				analog = true;
 				int k = 0;
