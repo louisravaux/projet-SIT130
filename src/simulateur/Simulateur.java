@@ -327,9 +327,9 @@ public class Simulateur {
 				int k = 0;
 				int l = 0;
 				for (int j = 0; j < 10 && i < args.length; j++) {
-					if (args[i].matches("\\d+")) {
+					if (args[i].matches("\\d+") && Integer.parseInt(args[i]) > 0) {
 						dt.set(k++, Integer.parseInt(args[i++]));
-					} else if (args[i].matches("\\d+\\.\\d+")) {
+					} else if (args[i].matches("\\d+\\.\\d+") && Float.parseFloat(args[i]) > 0) {
 						ar.set(l++, Float.parseFloat(args[i++]));
 					}
 				}
