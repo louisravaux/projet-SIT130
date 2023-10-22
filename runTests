@@ -1,6 +1,37 @@
 #!/bin/bash
 echo "running tests...."
 
-echo "TODO"
+# Test 1: Exécuter une simulation avec un message aléatoire de 1000 bits
+./simulateur -mess 1000
+
+# Test 2: Exécuter une simulation avec un message personnalisé (1101010) et une initialisation aléatoire des générateurs
+./simulateur -mess 1101010 -seed 12345
+
+# Test 3: Exécuter une simulation avec un message aléatoire de 500 bits sans affichage des sondes
+./simulateur -mess 500
+
+# Test 4: Exécuter une simulation avec un message binaire spécifique (1010101) et un SNR personnalisé
+./simulateur -mess 1010101 -snrpb 5.0
+
+# Test 5: Exécuter une simulation avec des trajets de décalage ajoutés
+./simulateur -mess 1000 -nbEch 100 -ti 1.0 0.5 -ti 0.5 25
+
+# Test 6: Exécuter une simulation avec le codeur activé
+./simulateur -mess 110110 -codeur
+
+# Test 7: Exécuter une simulation avec un message binaire aléatoire de 2000 bits, sans affichage des sondes, et avec un SNR personnalisé.
+./simulateur -mess 2000 -snrpb 8.0
+
+# Test 8: Exécuter une simulation avec un message personnalisé (10101010), un codeur activé et en utilisant des formes d'onde RZ.
+./simulateur -mess 10101010 -codeur -form RZ
+
+# Test 9: Exécuter une simulation avec un message binaire de 1111111, un nombre d'échantillons par bit de 50, et en utilisant des valeurs d'amplitude minimale et maximale personnalisées.
+./simulateur -mess 1111111 -nbEch 50 -ampl 0.2 0.8
+
+# Test 10: Exécuter une simulation avec un message binaire aléatoire de 3000 bits, activer le codeur, et ajouter deux trajets de décalage au signal envoyé.
+./simulateur -mess 3000 -nbEch 100 -codeur -ti 1.0 0.5 -ti 0.5 90.0
+
+# Test 11: Exécuter une simulation avec un message binaire aléatoire de 1500 bits, utiliser des formes d'onde NRZT, et spécifier un SNR personnalisé.
+./simulateur -mess 1500 -form NRZT -snrpb 12.0
 
 echo "done."
